@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>模联完善资料页面</title>
+    <link rel="stylesheet" href="../css/mui.min.css"/>
+    <link rel="stylesheet" href="../css/mui_popover.css"/>
+    <link rel="stylesheet" href="../css/base.css"/>
+    <link rel="stylesheet" href="../css/header.css"/>
+    <link rel="stylesheet" href="../css/addData.css"/>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>完善资料</h3>
+        <em onclick="location.href='login.html'">跳过</em>
+    </header>
+    <div class="main_content">
+       <div class="name clearfix">
+           <span class="f_left">技工姓名：</span>
+           <input type="text" placeholder="请输入姓名" />
+       </div>
+        <div class="type clearfix">
+            <span class="f_left">技工工种：</span>
+            <a href="#middlePopover" class="type_choose">+ 请选择工种名称</a>
+            <div id="middlePopover" class="mui-popover">
+                <div class="mui-card">
+                    <p>请选择技术工种</p>
+                    <ul class="mui-table-view mui-table-view-radio">
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                普通车床
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell mui-selected">
+                            <a class="mui-navigate-right">
+                                数控车床
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                数控加工中心
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                刨床
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                线切割
+                            </a>
+                        </li><li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                钻床
+                            </a>
+                        </li><li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                钳工
+                            </a>
+                        </li><li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                装配工
+                            </a>
+                        </li>
+                    </ul>
+                    <!--<form class="mui-input-group ">
+                        <div class="mui-input-row mui-radio">
+                            <label>普通车床</label>
+                            <input name="radio1" type="radio" checked>
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>数控车床</label>
+                            <input name="radio1" type="radio">
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>数控加工中心</label>
+                            <input name="radio1" type="radio">
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>刨床</label>
+                            <input name="radio1" type="radio" >
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>线切割</label>
+                            <input name="radio1" type="radio">
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>钻床</label>
+                            <input name="radio1" type="radio">
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>钳工</label>
+                            <input name="radio1" type="radio" >
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>装配工</label>
+                            <input name="radio1" type="radio" >
+                        </div>
+                    </form>-->
+                </div>
+
+            </div>
+        </div>
+        <div class="work_year clearfix">
+            <span class="f_left">工作年限：</span>
+            <a href="#middlePopover1" class="work_choose">+ 请选择工作年限</a>
+            <div id="middlePopover1" class="mui-popover">
+                        <p>请选择工作年限</p>
+                        <ul class="mui-table-view mui-table-view-radio word_year">
+                            <li class="mui-table-view-cell">
+                                <a class="mui-navigate-right">
+                                    0~1年
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell mui-selected">
+                                <a class="mui-navigate-right">
+                                    1~3年
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell">
+                                <a class="mui-navigate-right">
+                                    3~5年
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell">
+                                <a class="mui-navigate-right">
+                                    5~10年
+                                </a>
+                            </li>
+                            <li class="mui-table-view-cell">
+                                <a class="mui-navigate-right">
+                                    10年以上
+                                </a>
+                            </li>
+                           <!-- <form class="mui-input-group">
+                        <div class="mui-input-row mui-radio ">
+                            <label>0~1年</label>
+                            <input name="radio2" type="radio" checked>
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>1~3年</label>
+                            <input name="radio2" type="radio">
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>3~5年</label>
+                            <input name="radio2" type="radio">
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>5~10年</label>
+                            <input name="radio2" type="radio" >
+                        </div>
+                        <div class="mui-input-row mui-radio">
+                            <label>10年以上</label>
+                            <input name="radio2" type="radio" >
+                        </div>
+                    </form>-->
+
+
+            </ul>
+
+            </div>
+        </div>
+        <div class="ID_message clearfix">
+            <span class="f_left">技工身份信息：</span>
+            <input type="number" id="Idcard" placeholder="请填写技工身份证号码"/>
+        </div>
+        <div class="Id_photo clearfix">
+            <span class="f_left">身份证信息：</span>
+            <em>请上传您的身份证照片</em>
+            <div class="against f_right">
+                <div class="against_box">
+                    <input type="file" id="against" accept="image/*" capture="camera" />
+                </div>
+
+                <em>身份证国徽面</em>
+            </div>
+            <div class="open f_right">
+                <div class="open_box">
+                    <input type="file" id="just" accept="image/*" capture="camera"/>
+                </div>
+            <em>身份证照片面</em>
+            </div>
+
+        </div>
+        <div class="address clearfix">
+            <span class="f_left">居住地址：</span>
+            <input type="text" placeholder="请填写常用地址" />
+        </div>
+        <div class="phone clearfix">
+            <span class="f_left">联系电话：</span>
+            <input type="number" placeholder="请输入电话号码" class="f_left"/>
+            <input type="number" placeholder="请输入验证码" class="f_right"/>
+           <em>请输入验证码</em>
+        </div>
+        <div class="experience clearfix" onclick="location.href='./addData_work.html'">
+            <span class="f_left">工作经历：</span>
+            <em>+ 添加工作经历</em>
+        </div>
+        <div class="introduce clearfix">
+            <span class="f_left">自我介绍：</span>
+            <textarea placeholder="请输入自我介绍"></textarea>
+        </div>
+    </div>
+    <div class="add_box">
+        <button class="add_data">保存资料</button>
+    </div>
+
+</div>
+
+</body>
+<script src="../js/common/x_rem.js"></script>
+<script src="../js/common/mui.min.js"></script>
+<script src="../js/common/jquery.js"></script>
+<script src="../js/common/base.js"></script>
+<!--<script>
+    $(function () {
+        //上传图片 即时预览
+        $("#just").change(function () {
+            var file=$("#just").files;
+            html5Reader(file);
+        })
+        function html5Reader(file){
+            //var file = file.files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                var pic = $("#just");
+                pic.css.backgroundImage=this.result;
+            }
+        }
+    })
+</script>-->
+    <script>
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    mui('.mui-scroll-wrapper').scroll();
+    mui('body').on('shown', '.mui-popover', function(e) {
+        //console.log('shown', e.detail.id);//detail为当前popover元素
+    });
+    mui('body').on('hidden', '.mui-popover', function(e) {
+        //console.log('hidden', e.detail.id);//detail为当前popover元素
+    });
+    //采用自定义属性选择单选框吧
+
+    //var info = document.getElementById("info");
+    document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected',function(e){
+        console.log("工作类型为：" + e.detail.el.innerText);
+       /* alert(1);*/
+    });
+    document.querySelector('.mui-table-view.word_year').addEventListener('selected',function(e1){
+        console.log("工作年限为：" + e1.detail.el.innerText);
+       /* alert(1);*/
+    });
+
+    //验证身份证 电话不为空 11位的函数都在base.js里面了
+  //图片预览 国徽面设置完毕  封装
+    document.querySelector("#against").onchange=function () {
+        var file=document.querySelector("#against").files;
+        html5Reader(file,".against_box")
+    }
+    document.querySelector("#just").onchange=function () {
+        var file=document.querySelector("#just").files;
+        html5Reader(file,".open_box")
+    }
+    function html5Reader(file,ele){
+        //var file = file.files[0];
+        var reader = new FileReader();
+       // reader.readAsDataURL(file);
+        reader.readAsDataURL(file[0]);
+        reader.onload = function(e){
+            var pic = document.querySelector(ele);
+            console.log(reader.result);
+            pic.style.backgroundImage="url("+reader.result+")";
+        }
+    }
+</script>
+</html>

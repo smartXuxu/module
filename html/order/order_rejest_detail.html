@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>服务详情</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/mui.min.css"/>
+    <link rel="stylesheet" href="../../css/mui_img.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/index/service_detail.css"/>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>服务详情</h3>
+        <del></del>
+    </header>
+    <div class="main">
+        <div class="top_title clearfix">
+            <div class="tit_left f_left">
+                <h3>宇通公司制宇通公司制宇通公司制宇通公司制作轮毂模具</h3>
+                <span>要求三位以上模具师同时作业上模具师同时作业上模具师同时作业</span>
+                <em>￥29/小时</em>
+            </div>
+            <div class="f_right tit_right">
+                电话咨询
+            </div>
+        </div>
+        <div class="img_big_box">
+            <div class="img_box">
+                <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+            </div>
+            <div class="img_box">
+                <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+            </div>
+            <div class="img_box">
+                <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+            </div>
+        </div>
+        <div class="promise">
+            保障：大企业信誉保证
+        </div>
+        <div class="work_time">
+            <span>工作时间</span>
+            <div class="time clearfix">2018-05-12到2018-08-20
+                <em class="f_right">每天08:00～18:00</em></div>
+        </div>
+        <div class="work_address">
+            <span>工作地点</span>
+            <div class="address clearfix">地址：郑州市中牟县九龙镇宇通工业园
+            </div>
+        </div>
+
+        <div class="appraise ">
+            <div class="title clearfix">
+                <span class="f_left"> 评价（56）</span>
+                <i class='f_right mui-icon mui-icon-arrowright' onclick="location.href='./appraise_detail.html'"></i>
+            </div>
+            <div class="appraise_det">
+                <div class="det_top clearfix">
+                    <img src="../../img/focus-img1.png" alt=""/>
+                    <em> name</em>
+                    <span class="f_right">2018-03-05</span>
+                </div>
+                <div class="det_b">
+                    之前去宇通他们这里临时做工，气氛十分融洽，不愧是大 企业，结算薪资的时候也之前去宇通他们这里临时做工，气氛十分融洽，不愧是大 企业，结算薪资的时候也是十分干脆
+                </div>
+            </div>
+        </div>
+        <div class="intro">
+            <span>详情介绍</span>
+            <p>郑州宇通集团有限公司，是以客车为核心任务，以 工程机械、汽车零部州宇通集团有限公司，是以客车为核心任务，以 工程机械、汽车零部件、房地产为战略业务...</p>
+            <div class="read_more" onclick="location.href='company_detail.html'" >查看更多>></div>
+        </div>
+        <!--在线咨询-->
+        <div class="online order_rej">
+            <button class="refer">已拒绝</button>
+            <button class="sure_work" onclick="location.href='./order_rejest_reason.html'">拒绝原因</button>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/mui.min.js"></script>
+<script src="../../js/common/mui.zoom.js"></script>
+<script src="../../js/common/mui.preview.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script>
+    $(function () {
+        mui.previewImage();
+        mui('body').on('tap','a',function(){document.location.href=this.href;});
+
+    })
+</script>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>完善工作经历</title>
+    <link rel="stylesheet" href="../css/base.css"/>
+    <link rel="stylesheet" href="../css/header.css"/>
+    <link rel="stylesheet" href="../css/data/index_1.css"/>
+    <style>
+        .main_content{
+            padding-top: 1.8rem;
+        }
+        .main_content>div{
+            height: 1.2rem;
+            line-height: 1.2rem;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .main_content>div:last-of-type{
+            border-bottom: none;
+        }
+        .main_content>div>.f_left{
+            padding-left: 0.3rem;
+            font-size: 0.32rem;
+            color:#666;
+        }
+        .main_content>div>input{
+            margin-top: 0.15rem;
+            width: 60%;
+            text-align: right;
+            height: 1rem;
+            line-height: 1rem;
+            margin-right: 0.32rem;
+            font-size: 0.32rem;
+        }
+        .des>textarea{
+            position: relative;
+            width: 80%;
+            left: 5%;
+            border:1px solid #eeeeee;
+            padding: 0.3rem;
+            font-size: 0.26rem;
+            height: 2rem;
+        }
+        .kinerDatePickerInput{
+            padding-right: 0.3rem;
+            font-size: 0.3rem;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>工作经验</h3>
+        <em class="save">保存</em>
+    </header>
+    <div class="main_content">
+        <div class="com_name clearfix">
+            <span class="f_left">公司名称</span>
+            <input type="text" placeholder="请输入公司名称" class="f_right"/>
+        </div>
+        <!--开始时间-->
+        <div class="beg_time clearfix">
+            <span class="f_left">工作开始时间</span>
+            <!--<input type="text" placeholder="请选择开始时间" id="kinerDatePickerInput1" class="f_right kinerDatePickerInput" startYear="1950" default-val="1995-1-1"/>-->
+            <div class="kinerDatePickerInput f_right" id="kinerDatePickerInput1" title="请选择开始时间" startYear="1950" default-val="1995-1-1">请选择开始时间</div>
+
+    </div>
+        <!--结束时间-->
+        <div class="end_time clearfix">
+            <span class="f_left">工作结束时间</span>
+            <div class="kinerDatePickerInput f_right" id="kinerDatePickerInput2" title="请选择结束时间" startYear="2000" default-val="1995-1-1">请选择结束时间</div>
+           <!-- <input type="text" placeholder="请选择结束时间" id="kinerDatePickerInput2"  class="f_right kinerDatePickerInput" startYear="1950" default-val="1995-1-1"/>-->
+        </div>
+       <!-- <div class="kinerDatePickerInput" id="kinerDatePickerInput1" title="请选择出生年月日" startYear="1950" default-val="1995-1-1">请选择出生年月日</div>
+
+        <div class="kinerDatePickerInput" id="kinerDatePickerInput2" title="请选择出生年月日" startYear="1950" default-val="1995-1-1">请选择出生年月日</div>-->
+
+        <!--担任职务-->
+        <div class="com_name clearfix">
+            <span class="f_left">担任职务</span>
+            <input type="text" placeholder="请输入担任的职务" class="f_right"/>
+        </div>
+        <!--自我描述-->
+        <div class="des clearfix">
+            <span class="f_left">工作描述</span>
+            <textarea placeholder="请输入工作描述"></textarea>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../js/common/x_rem.js"></script>
+<script src="../js/common/base.js"></script>
+<!--<script src="../js/common/jquery.js"></script>-->
+<script src="../js/data/jquery-1.10.2_1.js"></script>
+<script src="../js/data/flexible.debug_1.js"></script>
+<script src="../js/data/flexible_css.debug_1.js"></script>
+<script src="../js/data/mobilefix_1.js"></script>
+<script src="../js/data/swiper.min_1.js"></script>
+<script src="../js/data/kinerdatepicker_1.js"></script>
+<script>
+    $('#kinerDatePickerInput1').kinerDatePicker({
+        clickMaskHide: true,
+       /* showHandler: function (ctx) {
+            console.log("显示时间选择器:",ctx);
+        },
+        hideHandler: function (ctx) {
+            console.log("隐藏时间选择器:",ctx);
+        },
+        changeHandler: function (vals,ctx) {
+            console.log("时间改变:",vals,ctx);
+        },
+        okHandler: function (vals, ctx) {
+            console.log("确定选择:",vals,ctx);
+        },
+        cancelHandler: function (ctx) {
+            console.log("取消选择:",ctx);
+        }*/
+    });
+
+    $('#kinerDatePickerInput2').kinerDatePicker({
+        clickMaskHide: true,
+       /* showHandler: function (ctx) {
+            console.log("显示时间选择器:",ctx);
+        },
+        hideHandler: function (ctx) {
+            console.log("隐藏时间选择器:",ctx);
+        },
+        changeHandler: function (vals,ctx) {
+            console.log("时间改变:",vals,ctx);
+        },
+        okHandler: function (vals, ctx) {
+            console.log("确定选择:",vals,ctx);
+        },
+        cancelHandler: function (ctx) {
+            console.log("取消选择:",ctx);
+        }*/
+    });
+    $(".save").click(function () {
+        var kinerDatePickerInput1=$("#kinerDatePickerInput1").text();
+        console.log(kinerDatePickerInput1);
+        var kinerDatePickerInput2=$("#kinerDatePickerInput2").text();
+        console.log(kinerDatePickerInput2);
+    })
+</script>
+</html>

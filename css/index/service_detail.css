@@ -1,0 +1,210 @@
+.layer>header{
+    height: 1.6rem;
+    z-index: 1;
+
+}
+.layer>header>h3{
+    line-height: 1rem;
+}
+.layer>header>i{
+    top: 40%;
+}
+header>del{
+    width: 0.6rem;
+    height: 0.8rem;
+    position: absolute;
+    right: 3%;
+    top:42%;
+    background: url("../../img/share.png") no-repeat center;
+    -webkit-background-size: 100%;
+    background-size: 100%;
+}
+body{
+    background-color: #fff;!important;
+
+}
+/*主体部分*/
+.main{
+    padding-top: 1.8rem;
+    padding-bottom: 1.1rem;
+}
+.top_title{
+    padding:0 0.3rem;
+    width: 100%;
+}
+.tit_left{
+    width: 60%;
+}
+.tit_left>h3,.tit_left>span{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+.tit_left>h3{
+    font-size: 0.3rem;
+    height: 0.27rem;
+}
+.tit_left>span{
+    color:#999;
+    margin-bottom: 0.1rem;
+    font-size: 0.24rem;
+}
+.tit_left>em{
+    font-size: 0.32rem;
+    color:red;
+}
+.tit_right{
+    margin-top: 0.3rem;
+    padding: 0.1rem;
+    color:#009afb;
+    font-size: 0.3rem;
+    border-radius: 10px;
+    border: 1px solid #009afb;
+}
+.img_big_box{
+    padding:0 0.3rem;
+    width: 100%;
+    height: auto;
+    margin-top: 0.2rem;
+    padding-bottom: 0.1rem;
+    border-bottom: 1px solid #eeeeee;
+    overflow: hidden;
+}
+.img_box{
+    position: relative;
+    height: 2rem;
+    display: inline-block;
+    width: 32%;
+    overflow: hidden;
+    background-color: #333333;
+}
+.img_box>img{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+}
+.promise{
+    padding:0 0.3rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    font-size: 0.24rem;
+    border-bottom: 0.1rem solid #eee;
+}
+.work_time,.work_address,.insurance,.work_duration,.work_pay{
+    padding: 0.2rem 0.3rem;
+    border-bottom: 0.1rem solid #eeeeee;
+}
+.work_time>span,.work_address>span,.insurance>span,.work_duration>span,.work_pay>span{
+    color:#009afb;
+    font-size: 0.3rem;
+}
+.work_time>.time,.work_address>.address,.insurance>h3,.work_duration>.work_duration_total,.work_pay>.work_pay_total{
+    margin-top: 0.1rem;
+    margin-left: 0.4rem;
+    font-size: 0.24rem;
+    line-height: 0.4rem;
+}
+.work_duration_total>em,.work_pay_total>em{
+    font-size: 0.3rem;
+    color:red;
+}
+.appraise{
+ padding:0.2rem 0.3rem;
+    border-bottom: 0.1rem solid #eeeeee;
+}
+.appraise>.title{
+    border-bottom: 1px solid #eeeeee;
+}
+.appraise>.title>span{
+    font-size: 0.3rem;
+    color: #009afb;
+}
+.appraise>.title>i{
+    font-size: 0.28rem;
+}
+.appraise_det{
+    width: 100%;
+    margin-top: 0.2rem;
+}
+.det_top{
+    width: 100%;
+}
+.det_top>img{
+    width: 0.8rem;
+    height: 0.8rem;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 0.2rem;
+}
+.det_top>em{
+    font-size: 0.3rem;
+    display: inline-block;
+}
+.det_top>span{
+    color:#999;
+}
+.det_b,.intro>p{
+    margin-left: 1rem;
+    color: #666;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+.intro{
+    padding:0.2rem 0.3rem;
+    border-bottom: 0.1rem solid #eeeeee;
+}
+.intro>span{
+    font-size: 0.3rem;
+    color:#009afb;
+}
+.intro>p{
+    margin-left: 0.8rem;
+    font-size: 0.24rem;
+    -webkit-line-clamp: 2;
+}
+.read_more{
+    color:#bfbfbf;
+    text-align: center;
+}
+.online{
+    position: fixed;
+    height: 1.1rem;
+    background-color: #fff;
+    bottom: 0;
+    z-index:1;
+    width: 100%;
+    border-top: 1px solid #eeeeee;
+}
+.online>button{
+    display: inline-block;
+    text-align: center;
+    margin-top: 0.2rem;
+}
+.refer{
+    border:1px solid #009afb;
+    color: #009afb;
+    margin-left: 1.5rem;
+}
+.sure_work{
+    border:1px solid #009afb;
+    background-color: #009afb;
+    color: #fff;
+    margin-left: 0.7rem;
+}
+.order_rej>button{
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+.order_rej>button:first-of-type{
+    border: 1px solid #999;
+    color:#999;
+}

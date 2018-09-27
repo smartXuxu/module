@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>在线咨询</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
+    <link rel="stylesheet" href="../../css/index/online_ask.css"/>
+</head>
+<body>
+<div class="layer">
+    <header class="clearfix">
+        <i onclick="back()"></i>
+        <h3>沟通</h3>
+        <del onclick="location.href='service_detail.html'">职位详情</del>
+    </header>
+    <div class="main clearfix">
+        <div class="left f_left">
+            <img src="../../img/focus-img1.png" class="f_left" alt=""/>
+            <div class="mess f_left">
+                Hi,感谢你报名此职务~可能 无法及时回复消息，请见谅
+            </div>
+        </div>
+        <div class="right f_right">
+            <img src="../../img/focus-img1.png" class="f_right" alt=""/>
+            <div class="mess f_right">
+                Hi,感谢你报名此职务~可能 无法及时回复消息，请见谅
+            </div>
+        </div>
+    </div>
+    <div class="send">
+        <input type="text" placeholder="开始咨询" />
+        <em class="m_send">发送</em>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script>
+    $(function () {
+        $(".m_send").click(function () {
+            //input的值
+            var mess=$('.send>input').val();
+
+            mess=$.trim(mess);
+            console.log(mess);
+            if(mess==''){
+                sweetAlert(
+                        'sorry',
+                        '您不能发送空消息！',
+                        'error'
+                )
+            }else{
+                var html="<div class='right f_right'><img src='../../img/focus-img1.png'class='f_right'/><div class='mess f_right'>"+mess+"</div></div>"
+                $('.main').append(html);
+                $('.send>input').val("");
+            }
+        })
+    })
+</script>
+</html>
