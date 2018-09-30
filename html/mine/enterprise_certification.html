@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>企业认证</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/addData.css"/>
+    <style>
+        .layer>header{
+            height: 1.3rem;
+        }
+        .Id_photo>em{
+
+        }
+        .main_content>div>input, .type_choose, .work_choose{
+            text-indent:1em;
+        }
+        .main_content>.Id_photo{
+            border-top: 0.1rem solid #eee;
+            border-bottom: 0.1rem solid #eee;
+        }
+        .main_content>.business_license{
+            border-bottom: none;
+        }
+        .main_content>.business_license>span{
+            width: 2.5rem;
+            text-align: right;
+            font-size: 0.3rem
+        }
+        .main_content>.business_license>.license_box{
+            display: block;
+            width: 100%;
+
+
+        }
+        .main_content>.business_license>.license_box>.input_box{
+            width: 49%;
+            display:inline-block;
+            background:url("../../img/license_03.png") no-repeat center;
+            vertical-align:top;
+            background-size: 30%;
+            height: 2rem;
+
+        }
+        .main_content>.business_license>.license_box input{
+            opacity:0;
+            width: 100%;
+            height: 100%;
+        }
+        .main_content>.business_license .img_box{
+            width: 48%;
+            height: 2rem;
+            display:inline-block;
+
+            position:relative;
+            overflow:hidden;
+        }
+        .main_content>.business_license .img_box>img{
+            position: absolute;
+            left: 50%;
+            transform:translateX(-50%);
+            height: 2rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>企业认证</h3>
+    </header>
+    <div class="main_content">
+        <div class="name clearfix">
+            <span class="f_left">企业名称：</span>
+            <input type="text" placeholder="请输入企业名称" />
+        </div>
+        <div class="registered_person clearfix">
+            <span class="f_left">企业注册人：</span>
+            <input type="text" placeholder="请输入申请人的名字" />
+        </div>
+
+        <div class="ID_message clearfix">
+            <span class="f_left">注册人身份证:</span>
+            <input type="number" id="Idcard" placeholder="请输入身份证号"/>
+        </div>
+        <div class="company_register clearfix">
+            <span class="f_left">公司注册时间:</span>
+            <input type="text" id="" placeholder="请输入公司注册时间"/>
+        </div>
+        <div class="Id_photo clearfix">
+            <span class="f_left">申请人身份证：</span>
+            <em>请上传申请人的身份证照片</em>
+            <div class="against f_right">
+                <div class="against_box">
+                    <input type="file" id="against" accept="image/*" capture="camera" />
+                </div>
+
+                <em>身份证国徽面</em>
+            </div>
+            <div class="open f_right">
+                <div class="open_box">
+                    <input type="file" id="just" accept="image/*" capture="camera"/>
+                </div>
+                <em>身份证照片面</em>
+            </div>
+
+        </div>
+        <div class="business_license clearfix">
+            <span>营业执照：</span>
+            <div class="license_box">
+                <div class="input_box">
+                    <input type="file" id="license" accept="image/*" capture="camera" />
+                </div>
+               <!-- <div class="img_box">
+                    <img src="../../img/focus-img1.png" alt=""/>
+                </div>-->
+                <div class='img_box'>
+                    <img src="" alt=""/>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    <div class="add_box">
+        <button class="add_data">保存资料</button>
+    </div>
+
+</div>
+
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/mui.min.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+
+<script>
+
+
+    //验证身份证 电话不为空 11位的函数都在base.js里面了
+
+    //图片预览 国徽面设置完毕  封装
+    document.querySelector("#against").onchange=function () {
+        var file=document.querySelector("#against").files;
+        html5Reader(file,".against_box")
+    }
+    document.querySelector("#just").onchange=function () {
+        var file=document.querySelector("#just").files;
+        html5Reader(file,".open_box")
+    }
+    document.querySelector("#license").onchange=function(){
+        var file=document.querySelector("#license").files;
+        html5ReaderAppend(file);
+    }
+
+    function html5Reader(file,ele){
+        //var file = file.files[0];
+        var reader = new FileReader();
+        // reader.readAsDataURL(file);
+        reader.readAsDataURL(file[0]);
+        reader.onload = function(e){
+            var pic = document.querySelector(ele);
+            console.log(reader.result);
+            pic.style.backgroundImage="url("+reader.result+")";
+        }
+    }
+
+    function html5ReaderAppend(file){
+        //var file = file.files[0];
+        var reader = new FileReader();
+        // reader.readAsDataURL(file);
+        reader.readAsDataURL(file[0]);
+        reader.onload = function(e){
+            $(".img_box img").attr("src",reader.result);
+
+        }
+    }
+
+</script>
+</html>

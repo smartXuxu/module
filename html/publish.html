@@ -2,9 +2,267 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>发布界面</title>
+    <link rel="stylesheet" href="../css/mui.min.css"/>
+    <link rel="stylesheet" href="../css/mui_popover.css"/>
+    <link rel="stylesheet" href="../css/header.css"/>
+    <link rel="stylesheet" href="../css/base.css"/>
+    <link rel="stylesheet" href="../css/addData.css"/>
+    <link rel="stylesheet" href="../css/publish/publish.css"/>
+    <link rel="stylesheet" href="../css/data_time/mobiscroll.2.13.2.css" />
 </head>
 <body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>发布需求</h3>
+        <em>完成</em>
+    </header>
+    <div class="main_content">
+        <div class="type clearfix">
+            <span>技术类型</span>
+            <a href="#middlePopover" class="type_choose">请选择招工类型</a>
+            <div id="middlePopover" class="mui-popover">
+                <div class="mui-card">
+                    <ul class="mui-table-view mui-table-view-radio">
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                普通车床
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell mui-selected">
+                            <a class="mui-navigate-right">
+                                数控车床
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                数控加工中心
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                刨床
+                            </a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">
+                                线切割
+                            </a>
+                        </li><li class="mui-table-view-cell">
+                        <a class="mui-navigate-right">
+                            钻床
+                        </a>
+                    </li><li class="mui-table-view-cell">
+                        <a class="mui-navigate-right">
+                            钳工
+                        </a>
+                    </li><li class="mui-table-view-cell">
+                        <a class="mui-navigate-right">
+                            装配工
+                        </a>
+                    </li>
+                    </ul>
+                </div>
 
+            </div>
+        </div>
+        <div class="work_name">
+            <span>岗位名称</span>
+            <input type="text" placeholder="请输入岗位名称"/>
+        </div>
+        <div class="activity_time">
+            <div class="settings" style="display:none;">
+                <select name="demo" id="demo">
+                    <option value="date">日期</option>
+                </select>
+            </div>
+            <div class="begin_time">
+                <span>开始时间</span>
+                <input name="test" id="tests" class="demo-test-date demo-test-datetime demo-test-time demo-test-credit" placeholder="请设置活动开始时间" />
+            </div>
+            <div class="end_time">
+                <span>结束时间</span>
+                <input name="test" id="test" class="demo-test-date demo-test-datetime demo-test-time demo-test-credit" placeholder="请设置活动结束时间"  />
+            </div>
+        </div>
+        <div class="pay">
+            <span>工资薪酬</span>
+            <input type="text" placeholder="元/小时"/>
+        </div>
+        <div class="recruiting">
+          <span>招聘人数</span>
+            <input type="text" placeholder="请输入招聘人数"/>
+        </div>
+        <div class="link_phone">
+          <span>联系电话</span>
+            <input type="text" placeholder="请输入联系电话"/>
+        </div>
+        <textarea  placeholder="具体描述您想要什么，能更快找到适合您的服务商， 如：需求背景，工作周期等"></textarea>
+        <div class="imageBox">
+            <div class="z_photo">
+                <div class="z_file">
+                    <input type="file" capture="camera" name="file" id="file" value=""  accept="image/*" multiple onchange="imgChange('z_photo','z_file');" />
+                </div>
+            </div>
+
+            <div class="z_mask">
+                <div class="z_alert">
+                    <p>确定要删除这张图片吗？</p>
+                    <p>
+                        <span class="z_cancel">取消</span>
+                        <span class="z_sure">确定</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="etc">
+            <span>备注</span>
+            <textarea placeholder="留下备注吧"></textarea>
+        </div>
+    </div>
+</div>
 </body>
+<script src="../js/common/x_rem.js"></script>
+<script src="../js/common/mui.min.js"></script>
+<script src="../js/common/data_time/jquery-1.9.1.js"></script>
+<script src="../js/common/data_time/mobiscroll.2.13.2.js"></script>
+<script src="../js/common/base.js"></script>
+<script src="../js/common/template-web.js"></script>
+<script src="../js/common/template.js"></script>
+<script>
+    /*上传图片
+     * */
+    function imgChange(obj1, obj2) {
+        //获取点击的文本框
+        var file = document.getElementById("file");
+        //存放图片的父级元素
+        var imgContainer = document.getElementsByClassName(obj1)[0];
+        //获取的图片文件
+        var fileList = file.files;
+        //文本框的父级元素
+        var input = document.getElementsByClassName(obj2)[0];
+        var imgArr = [];
+        //遍历获取到得图片文件
+        for (var i = 0; i < fileList.length; i++) {
+            //判断上传的图片大小
+            if(file.files && file.files[i]){
+                var fileData = file.files[i];
+                var size = fileData.size;   //注意，这里读到的是字节数
+                var isAllow = false;
+                if(!size) isAllow = false;
+                var maxSize = 2048;
+                maxSize = maxSize * 1024;   //转化为字节
+                isAllow = size <= maxSize;
+                if(!isAllow){
+                    alert("大小超过2 M，请重新上传");
+                    return false;
+                }
+            }
+            //结束
+            var imgUrl = window.URL.createObjectURL(file.files[i]);
+            imgArr.push(imgUrl);
+            var img = document.createElement("img");
+            img.setAttribute("src", imgArr[i]);
+            var imgAdd = document.createElement("div");
+            imgAdd.setAttribute("class", "z_addImg");
+            imgAdd.appendChild(img);
+            imgContainer.appendChild(imgAdd);
+            //getBase64Image(img,imgArr[i]);
+        };
+        //'console.log(imgArr);这个是图片的本地地址
+        for(let i=0;i<imgArr.length;i++){
+            (function(image, x, y,index){
+                drawing(image, x, y,index)
+            })(imgArr[i],0,0,i)
+        }
+        imgRemove();
+    };
+    function imgRemove() {
+        var imgList = document.getElementsByClassName("z_addImg");
+        var mask = document.getElementsByClassName("z_mask")[0];
+        var cancel = document.getElementsByClassName("z_cancel")[0];
+        var sure = document.getElementsByClassName("z_sure")[0];
+        for (var j = 0; j < imgList.length; j++) {
+            imgList[j].index = j;
+            imgList[j].onclick = function() {
+                var t = this;
+                mask.style.display = "block";
+                cancel.onclick = function() {
+                    mask.style.display = "none";
+                };
+                sure.onclick = function() {
+                    mask.style.display = "none";
+                    t.style.display = "none";
+                };
+            }
+        };
+    };
+    var container=document.querySelector(".z_photo");
+    var images=[];
+    function drawing(image, x, y,index) {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = image;
+        img.onload = function () {
+            let id='canvas'+index;
+            createCanvas(id,img.width,img.height);
+            var cs = document.getElementById(id);
+            var ctx = cs.getContext("2d");
+            ctx.drawImage(img, x, y);
+            var imageUrl=cs.toDataURL('', 1);
+            images.push(imageUrl);
+            //转换成功
+            // console.log(images);
+            removeDom(id);
+        } ;
+    }
+    function createCanvas(id,width,height){
+        var canvas=document.createElement("canvas");
+        canvas.setAttribute('id',id);
+        canvas.setAttribute('width',width);
+        canvas.setAttribute('height',height);
+        canvas.style.display="none";
+        container.appendChild(canvas);
+    }
+    function removeDom(id){
+        document.getElementById(id).outerHTML='';
+    }
+    /*上传图片结束*/
+</script>
+<!--日期时间插件-->
+<script type="text/javascript">
+    var curr = new Date().getFullYear();
+    var opt={};
+    opt.date = {preset : 'date'};
+    opt.datetime = {preset : 'datetime'};
+    opt.time = {preset : 'time'};
+
+    opt.default = {
+        theme: 'android-holo light', //皮肤样式
+        display: 'modal', //显示方式
+        mode: 'scroller', //日期选择模式
+        dateFormat: 'yyyy-mm-dd',
+        lang: 'zh',
+        showNow: true,
+        nowText: "今天",
+        stepMinute: 5,
+        startYear: curr - 0, //开始年份
+        endYear: curr + 0 //结束年份
+    };
+    $('.settings').bind('change', function() {
+        var demo = 'datetime';
+        if (!demo.match(/select/i)) {
+            $('.demo-test-' + demo).val('');
+        }
+        $('.demo-test-' + demo).scroller('destroy').scroller($.extend(opt['datetime'], opt['default']));
+        $('.demo').hide();
+        $('.demo-' + demo).show();
+    });
+    $('#demo').trigger('change');
+
+</script>
 </html>

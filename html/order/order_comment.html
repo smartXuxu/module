@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-
     <title>订单中心</title>
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
@@ -20,26 +19,36 @@
     <nav>
         <ul class="clearfix">
             <li>
-                <a href="./order_rejest.html" class="clearfix">
-                    <img src="../../img/rej.png" alt=""/>
+                <a href="order_rejest.html" class="clearfix">
+                    <span class="img_box">
+                        <img src="../../img/rej.png" alt=""/>
+                    </span>
+
                     <i>已拒绝</i>
                 </a>
             </li>
             <li>
                 <a href="./order_no_finish.html" class="clearfix">
+                   <span class="img_box">
                     <img src="../../img/wait.png" alt=""/>
+                   </span>
+
                     <i>待完成</i>
                 </a>
             </li>
             <li>
                 <a href="./ordering.html" class="clearfix">
-                    <img src="../../img/ing.png" alt=""/>
+                    <span class="img_box">
+                      <img src="../../img/ing.png" alt=""/>
+                    </span>
                     <i>进行中</i>
                 </a>
             </li>
             <li>
                 <a href="order_comment.html" class="clearfix">
-                    <img src="../../img/comment_act.png" alt=""/>
+                    <span class="img_box">
+                        <img src="../../img/comment_act.png" alt=""/>
+                    </span>
                     <i>待评价</i>
                 </a>
             </li>
@@ -47,7 +56,7 @@
         </ul>
     </nav>
     <div class="content">
-        <h3>进行中订单</h3>
+        <h3>待评价订单</h3>
         <div class="news_list">
             <div class="list clearfix" onclick="location.href='order_comment_detail.html'">
                 <div class="top">

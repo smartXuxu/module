@@ -32,9 +32,7 @@ if (window.history && window.history.pushState) {
 function back(){
     history.go(-1);
 }
-function goHref(){
-    window.location.href="../html/location.html"
-}
+
 function isUserID(){
     var userId=localStorage.getItem('userId');
     if(userId){
@@ -81,6 +79,7 @@ function checkTelNum(telNum){
 function isNotBlank(data) {
     return (data == "" || typeof(data)  == "undefined"|| data == null ) ? false : true;
 }
+// 上传图片
 
 var baseUrl="http://39.104.127.252:8080/shudong";
 
@@ -196,3 +195,22 @@ function noteMessageLookNumber(href){
     })
 }
 
+//多选 span active 函数
+function getData(flag,ele){
+    $(ele).click(function () {
+        if(flag){
+            $(this).addClass("active");
+            flag=false;
+        }else{
+            $(this).removeClass("active");
+            flag=true;
+        }
+    })
+}
+//获取 选中的span active的值
+function forEach(ele,arr){
+    $(ele).each(function () {
+        arr.push($(this).text());
+    })
+    console.log(arr);
+}

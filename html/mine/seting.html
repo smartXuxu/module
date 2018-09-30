@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>设置</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <style>
+        html{
+            background-color: #eeeeee;
+        }
+        .college_setting_layer{
+            width: 100%;
+            height: 100%;
+        }
+        .seting{
+            height: 1.3rem;
+            padding-top: 0.4rem;
+            width: 100%;
+            background-color: #fff;
+            position: relative;
+            margin-bottom: 0.2rem;
+            line-height: 0.98rem;
+        }
+        .seting em{
+            position: absolute;
+            width: 0.64rem;
+            height: 0.98rem;
+            background: url("../../img/left.png") no-repeat center;
+            left: 3%;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+        .seting h3{
+            text-align: center;
+            font-size: 0.36rem;
+            color: #5a5a5a;
+        }
+        .college_setting_content{
+            width: 100%;
+        }
+        .college_setting_content li{
+            font-size: 0.3rem;
+            height: 1.02rem;
+            line-height: 1.02rem;
+            background-color: #fff;
+            padding-left: 0.3rem;
+        }
+        .college_setting_content li:nth-of-type(2),.college_setting_content li:nth-of-type(4){
+            margin-top: 0.2rem;
+        }
+        .college_setting_content li:nth-of-type(2),.college_setting_content li:nth-of-type(4){
+            border-bottom: 1px solid #eee;
+        }
+        .college_setting_content li a{
+            color:#5a5a5a;
+            width: 100%;
+            display: block;
+            position: relative;
+            font-size: 0.34rem;
+        }
+        .college_setting_content li a i{
+            position: absolute;
+            width: 0.64rem;
+            height: 1rem;
+            background: url("../../img/r_trig_03.png") no-repeat center;
+
+            right:3%;
+            top: 10%;
+            -webkit-background-size: 60%;
+            background-size:60%;
+        }
+       /* .college_setting_content li:last-of-type{
+            margin-top: 0.3rem;
+        }*/
+        .quit{
+            width: 100%;
+            height: 1rem;
+            background-color: #fff;
+            display: block;
+            margin-top: 0.3rem;
+            color: #009afb;
+            font-size: 0.36rem;
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="college_setting_layer">
+    <header class="seting">
+        <em onclick="back()"></em>
+        <h3>设置</h3>
+    </header>
+    <ul class="college_setting_content">
+        <li><a href="./Account_save.html">账户安全<i></i></a></li>
+       <!-- <li><a href="./account_link.html">账号绑定<i></i></a></li>-->
+        <li><a href="./user_report.html">用户反馈<i></i></a></li>
+        <li><a href="./about.html">关于模联 <i></i></a></li>
+    </ul>
+    <button class="quit">退出当前账号</button>
+</div>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/back.js"></script>
+<script>
+    function back(){
+        history.go(-1);
+    }
+    var quit=document.querySelector(".quit");
+    quit.onclick=function(){
+        //localStorage.removeItem("uName");
+        localStorage.removeItem("pwd");
+        location.href='./login.html';
+    }
+</script>
+</body>
+</html>

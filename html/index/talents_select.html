@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>人才库</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <style>
+        .layer>header>em{
+           color: #fff;
+        }
+        .main{
+            padding: 0 0.3rem;
+            padding-top: 2rem;
+        }
+        .main>h3{
+            font-size: 0.34rem;
+            position: relative;
+            height: 0.8rem;
+            line-height: 0.8rem;
+            text-align: center;
+        }
+        .main>h3>span{
+            position: absolute;
+            right: 3%;
+            top: 10%;
+            height: 0.6rem;
+            width: 0.6rem;
+            background: url("../../img/del.png") no-repeat center;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+        .word_style>p,.work_year>p{
+            font-size: 0.28rem;
+            margin-bottom: 0.3rem;
+        }
+        .word_style span,.work_year span{
+            width: 28%;
+            height: 0.7rem;
+            margin-bottom: 0.2rem;
+            margin-right: 0.2rem;
+            line-height: 0.7rem;
+            text-align: center;
+            border: 1px solid #cccccc;
+        }
+        .word_style span:nth-of-type(3n),.work_year span:nth-of-type(3n){
+            margin-right: 0;
+        }
+        .word_style .active,.work_year .active{
+            border:1px solid #009afb;
+            COLOR:#009afb;
+        }
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>人才库</h3>
+        <em class="sure">确定</em>
+    </header>
+    <div class="main">
+        <h3>筛选
+        <span onclick="location.href='./select.html'"></span>
+        </h3>
+        <div class="word_style">
+            <p>选择工种</p>
+            <span data-value="1" class="active">全部</span>
+            <span data-value="2">数控车床</span>
+            <span data-value="3">数控加工中心</span>
+            <span data-value="4">刨床</span>
+            <span data-value="5">线切割</span>
+            <span data-value="6">钻床</span>
+            <span data-value="7">钳工</span>
+            <span data-value="8">普通车床</span>
+            <span data-value="9">装配工</span>
+        </div>
+        <div class="work_year">
+            <p>选择年限</p>
+            <span data-year="1" class="active">全部</span>
+            <span data-year="2">0~1年</span>
+            <span data-year="3">1~3年</span>
+            <span data-year="4">3~5年</span>
+            <span data-year="5">5~10年</span>
+            <span data-year="6">10年以上</span>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script>
+    function getData(flag,ele){
+        $(ele).click(function () {
+            if(flag){
+                $(this).addClass("active");
+                flag=false;
+            }else{
+                $(this).removeClass("active");
+                flag=true;
+            }
+        })
+    }
+    var flag=true
+    getData(flag,".word_style span");
+    var year=true;
+    getData(year,".work_year span")
+  /*  var flag=true;
+    $(".word_style span").click(function(){
+        if(flag){
+            $(this).addClass("active");
+            flag=false;
+        }else{
+            $(this).removeClass("active");
+            flag=true;
+        }
+    })*/
+    function forEach(ele,arr){
+        $(ele).each(function () {
+            arr.push($(this).text());
+        })
+        console.log(arr);
+    }
+    $(".sure").click(function() {
+        forEach(".word_style .active",str) ;
+        forEach(".work_year .active",list) ;
+    })
+
+    var list=[];
+    var str=[];
+
+   /* $(".sure").click(function(){
+        $(".word_style .active").each(function(i){
+            var sortid=$(this).data("value");
+            var text=$(this).text();
+            list.push(sortid);
+            str.push(text);
+        });
+        console.log(list);//成功 数组形式
+        console.log(str);//成功 数组形式
+    })*/
+</script>
+</html>

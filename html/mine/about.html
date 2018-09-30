@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>关于</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <style>
+        html{
+            background-color: #eeeeee;
+        }
+        .account_layer{
+            width: 100%;
+            height: 100%;
+        }
+        .seting{
+            height: 1.3rem;
+            padding-top: 0.4rem;
+            width: 100%;
+            background-color: #fff;
+            position: relative;
+            margin-bottom: 0.2rem;
+        }
+        .seting em{
+            position: absolute;
+            width: 0.64rem;
+            height: 1.3rem;
+            background: url("../../img/left.png") no-repeat center;
+            left: 3%;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+        .seting h3{
+            text-align: center;
+            line-height: 1.3rem;
+            font-size: 0.32rem;
+            color: #5a5a5a;
+        }
+        .logo{
+            width: 100%;
+            margin-top: 1.5rem;
+
+        }
+        .logo span{
+            width: 1.6rem;
+            height: 1.6rem;
+            background-color:#009afb;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            position: relative;
+            left: 50%;
+            transform:translateX(-50%);
+         /*   position: absolute;
+            left: 50%;
+         */
+        }
+        .logo p{
+            text-align: center;
+            margin-top: 0.2rem;
+            font-size: 0.3rem;
+            color:#464646;
+        }
+        .info{
+            font-size: 0.3rem;
+            padding: 0.3rem 0.4rem 0 0.4rem;
+            color:#464646;
+        }
+    </style>
+</head>
+<body>
+<div class="account_layer"  style="overflow-x: hidden">
+    <header class="seting">
+        <em onclick="back()"></em>
+        <h3>关于</h3>
+    </header>
+<div class="logo clearfix">
+    <span></span>
+    <p>模联V6.2.1-1520</p>
+</div>
+    <p class="info">模联是一款网上招聘的app,可以线上确认订单，也可以发布需求，模联将会用心为客户服务</p>
+
+</div>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/back.js"></script>
+<script>
+    function back(){
+        history.go(-1);
+    }
+</script>
+</body>
+</html>

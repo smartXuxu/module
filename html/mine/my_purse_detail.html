@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>我的钱包-零钱明细</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <style>
+        .my_purse_layer header h3{
+            text-align: left;
+            margin-left: 1.2rem;
+        }
+        .content{
+            padding-top: 1.6rem;
+        }
+        .content ul{
+            width: 100%;
+        }
+        .content ul li{
+            width: 100%;
+            padding:0 0.3rem;
+            border-bottom: 1px solid #eeeeee;
+            position: relative;
+            height: 1.3rem;
+        }
+        .content ul li .left{
+            position: absolute;
+            left: 3%;
+
+            top: 20%;
+        }
+        .content ul li .left i{
+            display: block;
+            font-size: 0.3rem;
+        }
+        .content ul li .left em{
+            margin-top: 0.1rem;
+            color:#999;
+        }
+        .content ul li .right{
+            position: absolute;
+            right: 3%;
+            top: 20%;
+            font-size: 0.36rem;
+        }
+        .content ul li:last-of-type{
+            border-bottom: 0;
+        }
+        .no_record{
+            font-size: 0.32rem;
+            color:#999;
+            margin-top: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layer my_purse_layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3 onclick="back()">零钱明细</h3>
+    </header>
+
+    <div class="content">
+        <ul>
+
+            <li>
+                <div class="left">
+                    <i>二手买卖</i>
+                    <em>2018-08-07 19:56:55</em>
+                </div>
+                <div class="right">
+                    -25.90
+                </div>
+            </li>
+            <li>
+                <div class="left">
+                    <i>二手买卖</i>
+                    <em>2018-08-07 19:56:55</em>
+                </div>
+                <div class="right">
+                    -25.90
+                </div>
+            </li>
+            <li>
+                <div class="left">
+                    <i>二手买卖</i>
+                    <em>2018-08-07 19:56:55</em>
+                </div>
+                <div class="right">
+                    -25.90
+                </div>
+            </li>
+            <li>
+                <div class="left">
+                    <i>二手买卖</i>
+                    <em>2018-08-07 19:56:55</em>
+                </div>
+                <div class="right">
+                    -25.90
+                </div>
+            </li>
+            <li>
+                <div class="left">
+                    <i>二手买卖</i>
+                    <em>2018-08-07 19:56:55</em>
+                </div>
+                <div class="right">
+                    -25.90
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/back.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script id="my_detail" type="text/html">
+    {{if list.length==0}}
+    <li class="no_record">对不起，您暂时没有任何交易的记录</li>
+    {{else}}
+{{each list as value i}}
+<li>
+    <div class="left">
+        {{if value.transactionType==1}}
+        <i>支出</i>
+        {{else if value.transactionType==2}}
+        <i>收入</i>
+        {{else if value.transactionType==3}}
+        <i>充值</i>
+        {{else}}
+        <i>提现</i>
+        {{/if}}
+        <em>{{time(value.time)}}</em>
+    </div>
+    <div class="right">
+
+       {{value.transactionType==1||value.transactionType==4?"-":"+"}} {{value.price}}
+    </div>
+</li>
+{{/each}}
+{{/if}}
+</script>
+<script >
+    var userId=location.href.split("=")[1];
+//render();
+function render(){
+    $.ajax({
+        //处理session每次不唯一问题
+        xhrFields: {
+            withCredentials: true
+        },
+        async:false,
+        type: "get",
+        url: baseUrl+"/pay/getBill",
+        data:{
+            type:1,
+            userId:userId
+        },
+        dataType: 'json',
+        success:function(data) {
+            console.log(data);
+            if(data.code=="success"||data.state==true||data.list!=="网络出了点小问题...."){
+                template.helper("time",function(date){
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').substr(5,12).replace("/","-");
+                    return time;
+                    /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                });
+                //跳转页面
+                $(".content>ul").html(template("my_detail",data));
+            }
+        }
+
+    })
+}
+</script>
+</html>

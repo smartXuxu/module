@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>我的资料</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <style>
+        html{
+            background-color:#eee;
+        }
+    header{
+        background-color: #009afb;
+        padding-top: 0.5rem;
+        padding-bottom: 0.3rem;
+    }
+    header>i{
+        width: 0.7rem;
+        margin-left: 0.3rem;
+        display: inline-block;
+        height: 0.8rem;
+        background: url("../../img/w_left_03.png") no-repeat center;
+        -webkit-background-size: 100%;
+        background-size: 100%;
+    }
+    .mid{
+        width: 100%;
+        text-align: center;
+    }
+
+    .mid>img{
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0 auto;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        margin-bottom: 0.3rem;
+    }
+        .mid>em{
+            font-size: 0.34rem;
+            color: #ffffff;
+        }
+        .bot{
+            height: 1rem;
+            line-height: 1rem;
+            text-align: center;
+        }
+    .bot>button{
+        background: none;
+        color: #ffffff;
+        border:1px solid #eeeeee;
+        width: 25%;
+        height: 0.6rem;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        font-size: 0.32rem;
+
+    }
+    .bot>button:first-of-type{
+        margin-right: 0.3rem;
+    }
+    .bot>button:last-of-type{
+        margin-left: 0.3rem;
+    }
+        .main_content{
+            padding: 0.3rem;
+        }
+        .main_content>ul>li{
+            height: 1.1rem;
+            line-height: 1.1rem;
+            background-color: #fff;
+            margin-bottom: 0.2rem;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+
+        }
+        .main_content>ul>li>a{
+            display: block;
+            position: relative;
+        }
+        .main_content>ul>li>a>span{
+            padding-left: 0.3rem;
+            font-size:0.32rem ;
+            color: #666666;
+        }
+        .main_content>ul>li>a>i{
+            position: absolute;
+           right: 3%;
+            top: 10%;
+            width: 0.6rem;
+            height: 0.8rem;
+            background: url("../../img/right_arrow.png") no-repeat center;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <div class="mid">
+            <img src="../../img/focus-img1.png" alt=""/>
+            <em>技术大神</em>
+        </div>
+        <div class="bot">
+            <button onclick="location.href='./mine_data.html'">预览资料</button>
+            <button onclick="location.href='./company_data.html'">预览企业</button>
+        </div>
+    </header>
+    <div class="main_content">
+        <ul>
+            <li>
+                <a href="../addData.html?url=my_message">
+                    <span>完善资料</span>
+                    <i></i>
+                </a>
+            </li>
+            <li>
+                <a href="./enterprise_certification.html">
+                    <span>企业认证</span>
+                    <i></i>
+                </a>
+            </li>
+            <li>
+                <a href="./company_Introduce.html">
+                    <span>企业介绍</span>
+                    <i></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/back.js"></script>
+
+<script>
+
+</script>
+</html>

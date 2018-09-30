@@ -15,6 +15,9 @@
         .layer>header{
             height: 1.4rem;
         }
+        .mui-content{
+            padding-top: 1.6rem;
+        }
         header>h3{
             font-size: 0.36rem;
             padding-top: 0.4rem;
@@ -616,7 +619,7 @@
             var text = $(this).text();
             localStorage.setItem("city", text);
             // 调用接口 发给后台 成功之后 back()返回
-            sendCity(text);
+            //sendCity(text);
             //console.log(text);
             //back();
         })

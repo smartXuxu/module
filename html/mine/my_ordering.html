@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>我的订单—进行中</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/mine/my_order.css"/>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="location.href='./mine.html'"></i>
+        <h3>我的订单</h3>
+    </header>
+    <div class="main">
+        <nav>
+            <ul class="clearfix">
+                <li ><a href="./my_allOrder.html" >全部</a></li>
+                <li><a href="./my_neworder.html" >新订单</a></li>
+                <li><a href="./my_wait.html">待完成</a></li>
+                <li><a href="./my_ordering.html" class="active" >进行中</a></li>
+                <li><a href="./my_nofinish.html">待完工</a></li>
+                <li><a href="./my_nocomment.html">待评价</a></li>
+            </ul>
+        </nav>
+        <div class="all_list">
+            <div class="list" onclick="location.href='./my_order_detail.html'">
+                <div class="tlt clearfix">
+                    <img src="../../img/focus-img1.png" alt=""/>
+                    <div class="tlt_r">
+                        <p>接单姓名：李先生</p>
+                        <p>岗位名称：模具设计</p>
+                        <p>工资薪酬：￥50/时</p>
+                        <p>接单时间：2018.08.15 12:21 12:21 12:21</p>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <button >查看详情</button>
+                    <button>进行中</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+</html>

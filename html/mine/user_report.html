@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>举报页面</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/mui.min.css"/>
+    <link rel="stylesheet" href="../../css/mine/chat_report.css"/>
+    <style>
+        html{
+            background-color: #fff;
+        }
+        #report_reason{
+            background-color: #fff;
+        }
+        #report_reason .mui-checkbox.mui-left label, .mui-radio.mui-left label{
+            font-size: 0.3rem;
+        }
+        .user_report_layer header{
+            background-color: #fff;
+            height: 1.3rem;
+            padding-top: 0.4rem;
+            line-height: 0.98rem;
+            position: relative;
+
+        }
+        .user_report_layer header i{
+            background-image: url("../../img/left.png");
+            position: absolute;
+            left: 5%;
+        }
+        .user_report_layer header h3{
+            text-align: center;
+            color:#333;
+            position: absolute;
+            left: 45%;
+            top: 46%;
+        }
+        .chat_layer header i{
+            height: 0.9rem;
+        }
+        #report_reason{
+            border-top: 0.3rem solid #eee;
+            padding-bottom: 0.8rem  ;
+        }
+        .mui-input-group .mui-input-row{
+            height: 1.2rem;
+            line-height: 1.2rem;
+            position: relative;
+            font-size: 0.32rem;
+        }
+        .mui-input-group .mui-input-row span{
+            position: absolute;
+            right: 5%;
+            color:#999;
+            top: 40%;
+            font-size: 0.28rem;
+        }
+        .mui-checkbox input[type=checkbox]{
+            top: 22%;
+        }
+       #submit{
+            margin: 0;
+           width: 100%;
+           left: 0%;
+           height: 1rem;
+           background-color:#009afb;
+        }
+        .mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{
+            color:#009afb;
+        }
+    </style>
+</head>
+<body>
+<div class="chat_layer user_report_layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>用户反馈</h3>
+    </header>
+    <form class="mui-input-group" id="report_reason">
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label order="1">功能异常：功能故障或不可用</label>
+            <input name="checkbox" value="Item 1" type="checkbox" >
+        </div>
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label  order="2">安全问题：密码、隐私、欺诈等</label>
+
+            <input name="checkbox" value="Item 1" type="checkbox" >
+        </div>
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label  order="3">产品优化建议</label>
+
+            <input name="checkbox" value="Item 1" type="checkbox" >
+        </div>
+        <div class="mui-input-row mui-checkbox mui-left">
+            <label  order="4">其他</label>
+            <input name="checkbox" value="Item 1" type="checkbox" >
+        </div>
+
+    </form>
+    <button class="report" id="submit"> 提交</button>
+    <!--存在点击按钮的时候button innertext 替换 同时提交给后台-->
+</div>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/mui.min.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/back.js"></script>
+<script>
+    $(function(){
+        function back(){
+            history.go(-1);
+        }
+        mui.init({
+            swipeBack:true //启用右滑关闭功能
+        });
+        var arr=[];
+        mui('.mui-input-group').on('change', 'input', function() {
+
+           arr.push($(this).prev("label").attr("order"));
+            console.log(arr);
+            //console.log(arr.join(""));
+        });
+        var userId=localStorage.getItem('userId');
+        if(userId){
+            userId=userId.replace(/\"/g,"");
+        }
+        $(".report").click(function () {
+            var this_report=arr.join("");
+            this_report=JSON.stringify(this_report);
+            console.log(this_report);
+            $.ajax({
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "post",
+                url: "http://192.168.1.126/student/pushProposal ",
+                data:{
+                    type:this_report
+                },
+                dataType: 'json',
+                success:function(data){
+                    console.log(data);
+                    if(data.code=="success"){
+                        $(".report").text("已举报，受理中");
+                    }
+                },
+                error:function(data){
+                    console.log(data);
+                }
+            })
+
+        })
+
+           /* var chat_report=arr.join("");
+            console.log(chat_report);
+            var chat_report_obj={};
+            //判断每个存在的数量
+            for(var i=0;i<arr.length;i++){
+                var item=arr[i];
+                if(chat_report_obj[item]){
+                    chat_report_obj[item]=chat_report_obj[item]+1;
+                }else{
+                    chat_report_obj[item]=1
+                }
+            }
+            console.log(chat_report_obj);
+            if(JSON.stringify(chat_report_obj) == "{}"){
+                alert("请选择举报原因");
+            }else{
+                $(this).text("已举报，受理中");
+            }
+        }) */
+
+    })
+
+
+
+</script>
+</body>
+</html>

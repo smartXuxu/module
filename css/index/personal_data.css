@@ -1,0 +1,111 @@
+.main{
+
+    padding:0 0.3rem;
+    padding-top: 1.8rem;
+    padding-bottom: 1rem;
+}
+.base>span,.experience>span,.introduce>span,.evaluate>p>span{
+    background: url("../../img/person_03.png") no-repeat center;
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    padding: 0.5rem;
+    font-size: 0.3rem;
+    color: #999;
+}
+.base>p,.experience>p{
+    height: 0.8rem;
+    line-height: 0.8rem;
+    font-size: 0.28rem;
+}
+.base>p>i,.experience>p>i{
+    display: inline-block;
+    width: 40%;
+}
+.base>p>em,.experience>p>em{
+    width: 50%;
+    margin-left: 40%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    margin-top: -0.8rem;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+.des>h2{
+    height: 0.8rem;
+    line-height: 0.8rem;
+}
+.introduce>p{
+    line-height: 0.4rem;
+    color: #666;
+
+}
+.evaluate>p{
+    position: relative;
+}
+.evaluate>p>i{
+    position: absolute;
+    right: 3%;
+    top: 30%;
+    color:#009afb;
+}
+.eval_tit{
+    position: relative;
+    width: 100%;
+}
+.eval_tit>img{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.eval_tit>em{
+    margin-left: 0.3rem;
+}
+.eval_tit>i{
+    position: absolute;
+    right: 3%;
+    top: 10%;
+    color: #999999;
+}
+.evaluate>h4{
+    border-bottom: 1px solid #eeeeee;
+    padding:0.2rem 0;
+}
+.read_more{
+    text-align: center;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    font-size: 0.28rem;
+    color: #999999;
+}
+.link{
+    position: fixed;
+    z-index: 1;
+    height: 1rem;
+    line-height: 1rem;
+    bottom: 0;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+    width: 100%;
+}
+.link>button{
+    height: 0.7rem;
+    text-align: center;
+    width: 30%;
+    background-color: #fff;
+    color: #009afb;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.online{
+    border: 1px solid #009afb;
+    margin-left: 0.5rem;
+
+}
+.link>.phone_call{
+    margin-left: 0.8rem;
+    color: #ffffff;
+    background-color: #009afb;
+}

@@ -17,7 +17,7 @@
     <header>
         <i onclick="back()"></i>
         <h3>完善资料</h3>
-        <em onclick="location.href='login.html'">跳过</em>
+        <em onclick="location.href='login.html'" class="jump">跳过</em>
     </header>
     <div class="main_content">
        <div class="name clearfix">
@@ -237,7 +237,13 @@
     })
 </script>-->
     <script>
-    mui.init({
+        /*加个标记 判断是否隐藏 em*/
+        var url=location.href.split("?")[1];
+        console.log(url);
+    if(url!==undefined){
+        $(".jump").hide();
+        }
+        mui.init({
         swipeBack: true //启用右滑关闭功能
     });
     mui('.mui-scroll-wrapper').scroll();
@@ -280,5 +286,6 @@
             pic.style.backgroundImage="url("+reader.result+")";
         }
     }
+
 </script>
 </html>

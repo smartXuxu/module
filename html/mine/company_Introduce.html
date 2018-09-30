@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>企业介绍</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/addData.css"/>
+    <link rel="stylesheet" href="../../css/publish/publish.css"/>
+    <style>
+        .layer>header>em{
+            color:#fff;
+        }
+        .main{
+
+
+            padding-top: 2rem;
+
+        }
+        .com_name,.com_add,.com_phone{
+            width: 100%;
+            padding: 0.3rem;
+            height: 0.8rem;
+            line-height:0.8rem;
+
+            position:relative;
+        }
+        .com_name>span,.com_add>span,.com_phone>span{
+            color:#666;
+            font-size: 0.3rem;
+        }
+        .com_name>input,.com_add>input,.com_phone>input{
+            width: 80%;
+            text-align: right;
+            height: 0.6rem;
+            margin-top: 0.1rem;
+
+        }
+        textarea{
+            height: 1.5rem;
+            margin-top: 0.3rem;
+            border-top: 0.2rem solid #eee;
+        }
+        .imageBox{
+            border-bottom: 0.2rem solid #eee;
+        }
+        .submit{
+        position:relative;
+            width: 90%;
+            left: 5%;
+            border-radius:5px;
+            margin-top: 0.8rem;
+            background: #009afb;
+            font-size:0.3rem;
+            color:#fff;
+            text-align: center;
+            height: 0.8rem;
+            line-height: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>企业介绍</h3>
+        <em>完成</em>
+    </header>
+    <div class="main">
+        <div class="com_name">
+            <span>企业名称</span>
+            <input type="text" placeholder="请输入公司名称"/>
+        </div>
+        <div class="com_add">
+            <span>企业地址</span>
+            <input type="text" placeholder="请输入企业地址"/>
+        </div>
+        <div class="com_phone">
+            <span>联系电话</span>
+            <input type="text" placeholder="请输入联系电话"/>
+        </div>
+        <textarea  placeholder="请描述一下企业的详细情况.."></textarea>
+        <div class="imageBox">
+            <div class="z_photo">
+                <div class="z_file">
+                    <input type="file" capture="camera" name="file" id="file" value=""  accept="image/*" multiple onchange="imgChange('z_photo','z_file');" />
+                </div>
+            </div>
+
+            <div class="z_mask">
+                <div class="z_alert">
+                    <p>确定要删除这张图片吗？</p>
+                    <p>
+                        <span class="z_cancel">取消</span>
+                        <span class="z_sure">确定</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button class="submit">提交</button>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script>
+    /*上传图片
+     * */
+    function imgChange(obj1, obj2) {
+        //获取点击的文本框
+        var file = document.getElementById("file");
+        //存放图片的父级元素
+        var imgContainer = document.getElementsByClassName(obj1)[0];
+        //获取的图片文件
+        var fileList = file.files;
+        //文本框的父级元素
+        var input = document.getElementsByClassName(obj2)[0];
+        var imgArr = [];
+        //遍历获取到得图片文件
+        for (var i = 0; i < fileList.length; i++) {
+            //判断上传的图片大小
+            if(file.files && file.files[i]){
+                var fileData = file.files[i];
+                var size = fileData.size;   //注意，这里读到的是字节数
+                var isAllow = false;
+                if(!size) isAllow = false;
+                var maxSize = 2048;
+                maxSize = maxSize * 1024;   //转化为字节
+                isAllow = size <= maxSize;
+                if(!isAllow){
+                    alert("大小超过2 M，请重新上传");
+                    return false;
+                }
+            }
+            //结束
+            var imgUrl = window.URL.createObjectURL(file.files[i]);
+            imgArr.push(imgUrl);
+            var img = document.createElement("img");
+            img.setAttribute("src", imgArr[i]);
+            var imgAdd = document.createElement("div");
+            imgAdd.setAttribute("class", "z_addImg");
+            imgAdd.appendChild(img);
+            imgContainer.appendChild(imgAdd);
+            //getBase64Image(img,imgArr[i]);
+        };
+        //'console.log(imgArr);这个是图片的本地地址
+        for(let i=0;i<imgArr.length;i++){
+            (function(image, x, y,index){
+                drawing(image, x, y,index)
+            })(imgArr[i],0,0,i)
+        }
+        imgRemove();
+    };
+    function imgRemove() {
+        var imgList = document.getElementsByClassName("z_addImg");
+        var mask = document.getElementsByClassName("z_mask")[0];
+        var cancel = document.getElementsByClassName("z_cancel")[0];
+        var sure = document.getElementsByClassName("z_sure")[0];
+        for (var j = 0; j < imgList.length; j++) {
+            imgList[j].index = j;
+            imgList[j].onclick = function() {
+                var t = this;
+                mask.style.display = "block";
+                cancel.onclick = function() {
+                    mask.style.display = "none";
+                };
+                sure.onclick = function() {
+                    mask.style.display = "none";
+                    t.style.display = "none";
+                };
+            }
+        };
+    };
+    var container=document.querySelector(".z_photo");
+    var images=[];
+    function drawing(image, x, y,index) {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = image;
+        img.onload = function () {
+            let id='canvas'+index;
+            createCanvas(id,img.width,img.height);
+            var cs = document.getElementById(id);
+            var ctx = cs.getContext("2d");
+            ctx.drawImage(img, x, y);
+            var imageUrl=cs.toDataURL('', 1);
+            images.push(imageUrl);
+            //转换成功
+            // console.log(images);
+            removeDom(id);
+        } ;
+    }
+    function createCanvas(id,width,height){
+        var canvas=document.createElement("canvas");
+        canvas.setAttribute('id',id);
+        canvas.setAttribute('width',width);
+        canvas.setAttribute('height',height);
+        canvas.style.display="none";
+        container.appendChild(canvas);
+    }
+    function removeDom(id){
+        document.getElementById(id).outerHTML='';
+    }
+    /*上传图片结束*/
+</script>
+</html>

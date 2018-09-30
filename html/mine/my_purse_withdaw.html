@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>我的钱包-零钱提现</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/mine/my_purse_withdaw.css"/>
+    <style>
+        .box>.center input{
+            border-bottom: 1px solid #eeeeee;
+        }
+        .bottom{
+            height: 1rem;
+            width: 100%;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .bottom>input{
+            height: 0.9rem;
+            line-height: 0.9rem;
+            font-size: 0.34rem;
+            width: 100%;
+        }
+        .box .next{
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3 onclick="back()">零钱提现</h3>
+    </header>
+    <div class="main">
+        <div class="box">
+            <div class="top">
+                <img src="../../img/focus-img1.png" alt=""/>
+                <div class="middle">
+                    <em>提现到支付宝</em>
+                    <i>48小时内到账</i>
+                </div>
+              <!--  <div class="right">
+                </div>-->
+            </div>
+            <div class="center">
+                <p>提现金额</p>
+                <i>￥</i>
+                <input type="text" class="price"/>
+            </div>
+            <div class="bottom">
+                <input type="text" placeholder="请输入您要提现的支付宝账号" />
+            </div>
+            <button class="next">提现</button>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/back.js"></script>
+<script>
+    var userId=location.href.split("=")[1];
+    $(function (){
+       // getheader();
+        function getheader(){
+            $.ajax({
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "post",
+                async:false,
+                url: baseUrl+"/student/findAvatar",
+                dataType: 'json',
+                success:function(data){
+                    //console.log(data.message);
+                    $(".top>img").attr("src",data.message);
+
+                },
+                error:function(data){
+                    console.log(data);
+                }
+            })
+        }
+        $(".next").click(function () {
+            var price=$(".price").val();
+            console.log(price);
+            var account=$(".bottom>input").val();
+            if(price<="0"){
+                $(".price").val("");
+                alert("充值金额不能小于0");
+                return false;
+            }
+            if(isNotBlank(account)){
+                if(checkAccount(account)){
+                account=account;
+                } else{
+                   alert("请核实你的账户");
+                    $(".bottom>input").val("");
+                    return false;
+                }
+            }else{
+                alert("账号不能为空");
+                return false;
+            }
+
+            $.ajax({
+                //处理session每次不唯一问题
+                xhrFields: {
+                    withCredentials: true
+                },
+                async:false,
+                type: "post",
+                url: baseUrl+"/pay/aliPayTransfer",
+                data:{
+                    amount:price,
+                    type:1,
+                    payeeAccount:account
+                },
+                dataType: 'text',
+                success:function(data) {
+                    console.log('data',data)
+                if(data.code=="成功提现到支付宝账号"){
+                location.href='./my_wallet.html';
+                }else{
+                    alert("余额不足");
+                    }
+                },
+                fail: function (err, status) {
+                    console.log(err)
+                }
+            })
+        })
+        //验证手机号
+        function checkAccount(account){
+            if(!/^(?:\w+\.?)*\w+@(?:\w+\.)+\w+|\d{9,11}$/.test(account)){
+                return false;
+            }
+            return true;
+        }
+        //验证不为空
+        function isNotBlank(data) {
+            return (data == "" || typeof(data)  == "undefined"|| data == null ) ? false : true;
+        }
+    })
+</script>
+</html>

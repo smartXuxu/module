@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>订单详情</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/mui.min.css"/>
+    <link rel="stylesheet" href="../../css/mui_img.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/index/service_detail.css"/>
+    <style>
+        input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
+            padding: 0;
+        }
+        input{
+            -webkit-user-select: auto;!important;
+        }
+    </style>
+</head>
+<body>
+<div class="layer">
+    <div id="mask">
+
+    </div>
+    <div id="share">
+       <div class="box">
+           <input type="number"  class="data" /> &nbsp;天&nbsp;
+           <input type="number"  class="hour" /> &nbsp;时&nbsp;
+           <input type="number" class="min"  /> &nbsp;分&nbsp;
+           <input type="number" class="second"  /> &nbsp;秒&nbsp;
+       </div>
+        <button class="quit">取消</button>
+        <button class="confirm">确定</button>
+
+    </div>
+    <header>
+        <i onclick="back()"></i>
+        <h3>订单详情</h3>
+        <del></del>
+    </header>
+    <div class="main">
+        <div class="top_info">
+            <img src="../../img/focus-img1.png" alt=""/>
+            <div class="top_info_mid">
+                <h2>李先生</h2>
+                <p>高级模具设计师</p>
+            </div>
+            <div class="top_info_rig" onclick="location.href='../index/personal_data.html'">
+                个人资料
+            </div>
+        </div>
+        <div class="top_title clearfix">
+            <div class="tit_left f_left">
+                <h3>宇通公司制宇通公司制宇通公司制宇通公司制作轮毂模具</h3>
+                <span>要求三位以上模具师同时作业上模具师同时作业上模具师同时作业</span>
+                <em>￥29/小时</em>
+            </div>
+
+        </div>
+        <div class="img_big_box">
+            <div class="img_box">
+                <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+            </div>
+            <div class="img_box">
+                <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+            </div>
+            <div class="img_box">
+                <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+            </div>
+        </div>
+        <div class="promise">
+            保障：大企业信誉保证
+        </div>
+        <div class="work_time">
+            <span>工作时间</span>
+            <div class="time clearfix">2018-05-12到2018-08-20
+                <em class="f_right">每天08:00～18:00</em></div>
+        </div>
+        <div class="work_address">
+            <span>工作地点</span>
+            <div class="address clearfix">地址：郑州市中牟县九龙镇宇通工业园
+            </div>
+        </div>
+        <!--if 判断是否显示-->
+        <div class="work_time">
+            <span>工作时长</span>
+            <!--会自动增加时长-->
+            <div class="tot_time clearfix">当前工作时长为：02:12:36
+                <em class="change_time">修改工时</em>
+            </div>
+
+        </div>
+
+        <div class="work_pay">
+            <span>当前工资</span>
+            <div class="tot_pay clearfix">当前工资为：￥200
+            </div>
+        </div>
+        <!--评价 -->
+        <!--<div class="work_time">
+            <span>工作时长</span>
+            &lt;!&ndash;会自动增加时长&ndash;&gt;
+            <div class="tot_time clearfix">总时长为：02:12:36
+            </div>
+
+        </div>
+        <div class="work_pay">
+            <span>当前工资</span>
+            <div class="tot_pay clearfix">已发工资为：￥200
+            </div>
+        </div>-->
+        <!--评价结束-->
+        <div class="appraise ">
+            <div class="title clearfix">
+                <span class="f_left"> 评价（56）</span>
+                <i class='f_right mui-icon mui-icon-arrowright' onclick="location.href='./appraise_detail.html'"></i>
+            </div>
+            <div class="appraise_det">
+                <div class="det_top clearfix">
+                    <img src="../../img/focus-img1.png" alt=""/>
+                    <em> name</em>
+                    <span class="f_right">2018-03-05</span>
+                </div>
+                <div class="det_b">
+                    之前去宇通他们这里临时做工，气氛十分融洽，不愧是大 企业，结算薪资的时候也之前去宇通他们这里临时做工，气氛十分融洽，不愧是大 企业，结算薪资的时候也是十分干脆
+                </div>
+            </div>
+        </div>
+        <div class="intro">
+            <span>详情介绍</span>
+            <p>郑州宇通集团有限公司，是以客车为核心任务，以 工程机械、汽车零部州宇通集团有限公司，是以客车为核心任务，以 工程机械、汽车零部件、房地产为战略业务...</p>
+            <div class="read_more" onclick="location.href='company_detail.html'" >查看更多>></div>
+        </div>
+        <!--在线咨询-->
+
+        <div class="online">
+            <!--评价-->
+            <button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
+            <button class="sure_work" onclick="location.href='./my_order_comment.html'">评&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价</button>
+            <!--进行中-->
+            <!--<button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
+            <button class="sure_work">进 行 中</button>-->
+            <!--待完成-->
+           <!-- <button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
+            <button class="sure_work">待 完 成</button>-->
+            <!--新订单-->
+           <!-- <button class="refer">拒绝订单</button>
+            <button class="sure_work">确认订单</button>-->
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/mui.min.js"></script>
+<script src="../../js/common/mui.zoom.js"></script>
+<script src="../../js/common/mui.preview.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script>
+    //根据状态 渲染模板 确定操作类型 参考树洞
+    $(function () {
+        mui.previewImage();
+        mui('body').on('tap','a',function(){document.location.href=this.href;});
+/*新订单与待完成订单 没有工作时长 工资等
+ * 进行中的订单有 工作时长 当前工资
+  * 待完工 工作时长 当前工资 修改工时
+  * 待评价 工作时长 当前工资 已发工资*/
+
+        $(".change_time").click(function () {
+            $("#mask").show();
+            $("#share").show();
+            $("body").css("overflow", "hidden");
+            $("body").on("touchmove", function () {
+                event.preventDefault();
+            });
+            var event = event || window.event;
+
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        })
+        $(".quit").click(function () {
+            $("#mask").hide();
+            $("#share").hide();
+        })
+        $(".confirm").click(function () {
+            $("#mask").hide();
+            $("#share").hide();
+
+            //console.log($("input[type='number']").val());
+        })
+
+    })
+</script>
+</html>

@@ -2,9 +2,123 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>我的</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/footer.css"/>
+    <link rel="stylesheet" href="../../css/mine/mine.css"/>
 </head>
 <body>
-wode
+<div class="layer">
+   <header>
+       <div class="box">
+           <img src="../../img/focus-img1.png" alt="" onclick="location.href='./head.html'"/>
+           <em>技术大神</em>
+           <i onclick="location.href='./seting.html'"></i>
+       </div>
+   </header>
+    <div class="main">
+        <div class="my_order">
+            <div class="tit">
+                <span>我发布的订单</span>
+                <a href="./my_allOrder.html">全部订单</a>
+            </div>
+            <nav>
+                <ul class="clearfix">
+                    <li>
+                        <a href="./my_neworder.html">
+                           <div class="img_box">
+                               <img src="../../img/new_order.png" alt=""/>
+                           </div>
+
+                            <span>新订单</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./my_wait.html">
+                            <div class="img_box">
+                            <img src="../../img/wait.png" alt=""/>
+                                </div>
+                            <span>待完成</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./my_ordering.html">
+                            <div class="img_box">
+                            <img src="../../img/ing.png" alt=""/>
+                            </div>
+                            <span>进行中</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./my_nofinish.html">
+                            <div class="img_box">
+                            <img src="../../img/no_ing.png" alt=""/>
+                                </div>
+                            <span>待完工</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./my_nocomment.html">
+                            <div class="img_box">
+                            <img src="../../img/comment.png" alt=""/>
+                            </div>
+                            <span>待评价</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="my_wallet" onclick="location.href='./my_wallet.html'">
+            <div class="img_box">
+                <img src="../../img/wallet.png" alt=""/>
+            </div>
+            <em>我的钱包</em>
+            <i></i>
+        </div>
+        <div class="my_message" onclick="location.href='./my_message.html'">
+            <div class="img_box">
+                <img src="../../img/custome.png" alt=""/>
+            </div>
+            <em>我的资料</em>
+            <i></i>
+        </div>
+    </div>
+
+    <footer>
+        <ul class="clearfix">
+            <li class="clearfix" onclick="location.href='../index/select.html'">
+                <i></i>
+                <em >筛选</em>
+            </li>
+            <li class="clearfix" onclick="location.href='../order/order_rejest.html'">
+                <i></i>
+                <em>订单</em>
+            </li>
+            <li class="clearfix" onclick="location.href='../publish.html'">
+                <i></i>
+                <em>发布</em>
+            </li>
+            <li class="clearfix" onclick="location.href='../message/message.html'">
+                <i></i>
+                <em >消息</em>
+            </li>
+            <li class="clearfix" onclick="location.href='../mine/mine.html'">
+                <i></i>
+                <em class="active">我的</em>
+            </li>
+        </ul>
+    </footer>
+</div>
 </body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script>
+
+</script>
 </html>

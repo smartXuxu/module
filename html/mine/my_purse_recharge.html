@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>我的钱包-零钱充值</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/mine/my_purse_withdaw.css"/>
+    <style>
+        .show{
+            position: fixed;
+            bottom: 1%;
+            width: 90%;
+            height: 1rem;
+            background-color: #5f321a;
+            text-align: center;
+            color:#fff;
+            font-size: 0.32rem;
+            line-height: 1rem;
+            display: none;
+        }
+        html,body,iframe {width: 100%; height: 100%;}
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3 onclick="back()">零钱充值</h3>
+    </header>
+    <div class="main">
+            <div class="box">
+                <div class="top">
+                    <img src="../../img/focus-img1.png" alt=""/>
+                    <div class="middle">
+                        <em>支付宝充值</em>
+                        <i>单日交易限额￥10000.00</i>
+                    </div>
+                  <!--  <div class="right">
+
+                    </div>-->
+                </div>
+                <div class="center">
+                    <p>充值金额</p>
+                    <i>￥</i>
+                    <input type="text" class="price"/>
+                    <button class="next">下一步 </button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+<!--<button class="show" onclick="location.href='./my_purse.html'">回到主页面</button>-->
+
+</body>
+<!--<div class="box" style="width: 100%;">
+    <iframe  frameborder="0" scrolling="no" id="sub_frame" name="code_result" >
+
+    </iframe>
+</div>-->
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/back.js"></script>
+<script>
+var userId=location.href.split("=")[1];
+    $(function (){
+       // getheader();
+        function getheader(){
+            $.ajax({
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "post",
+                async:false,
+                url: baseUrl+"/student/findAvatar",
+                dataType: 'json',
+                success:function(data){
+                    //console.log(data.message);
+                    $(".top>img").attr("src",data.message);
+
+                },
+                error:function(data){
+                    console.log(data);
+                }
+            })
+        }
+        $(".next").click(function () {
+            var price=$(".price").val();
+            console.log(price);
+            if(price<="0"){
+                $(".price").val("");
+                alert("充值金额不能小于0");
+                return false;
+            }
+            $.ajax({
+                //处理session每次不唯一问题
+                xhrFields: {
+                    withCredentials: true
+                },
+                async:false,
+                type: "post",
+                url: baseUrl+"/pay/aliPay.html",
+                data:{
+                    price:price,
+                    type:1,
+                    userId:userId
+                },
+                dataType: 'text',
+                success:function(data) {
+                    console.log('data',data)
+                    //console.log(data.response);
+                   // location.href=baseUrl+"/pay/aliPay.html"+"?price="+price+"&"+"type=1"+"userId="+userId;
+                        //跳转页面
+                    if(data!==""){
+                        localStorage.setItem("purseData",data);
+                        location.href='my_purse_recharge_b.html';
+                       /* $(".layer").hide();
+                        $(".show").show();
+                        var height=$("body").height();
+                        var width= $("body").width();
+                        console.log(height);
+                        $("#sub_frame").css("height",height);
+                        $("#sub_frame").css("width",width);
+                      //  $("#sub_frame").contents().find("body").css("height",height);
+                        //$("#sub_frame").contents().find("body").css("width",width);
+
+                        window.frames["code_result"].document.open();
+                        window.frames["code_result"].document.write(data);
+                        window.frames["code_result"].document.close();*/
+                        //$("iframe").contents().find("body").html(data);
+                    }
+                       // document.write(data);
+
+                        //document.close();
+
+                },
+                fail: function (err, status) {
+                    console.log(err)
+                }
+
+            })
+        })
+
+    })
+</script>
+
+</html>

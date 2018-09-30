@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>我的订单-评价页面</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/mine/my_comment.css"/>
+    <style>
+        .email>ul>li:nth-of-type(1) span{
+            background-image: url("../../img/uhappy_e.png");
+        }
+        .email>ul>li .active span{
+    background-image: url("../../img/happy_w.png");
+}
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>评价</h3>
+    </header>
+    <div class="mian">
+    <div class="top">
+        <img src="../../img/focus-img1.png" alt=""/>
+        <div class="center">
+            <p>李先生</p>
+            <h4>高级资深模具设计师</h4>
+        </div>
+    </div>
+        <div class="email">
+            <ul>
+                <li>
+                    <a href="./my_order_comment_nosat.html">
+                        <span></span>
+                        不满意
+                    </a>
+                </li>
+                <li>
+                    <a href="./my_order_comment.html" class="active">
+                        <span></span>
+                        满意
+                    </a>
+
+                </li>
+            </ul>
+        </div>
+        <div class="reason_satisfaction">
+            <p>请选择满意的原因(必选）</p>
+            <div class="reason_detail">
+                <span data-value="1" class="active">效率高</span>
+                <span data-value="2">态度好</span>
+                <span data-value="3">仪表整洁</span>
+                <span data-value="4">沟通良好</span>
+                <span data-value="5">热情礼貌</span>
+                <span data-value="6">风雨无阻</span>
+            </div>
+        </div>
+        <button class="submit">提交</button>
+
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script>
+    $(function () {
+        var flag=true;
+        getData(flag,".reason_detail span");
+        var  arr=[];
+        $(".submit").click(function () {
+            forEach(".reason_detail>.active",arr);
+            console.log(arr.join(","));
+        })
+    })
+</script>
+</html>

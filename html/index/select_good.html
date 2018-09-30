@@ -16,7 +16,7 @@
     <header>
         <em onclick="location.href='./select_city.html'">北京 <s>&nbsp;∨</s></em>
         <input type="text" placeholder="搜索需求"/>
-        <i></i>
+        <i onclick="location.href='./talents.html'"></i>
     </header>
     <div class="main_content">
         <nav>
@@ -133,4 +133,18 @@
 <script src="../../js/common/base.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script>
+    $(function () {
+        $("header input").focus(function () {
+            location.href='./search.html';
+        })
+        //获取展示的城市
+        var city =localStorage.getItem("city");
+        if(city){
+            var text=city+" <s>&nbsp;∨</s>"
+            $("header em").html(text);
+        }
+    })
+
+</script>
 </html>

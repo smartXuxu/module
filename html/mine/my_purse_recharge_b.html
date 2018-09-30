@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="../../js/common/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/common/back.js"></script>
+</head>
+<style>
+    *{margin:0;padding:0;}
+    #btn{
+        width: 90%;
+        height: 3rem;
+        line-height: 1rem;
+       /* padding: 0.8rem 0.3rem;*/
+        background: #00a7f0;
+        color: white;
+        border: none;
+        font-size: 0.6rem;
+        border-radius:0.2rem;
+        position: absolute;
+        left:5%;
+        bottom: 0;
+    }
+    #sub_frame{
+        width:100%;
+    }
+</style>
+<body>
+<button id="btn">点击退出支付</button>
+<iframe src="my_purse_recharge_c.html" id="sub_frame" frameborder="0" scrolling="no" style="overflow: hidden"></iframe>
+<script type="text/javascript">
+    var height=$(window).height();
+    console.log(height);
+    $("#sub_frame").css("height",height);
+    $("#btn").click(function(){
+        window.location.href="./my_purse.html"
+    })
+
+</script>
+</body>
+</html>
