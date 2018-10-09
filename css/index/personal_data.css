@@ -98,6 +98,7 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    font-size: 0.28rem;
 }
 .online{
     border: 1px solid #009afb;
@@ -108,4 +109,11 @@
     margin-left: 0.8rem;
     color: #ffffff;
     background-color: #009afb;
+}
+.link>.phone_call>a{
+    display: block;
+    height: 100%;
+    line-height: 0.7rem;
+    color: #fff;
+    font-size: 0.28rem;
 }

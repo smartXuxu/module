@@ -26,7 +26,7 @@
                 <em>￥29/小时</em>
             </div>
             <div class="f_right tit_right">
-                电话咨询
+                <a href="tel:18749986696">电话咨询</a>
             </div>
         </div>
         <div class="img_big_box">
@@ -101,7 +101,8 @@
     $(function () {
         mui.previewImage();
         mui('body').on('tap','a',function(){document.location.href=this.href;});
-
+        var tel=15839613995;
+        $(".phone_call a").attr("href","tel:"+tel);
     })
 </script>
 </html>

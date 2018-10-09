@@ -69,7 +69,7 @@ textarea{
     float: left;
     margin-left: 0.2rem;
     width: 30%;
-    height: 2.5rem;
+    height: 2rem;
     overflow: hidden;
     position: relative;
     margin-bottom: 0.2rem;
@@ -87,7 +87,7 @@ textarea{
 }
 .z_file {
     width:30%;
-    height: 2.5rem;
+    height: 2rem;
     background: url("../../img/location_bg.png") no-repeat;
     background-size: 100% 100%;
     float: left;
@@ -166,7 +166,7 @@ textarea{
     top: 70%;
     left: 12%;
 }
-/*Í¼Æ¬ ½áÊø*/
+/*Í¼Æ¬ ï¿½ï¿½ï¿½ï¿½*/
 .main_content>.imageBox{
     height:auto;
     border-bottom: 0.1rem solid #eeeeee;

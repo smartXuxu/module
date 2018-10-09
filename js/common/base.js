@@ -64,8 +64,8 @@ function isCardNo(card)
     if(reg.test(card) === false)
     {
         alert("身份证输入不合法");
-        $("#Idcard").val("");
-        return  false;
+        //$("#Idcard").val("");
+        return false;
     }
 }
 //验证手机号
@@ -81,7 +81,7 @@ function isNotBlank(data) {
 }
 // 上传图片
 
-var baseUrl="http://39.104.127.252:8080/shudong";
+var baseUrl="http://192.168.1.125/";
 
 //获取所有的头像
  function getAvatar(ele){

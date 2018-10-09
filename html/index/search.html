@@ -12,9 +12,7 @@
     <link rel="stylesheet" href="../../css/index/talents.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <style>
-        .layer>header{
 
-        }
         .layer>header>input{
             height: 0.8rem;
             line-height:0.8rem;
@@ -30,6 +28,8 @@
             color:#fff;
            font-size:0.30rem;
            margin-left: 0.2rem;
+           top: 21%;
+           background: none;
         }
         .layer>header:before{
             width: 0.5rem;
@@ -52,6 +52,7 @@
         }
         .hot_tit{
             position: relative;
+
             font-size: 0.32rem;
             height: 1rem;
             line-height: 1rem;
@@ -149,6 +150,7 @@
 <script src="../../js/common/jquery.js"></script>
 <script src="../../js/common/sweetalert2.js"></script>
 <script src="../../js/common/base.js"></script>
+<script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
 <script type="text/template" id="historyTpl">
@@ -156,7 +158,7 @@
     <p>对不起，暂时没有搜索记录！</p>
     {{else}}
     {{each list as value i}}
-    <span>{{value}}</span>
+    <span class="searchList">{{value}}</span>
     {{/each}}
     {{/if}}
 
@@ -171,11 +173,16 @@
         /*渲染*/
         $('.search-history-list').html(template('historyTpl',{list:historyList}));
         $('#search').val('');
-
+        $(".searchList").click(function (){
+            var text= $(this).text();
+            console.log(text);
+            $("#search").val(text);
+        })
         /*2点击搜索*/
         $(".search-btn").click(function(){
-            /*获取关键字*/
+            //发送请求
 
+            /*获取关键字*/
             var key = $.trim($('#search').val());
             /*如果用户没有输入*/
             if(!key){
@@ -218,7 +225,7 @@
             /*存起来*/
             localStorage.setItem('MuHistory',JSON.stringify(arr));
             $("#search").val("");
-            console.log({list:arr});
+          // console.log({list:arr});
             $('.search-history-list').html(template('historyTpl',{list:arr.reverse()}));
             /*跳转搜索列表*/
             // location.href = 'searchList.html?key='+key;
@@ -263,6 +270,8 @@
         /*4.返回js可操作的数组*/
         return arr;
     }
+    //
+
 
 </script>
 </html>

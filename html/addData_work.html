@@ -8,6 +8,7 @@
     <title>完善工作经历</title>
     <link rel="stylesheet" href="../css/base.css"/>
     <link rel="stylesheet" href="../css/header.css"/>
+    <link rel="stylesheet" href="../css/sweetalert2.css"/>
     <link rel="stylesheet" href="../css/data/index_1.css"/>
     <style>
         .main_content{
@@ -34,6 +35,7 @@
             line-height: 1rem;
             margin-right: 0.32rem;
             font-size: 0.32rem;
+            color:#999;
         }
         .des>textarea{
             position: relative;
@@ -43,11 +45,15 @@
             padding: 0.3rem;
             font-size: 0.26rem;
             height: 2rem;
+            color:#999;
         }
         .kinerDatePickerInput{
             padding-right: 0.3rem;
             font-size: 0.3rem;
             color: #999999;
+        }
+        .layer>header>em{
+            color:#fff;
         }
     </style>
 </head>
@@ -81,7 +87,7 @@
         <div class="kinerDatePickerInput" id="kinerDatePickerInput2" title="请选择出生年月日" startYear="1950" default-val="1995-1-1">请选择出生年月日</div>-->
 
         <!--担任职务-->
-        <div class="com_name clearfix">
+        <div class="job_name clearfix">
             <span class="f_left">担任职务</span>
             <input type="text" placeholder="请输入担任的职务" class="f_right"/>
         </div>
@@ -95,6 +101,7 @@
 </body>
 <script src="../js/common/x_rem.js"></script>
 <script src="../js/common/base.js"></script>
+<script src="../js/common/back.js"></script>
 <!--<script src="../js/common/jquery.js"></script>-->
 <script src="../js/data/jquery-1.10.2_1.js"></script>
 <script src="../js/data/flexible.debug_1.js"></script>
@@ -102,6 +109,7 @@
 <script src="../js/data/mobilefix_1.js"></script>
 <script src="../js/data/swiper.min_1.js"></script>
 <script src="../js/data/kinerdatepicker_1.js"></script>
+<script src="../js/common/sweetalert2.js"></script>
 <script>
     $('#kinerDatePickerInput1').kinerDatePicker({
         clickMaskHide: true,
@@ -145,6 +153,54 @@
         console.log(kinerDatePickerInput1);
         var kinerDatePickerInput2=$("#kinerDatePickerInput2").text();
         console.log(kinerDatePickerInput2);
+        let com_name=$(".com_name>input").val();
+        console.log(com_name);
+        let job_name=$(".job_name>input").val();
+        console.log(job_name);
+        let des=$("textarea").val();
+        console.log(des);
+        if(kinerDatePickerInput1 =="请选择开始时间"){
+            sweetAlert(
+                    'sorry',
+                    '请选择开始时间！',
+                    'error'
+            )
+            return false;
+        }else{
+            localStorage.setItem("startTime",kinerDatePickerInput1);
+        }
+        if(kinerDatePickerInput2 =="请选择结束时间"){
+            sweetAlert(
+                    'sorry',
+                    '请选择结束时间！',
+                    'error'
+            )
+            return false;
+        }else{
+            localStorage.setItem("endTime",kinerDatePickerInput2);
+        }
+        if(com_name.length == 0){
+            sweetAlert(
+                    'sorry',
+                    '请填写公司名称！',
+                    'error'
+            )
+            return false;
+
+        }else{
+            localStorage.setItem("companyName",com_name);
+        }
+        if(job_name.length == 0){
+            sweetAlert(
+                    'sorry',
+                    '请填写工作职位！',
+                    'error'
+            )
+            return false;
+        }else{
+            localStorage.setItem("job_name",job_name);
+        }
+        localStorage.setItem("des",des);
     })
 </script>
 </html>

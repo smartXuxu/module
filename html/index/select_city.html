@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-
     <title>选择城市</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/mui.min.css"/>
     <link rel="stylesheet" href="../../css/mui.indexedlist.css" />
     <link rel="stylesheet" href="../../css/sweetalert2.css" />
     <style>
+        html,body,#container{
+            height:100%;
+        }
+        #container{
+            display:none;
+        }
+        .info{
+            display: none;
+        }
         .layer>header{
             height: 1.4rem;
         }
@@ -59,9 +68,20 @@
         .location .guild .btnout{width: 25%;float: left;padding: 0 10px;margin: 10px 0;}
         .location .guild .btnout button{width: 100%;}
         /*location结束*/
+        .citylocation{
+            height: 1rem;
+            line-height: 1rem;
+            font-size: 0.34rem;
+            padding-left: 0.3rem;
+            color:#666;
+        }
     </style>
 </head>
 <body>
+<div id="container"></div>
+<div class="info">
+    <p id='info'></p>
+</div>
 <div class="location layer" id="location" style="display: block;">
     <header>
         <i onclick="back()"></i>
@@ -70,6 +90,7 @@
     <div class="mui-content">
         <div id='list' class="mui-indexed-list">
             <div class="mui-indexed-list-search mui-input-row mui-search"><input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="输入城市查询或首字母查询" style="background: none;"></div>
+            <div class="citylocation">当前定位城市是：<em class="location_city"></em></div>
             <div class="mui-indexed-list-bar">
                 <a>A</a>
                 <a>B</a>
@@ -668,5 +689,35 @@
         })
 
     }
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=bd54e4be514aab4910f8afc68209d057&plugin=AMap.CitySearch"></script>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [0,0],
+        zoom: 13
+    });
+    //获取用户所在城市信息
+    function showCityInfo() {
+        //实例化城市查询类
+        var citysearch = new AMap.CitySearch();
+        //自动获取用户IP，返回当前城市
+        citysearch.getLocalCity(function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                if (result && result.city && result.bounds) {
+                    var cityinfo = result.city;
+                    var citybounds = result.bounds;
+                    /*document.getElementById('info').innerHTML = '您当前所在城市：'+cityinfo;*/
+                    document.querySelector(".location_city").innerText=cityinfo;
+                    console.log(cityinfo);
+                    //地图显示当前城市
+                    map.setBounds(citybounds);
+                }
+            } else {
+                document.getElementById('info').innerHTML = result.info;
+            }
+        });
+    }
+    showCityInfo();
 </script>
 </html>

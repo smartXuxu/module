@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../css/base.css"/>
     <link rel="stylesheet" href="../css/header.css"/>
     <link rel="stylesheet" href="../css/addData.css"/>
+    <link rel="stylesheet" href="../css/sweetalert2.css"/>
+
 </head>
 <body>
 <div class="layer">
@@ -36,7 +38,7 @@
                                 普通车床
                             </a>
                         </li>
-                        <li class="mui-table-view-cell mui-selected">
+                        <li class="mui-table-view-cell">
                             <a class="mui-navigate-right">
                                 数控车床
                             </a>
@@ -69,40 +71,6 @@
                             </a>
                         </li>
                     </ul>
-                    <!--<form class="mui-input-group ">
-                        <div class="mui-input-row mui-radio">
-                            <label>普通车床</label>
-                            <input name="radio1" type="radio" checked>
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>数控车床</label>
-                            <input name="radio1" type="radio">
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>数控加工中心</label>
-                            <input name="radio1" type="radio">
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>刨床</label>
-                            <input name="radio1" type="radio" >
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>线切割</label>
-                            <input name="radio1" type="radio">
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>钻床</label>
-                            <input name="radio1" type="radio">
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>钳工</label>
-                            <input name="radio1" type="radio" >
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>装配工</label>
-                            <input name="radio1" type="radio" >
-                        </div>
-                    </form>-->
                 </div>
 
             </div>
@@ -118,7 +86,7 @@
                                     0~1年
                                 </a>
                             </li>
-                            <li class="mui-table-view-cell mui-selected">
+                            <li class="mui-table-view-cell">
                                 <a class="mui-navigate-right">
                                     1~3年
                                 </a>
@@ -138,31 +106,7 @@
                                     10年以上
                                 </a>
                             </li>
-                           <!-- <form class="mui-input-group">
-                        <div class="mui-input-row mui-radio ">
-                            <label>0~1年</label>
-                            <input name="radio2" type="radio" checked>
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>1~3年</label>
-                            <input name="radio2" type="radio">
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>3~5年</label>
-                            <input name="radio2" type="radio">
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>5~10年</label>
-                            <input name="radio2" type="radio" >
-                        </div>
-                        <div class="mui-input-row mui-radio">
-                            <label>10年以上</label>
-                            <input name="radio2" type="radio" >
-                        </div>
-                    </form>-->
-
-
-            </ul>
+                     </ul>
 
             </div>
         </div>
@@ -194,9 +138,9 @@
         </div>
         <div class="phone clearfix">
             <span class="f_left">联系电话：</span>
-            <input type="number" placeholder="请输入电话号码" class="f_left"/>
-            <input type="number" placeholder="请输入验证码" class="f_right"/>
-           <em>请输入验证码</em>
+            <input type="number"  placeholder="请输入电话号码" class="f_left phone_number"/>
+            <input type="number" placeholder="请输入验证码" class="f_right ver_number"/>
+           <em class="gain" onclick="getcode()">请输入验证码</em>
         </div>
         <div class="experience clearfix" onclick="location.href='./addData_work.html'">
             <span class="f_left">工作经历：</span>
@@ -218,24 +162,8 @@
 <script src="../js/common/mui.min.js"></script>
 <script src="../js/common/jquery.js"></script>
 <script src="../js/common/base.js"></script>
-<!--<script>
-    $(function () {
-        //上传图片 即时预览
-        $("#just").change(function () {
-            var file=$("#just").files;
-            html5Reader(file);
-        })
-        function html5Reader(file){
-            //var file = file.files[0];
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function(e){
-                var pic = $("#just");
-                pic.css.backgroundImage=this.result;
-            }
-        }
-    })
-</script>-->
+<script src="../js/common/back.js"></script>
+<script src="../js/common/sweetalert2.js"></script>
     <script>
         /*加个标记 判断是否隐藏 em*/
         var url=location.href.split("?")[1];
@@ -248,20 +176,31 @@
     });
     mui('.mui-scroll-wrapper').scroll();
     mui('body').on('shown', '.mui-popover', function(e) {
+        window.event? window.event.cancelBubble = true : e.stopPropagation();
         //console.log('shown', e.detail.id);//detail为当前popover元素
     });
     mui('body').on('hidden', '.mui-popover', function(e) {
+        window.event? window.event.cancelBubble = true : e.stopPropagation();
         //console.log('hidden', e.detail.id);//detail为当前popover元素
     });
     //采用自定义属性选择单选框吧
-
     //var info = document.getElementById("info");
     document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected',function(e){
         console.log("工作类型为：" + e.detail.el.innerText);
+        document.querySelector(".type_choose").innerText=e.detail.el.innerText;
+        document.querySelector(".type_choose").style.color="#333";
+        document.querySelector("#middlePopover").style.display="none";
+        document.querySelector(".mui-backdrop").style.display="none";
+        window.event? window.event.cancelBubble = true : e.stopPropagation();
        /* alert(1);*/
     });
     document.querySelector('.mui-table-view.word_year').addEventListener('selected',function(e1){
+        window.event? window.event.cancelBubble = true : e.stopPropagation();
         console.log("工作年限为：" + e1.detail.el.innerText);
+        document.querySelector(".work_choose").innerText= e1.detail.el.innerText;
+        document.querySelector(".work_choose").style.color="#333";
+        document.querySelector("#middlePopover1").style.display="none";
+        document.querySelector(".mui-backdrop").style.display="none";
        /* alert(1);*/
     });
 
@@ -269,11 +208,15 @@
   //图片预览 国徽面设置完毕  封装
     document.querySelector("#against").onchange=function () {
         var file=document.querySelector("#against").files;
-        html5Reader(file,".against_box")
+
+        html5Reader(file,".against_box");
+        //console.log(base64IdCardBack);
     }
     document.querySelector("#just").onchange=function () {
         var file=document.querySelector("#just").files;
-        html5Reader(file,".open_box")
+
+        html5Reader(file,".open_box");
+      // console.log(base64IdCardFront);
     }
     function html5Reader(file,ele){
         //var file = file.files[0];
@@ -282,10 +225,119 @@
         reader.readAsDataURL(file[0]);
         reader.onload = function(e){
             var pic = document.querySelector(ele);
-            console.log(reader.result);
             pic.style.backgroundImage="url("+reader.result+")";
+           var des=reader.result;
+           // console.log(des);
         }
     }
+        $(".mui-navigate-right").click(function (event) {
+                event.stopPropagation();
 
+        })
+        //点击保存资料的时候可以获取所有的信息
+        $(".add_data").click(function () {
+           var base64IdCardBack=$(".against_box").css('backgroundImage').replace('url(','').replace(')','');;
+            console.log(base64IdCardBack);
+            var base64IdCardFront=$(".open_box").css('backgroundImage').replace('url(','').replace(')','');;
+            console.log(base64IdCardFront);
+            //获取姓名
+            let name=$(".name>input").val();
+            console.log(name);
+            let type_choose=$(".type_choose").text();
+            console.log(type_choose);
+            let work_choose=$(".work_choose").text();
+            console.log(work_choose);
+            //省份证
+            let card=$("#Idcard").val();
+            isCardNo(card);
+            let adderess=$(".address>input").val();
+            console.log(adderess);
+            //
+            let phone_number=$(".phone_number").val();
+            let ver_number=$(".ver_number").val();
+            if (!isNotBlank(ver_number)) {
+                sweetAlert(
+                        'sorry',
+                        '短信验证码不能为空！',
+                        'error'
+                ).then(function () {
+                            $(".phone_number").val("");
+                        })
+                return false;
+
+            }
+            //验证短信验证码是否正确；
+            if(ver_number!==localStorage.getItem("code").replace(/\"/g,"")){
+                sweetAlert(
+                        'sorry',
+                        '短信验证码不正确！',
+                        'error'
+                ).then(function () {
+                            $("#phone_num").val("");
+                        })
+                return false;
+            }
+    let introduce=$(".introduce>textarea").val();
+            console.log(introduce);
+
+        })
+        //倒计时效果
+        $(".gain").click(function(){
+            var time=60;
+            $(this).text(time+ "S");
+            var timer= setInterval(function(){
+                time--;
+                $(".gain").text(time+ "S");
+                if(time<0){
+                    clearInterval(timer);
+                    $(".gain").text("重新发送");
+                    time=60;
+                }
+            },1000)
+        })
+        //获取 短信验证码
+        var flag = true;
+        function getcode(){
+            if(!flag){
+                return;
+            }
+            var mobile = $('.phone_number').val();
+            if(!checkTelNum(mobile)){
+                sweetAlert(
+                        'sorry',
+                        '手机号码不正确！',
+                        'error'
+                ).then(function () {
+                            $(".phone_number").val("");
+                        })
+                return false;
+            }
+            // var uuid=Math.random().toString(36).substr(2);
+            //var obj = {mobile:mobile,uuid:uuid,type:1};
+            flag = false;
+            $.ajax({
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "post",
+                url: baseUrl+"/api/getCode",
+                data: {
+                    mobilePhone:mobile
+                },
+                datType: 'json',
+                success: function (data){
+                    //alert(data);
+                    console.log(data);
+                    console.log(data.data.result);
+                    window.localStorage.setItem("code",JSON.stringify(data.data.result));
+                }
+            })
+        }
+        //工作经验
+        let companyName=localStorage.getItem("companyName");
+        if(companyName){
+            $(".experience>em").text("已添加完成");
+            $(".experience>em").css("color","#333");
+        }
 </script>
 </html>

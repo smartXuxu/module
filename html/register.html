@@ -26,7 +26,7 @@
         <div class="password">
             <i></i>
             <input type="password" id="pwd" placeholder="设置密码"/><em><i class="eye"></i></em> </div>
-        <button class="register">
+        <button class="register" onclick="register()">
             注册
         </button>
         <button class="login_Button" onclick="window.location.href='login.html'">已有账户？立即登录</button>
@@ -71,7 +71,7 @@
                 withCredentials: true
             },
             type: "post",
-            url: baseUrl+"/student/doCode",
+            url: baseUrl+"/api/getCode",
             data: {
                 mobilePhone:mobile
             },
@@ -79,9 +79,8 @@
             success: function (data){
                 //alert(data);
                 console.log(data);
-               console.log(data.code);
-
-                window.localStorage.setItem("code",JSON.stringify(data.code));
+               console.log(data.data.result);
+                window.localStorage.setItem("code",JSON.stringify(data.data.result));
             }
         })
     }
@@ -113,24 +112,32 @@
             alert('密码不能为空');
             return false;
         }
-        /*if (isNotBlank(safecode)) {
-            parms.captcha = safecode;
-        } else {
-            alert('短信验证码不能为空');
-            $('#phone_num').val("");
-            return false;
-        }*/
+
         if (!isNotBlank(safecode)) {
-            alert('短信验证码不能为空');
-            $('#phone_num').val("");
+            sweetAlert(
+                    'sorry',
+                    '短信验证码不能为空！',
+                    'error'
+            ).then(function () {
+                        $("#phone_num").val("");
+                    })
             return false;
+
         }
         //验证短信验证码是否正确；
 
         if(safecode!==localStorage.getItem("code").replace(/\"/g,"")){
-            alert("短信验证码不正确");
-            $(".gain").val("");
+            sweetAlert(
+                    'sorry',
+                    '短信验证码不正确！',
+                    'error'
+            ).then(function () {
+                        $("#phone_num").val("");
+                    })
             return false;
+           /* alert("短信验证码不正确");
+            $(".gain").val("");
+            return false;*/
         }
         //parms.uuid=localStorage.getItem("uuid").replace(/\"/g,"");
         // console.log(JSON.stringify(parms));
@@ -140,12 +147,12 @@
             },
             type: "post",
             //contentType:'application/json;charset=UTF-8',
-            url: baseUrl+"/student/register",
+            url: baseUrl+"/worker/workerRegister",
             data: parms,
             dataType: 'json',
             success: function (data){
                 console.log(data);
-                if(data.code=="success"){
+                if(data.code=="200"){
                     sweetAlert(
                             '恭喜您',
                             '注册成功！',
@@ -154,12 +161,17 @@
                                 localStorage.removeItem("code");
                                 window.location.href="./addData.html";
                             })
-
                 }
-                if(data.comment=="账号已存在"){
-                    alert(data.comment);
+                else if(data.code=="500"){
+                    alert(data.msg);
                     $("input").val("");
                     return false;
+                }else{
+                    sweetAlert(
+                            'sorry',
+                            '网络发生错误，请您稍后重试！',
+                            'error'
+                    )
                 }
             }
         })

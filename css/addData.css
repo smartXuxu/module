@@ -36,11 +36,12 @@ body{
     line-height: 0.8rem;
     border-radius: 5px;
    /* text-indent: 1em;*/
-    color: #999999;
+
     border: none;
 }
 .type_choose,.work_choose{
     text-indent: 1em;
+    color: #999;
 }
 .Id_photo>em{
     color:#999;
@@ -160,4 +161,13 @@ body{
 }
 .mui-table-view-cell>a:not(.mui-btn){
     padding:0 0 0 0.3rem;
+}
+.mui-popover{
+    background-color: #fff;
+}
+.mui-popover .mui-table-view{
+    background-color: #fff;
+}
+.layer>header>em{
+    top: 40%;
 }
