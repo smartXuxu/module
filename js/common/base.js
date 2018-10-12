@@ -214,3 +214,18 @@ function forEach(ele,arr){
     })
     console.log(arr);
 }
+function ajax(url,data,type,callback){
+    $.ajax({
+        url:baseUrl+url,
+        dataType:"JSON",
+        data:data,
+        type:type,
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (data) {
+            callback()
+        }
+
+    })
+}

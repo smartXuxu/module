@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-
     <title>模联完善资料页面</title>
     <link rel="stylesheet" href="../css/mui.min.css"/>
     <link rel="stylesheet" href="../css/mui_popover.css"/>
@@ -12,7 +11,6 @@
     <link rel="stylesheet" href="../css/header.css"/>
     <link rel="stylesheet" href="../css/addData.css"/>
     <link rel="stylesheet" href="../css/sweetalert2.css"/>
-
 </head>
 <body>
 <div class="layer">
@@ -26,6 +24,10 @@
            <span class="f_left">技工姓名：</span>
            <input type="text" placeholder="请输入姓名" />
        </div>
+        <div class="experience clearfix" onclick="location.href='./addData_work.html'">
+            <span class="f_left">工作经历：</span>
+            <em>+ 添加工作经历</em>
+        </div>
         <div class="type clearfix">
             <span class="f_left">技工工种：</span>
             <a href="#middlePopover" class="type_choose">+ 请选择工种名称</a>
@@ -81,7 +83,7 @@
             <div id="middlePopover1" class="mui-popover">
                         <p>请选择工作年限</p>
                         <ul class="mui-table-view mui-table-view-radio word_year">
-                            <li class="mui-table-view-cell">
+                            <li class="mui-table-view-cell" >
                                 <a class="mui-navigate-right">
                                     0~1年
                                 </a>
@@ -142,10 +144,7 @@
             <input type="number" placeholder="请输入验证码" class="f_right ver_number"/>
            <em class="gain" onclick="getcode()">请输入验证码</em>
         </div>
-        <div class="experience clearfix" onclick="location.href='./addData_work.html'">
-            <span class="f_left">工作经历：</span>
-            <em>+ 添加工作经历</em>
-        </div>
+
         <div class="introduce clearfix">
             <span class="f_left">自我介绍：</span>
             <textarea placeholder="请输入自我介绍"></textarea>
@@ -164,16 +163,25 @@
 <script src="../js/common/base.js"></script>
 <script src="../js/common/back.js"></script>
 <script src="../js/common/sweetalert2.js"></script>
-    <script>
+<script src="../js/common/fastclick.js"> </script>
+<script>
         /*加个标记 判断是否隐藏 em*/
         var url=location.href.split("?")[1];
         console.log(url);
     if(url!==undefined){
         $(".jump").hide();
         }
+        //工作经验
+       var companyName=localStorage.getItem("companyName");
+        if(companyName){
+            $(".experience>em").text("已添加完成");
+            $(".experience>em").css("color","#333");
+        }
+
         mui.init({
         swipeBack: true //启用右滑关闭功能
     });
+
     mui('.mui-scroll-wrapper').scroll();
     mui('body').on('shown', '.mui-popover', function(e) {
         window.event? window.event.cancelBubble = true : e.stopPropagation();
@@ -187,6 +195,7 @@
     //var info = document.getElementById("info");
     document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected',function(e){
         console.log("工作类型为：" + e.detail.el.innerText);
+        console.log(e.detail.el);
         document.querySelector(".type_choose").innerText=e.detail.el.innerText;
         document.querySelector(".type_choose").style.color="#333";
         document.querySelector("#middlePopover").style.display="none";
@@ -230,31 +239,80 @@
            // console.log(des);
         }
     }
+        //fastclick 的使用
+        $(function() {
+            FastClick.attach(document.body);
+        });
         $(".mui-navigate-right").click(function (event) {
                 event.stopPropagation();
 
         })
         //点击保存资料的时候可以获取所有的信息
         $(".add_data").click(function () {
-           var base64IdCardBack=$(".against_box").css('backgroundImage').replace('url(','').replace(')','');;
-            console.log(base64IdCardBack);
-            var base64IdCardFront=$(".open_box").css('backgroundImage').replace('url(','').replace(')','');;
-            console.log(base64IdCardFront);
+           var base64IdCardBack=$(".against_box").css('backgroundImage').replace('url(','').replace(')','');
+            //console.log(base64IdCardBack);
+            if(base64IdCardBack.replace(/\"/g,"") =="http://localhost:63342/MU/img/against.png"){
+                base64IdCardBack="";
+            }else{
+                base64IdCardBack=base64IdCardBack;
+            }
+           // console.log(base64IdCardBack);
+            var base64IdCardFront=$(".open_box").css('backgroundImage').replace('url(','').replace(')','');
+            //console.log(base64IdCardFront);
+            if(base64IdCardFront.replace(/\"/g,"")=="http://localhost:63342/MU/img/just.jpg"){
+                base64IdCardFront="";
+            }else{
+                base64IdCardFront=base64IdCardFront;
+            }
+           // console.log(base64IdCardFront);
             //获取姓名
             let name=$(".name>input").val();
             console.log(name);
+            if(name==""){
+                sweetAlert(
+                        'sorry',
+                        '请您输入姓名！',
+                        'error'
+                );
+                return false;
+            }
             let type_choose=$(".type_choose").text();
             console.log(type_choose);
+            if(type_choose=="+ 请选择工种名称"){
+                sweetAlert(
+                        'sorry',
+                        '请您选择工种名称！',
+                        'error'
+                );
+                return false;
+            }
             let work_choose=$(".work_choose").text();
             console.log(work_choose);
+            if(work_choose=="+ 请选择工作年限"){
+                sweetAlert(
+                        'sorry',
+                        '请您选择工作年限！',
+                        'error'
+                );
+                return false;
+            }
             //省份证
-            let card=$("#Idcard").val();
+            var card=$("#Idcard").val();
             isCardNo(card);
-            let adderess=$(".address>input").val();
+            var adderess=$(".address>input").val();
             console.log(adderess);
+            if(adderess==""){
+                sweetAlert(
+                        'sorry',
+                        '请您填写常用地址！',
+                        'error'
+                );
+                return false;
+            }
             //
-            let phone_number=$(".phone_number").val();
-            let ver_number=$(".ver_number").val();
+            var phone_number=$(".phone_number").val();
+
+            var ver_number=$(".ver_number").val();
             if (!isNotBlank(ver_number)) {
                 sweetAlert(
                         'sorry',
@@ -277,9 +335,40 @@
                         })
                 return false;
             }
-    let introduce=$(".introduce>textarea").val();
+            if(companyName){
+                var description=localStorage.getItem("des");
+                var job_name=localStorage.getItem("job_name");
+                var startTime=localStorage.getItem("startTime");
+                var endTime =localStorage.getItem("endTime");
+            }else{
+                sweetAlert(
+                        'sorry',
+                        '请您填写工作经验，如没有填写无！',
+                        'error'
+                );
+                return false;
+            }
+    var introduce=$(".introduce>textarea").val();
             console.log(introduce);
+            //ajax 封装了
+                var data={"base64IdCardFront":base64IdCardFront, "base64IdCardBack": base64IdCardBack,"experience.companyName":companyName,"experience.description":description,"experience.startTime":startTime,"experience.endTime":endTime,"experience.position":job_name,"idCardNumber":card,"introduce":introduce,"userName":name,"workType":type_choose,"workYear":work_choose,"address":adderess};
+            /*ajax("/worker/updateMessage",data,"post", function (data) {
+                    console.log(data);
+                })*/
+            $.ajax({
+                url:baseUrl+"/worker/updateMessage",
+                data:data,
+                async:false,
+                dataType:"JSON",
+                type:"post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (data) {
+                    console.log(data);
+                }
 
+            })
         })
         //倒计时效果
         $(".gain").click(function(){
@@ -333,11 +422,6 @@
                 }
             })
         }
-        //工作经验
-        let companyName=localStorage.getItem("companyName");
-        if(companyName){
-            $(".experience>em").text("已添加完成");
-            $(".experience>em").css("color","#333");
-        }
+
 </script>
 </html>
