@@ -35,9 +35,11 @@ html{
     background-color:#fff ;
     max-width: 70%;
     padding: 0.2rem;
+    height: auto;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    word-wrap:break-word;
 }
 .main>.right{
     margin-top: 0.3rem;
