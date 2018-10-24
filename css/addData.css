@@ -36,7 +36,7 @@ body{
     line-height: 0.8rem;
     border-radius: 5px;
    /* text-indent: 1em;*/
-
+    font-size:0.3rem;
     border: none;
 }
 .type_choose,.work_choose{

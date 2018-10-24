@@ -9,8 +9,18 @@
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/mine/my_order.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
+    <style>
+        .tlt_r{
+            width: 68%;
+           /* background-color: pink;*/
+        }
+    </style>
 </head>
 <body>
+<div id="loading">
+    <img src="../../img/login.gif" alt=""/>
+</div>
 <div class="layer">
     <header>
         <i onclick="location.href='./mine.html'"></i>
@@ -19,7 +29,7 @@
     <div class="main">
         <nav>
             <ul class="clearfix">
-                <li ><a href="./my_allOrder.html" class="active">全部</a></li>
+                <li ><a href="./my_allOrder.html" class="active">我的发布</a></li>
                 <li><a href="./my_neworder.html">新订单</a></li>
                 <li><a href="./my_wait.html">待完成</a></li>
                 <li><a href="./my_ordering.html">进行中</a></li>
@@ -28,7 +38,7 @@
             </ul>
         </nav>
         <div class="all_list">
-            <div class="list" onclick="location.href='./my_order_detail.html'">
+            <!--<div class="list" onclick="location.href='./my_order_detail.html'">
                 <div class="tlt clearfix">
                     <img src="../../img/focus-img1.png" alt=""/>
                     <div class="tlt_r">
@@ -72,7 +82,7 @@
                     <button >查看详情</button>
                     <button>进行中</button>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
@@ -83,4 +93,59 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script type="text/html" id="order">
+    {{if data.length==0}}
+    <div class="no_info">对不起，您暂时没有发布任何的需求</div>
+    {{else}}
+    {{each data as value i}}
+    <div class="list" onclick="location.href='./my_see_order_detail.html?data={{value.stationId}}'">
+        <div class="tlt clearfix">
+            {{if value.company.worker.avatar==""}}
+            <img src="../../img/no_img.png" alt=""/>
+            {{else}}
+            <img src="{{value.company.worker.avatar}}" alt=""/>
+            {{/if}}
+            <div class="tlt_r">
+                <p>公司名称：{{value.company.companyName}}</p>
+                <p>岗位介绍：{{value.workType}}{{value.stationName}}</p>
+                <p>工资薪酬：￥{{value.price}}元/小时</p>
+                <p>地址：{{value.company.address}}</p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+</script>
+<script>
+    $(function () {
+        //ajax 发送完毕
+        $(document).ajaxStop(function(){
+            $("#loading").hide();
+        });
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+             $(".all_list").html(template("order",data));
+            }else if(data.code==707){
+                sweetAlert(
+                    "sorry",
+                        "对不起，网络发生错误，请您重新登录",
+                        "error"
+                ).then(function () {
+                            location.href="../login.html"
+                        })
+            }
+            else{
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+
+                )
+            }
+        }
+        myAjax({url:"/station/getAllPushStation",type:"post",data:"",async:"false"},render);
+    })
+</script>
 </html>

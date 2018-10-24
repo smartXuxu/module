@@ -77,9 +77,17 @@
     background: #fff;
 }
 .title_bottom>.phone{
+    display: inline-block;
+    text-align: center;
+    width: 49.3%;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    background: #fff;
+    border-right: 1px solid #eee;
    /* border-right: 1px solid #eeeeee;*/
 }
+/*
 .title_bottom>.online{
     background-color: #009afb;
     color: #ffffff;
-}
+}*/

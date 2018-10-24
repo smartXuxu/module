@@ -64,9 +64,9 @@
 <script src="../../js/common/base.js"></script>
 <script src="../../js/common/back.js"></script>
 <script>
-var userId=location.href.split("=")[1];
+//var userId=location.href.split("=")[1];
     $(function (){
-       // getheader();
+       getheader();
         function getheader(){
             $.ajax({
                 xhrFields: {
@@ -74,11 +74,12 @@ var userId=location.href.split("=")[1];
                 },
                 type: "post",
                 async:false,
-                url: baseUrl+"/student/findAvatar",
+                url: baseUrl+"/worker/getUserMessage",
                 dataType: 'json',
                 success:function(data){
+                    console.log(data);
                     //console.log(data.message);
-                    $(".top>img").attr("src",data.message);
+                    $(".top>img").attr("src",data.data.avatar);
 
                 },
                 error:function(data){
@@ -104,8 +105,8 @@ var userId=location.href.split("=")[1];
                 url: baseUrl+"/pay/aliPay.html",
                 data:{
                     price:price,
-                    type:1,
-                    userId:userId
+                  /*  type:1,
+                     userId:userId*/
                 },
                 dataType: 'text',
                 success:function(data) {
@@ -116,7 +117,7 @@ var userId=location.href.split("=")[1];
                     if(data!==""){
                         localStorage.setItem("purseData",data);
                         location.href='my_purse_recharge_b.html';
-                       /* $(".layer").hide();
+                        $(".layer").hide();
                         $(".show").show();
                         var height=$("body").height();
                         var width= $("body").width();
@@ -128,7 +129,7 @@ var userId=location.href.split("=")[1];
 
                         window.frames["code_result"].document.open();
                         window.frames["code_result"].document.write(data);
-                        window.frames["code_result"].document.close();*/
+                        window.frames["code_result"].document.close();
                         //$("iframe").contents().find("body").html(data);
                     }
                        // document.write(data);

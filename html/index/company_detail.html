@@ -8,6 +8,7 @@
     <title>公司详情</title>
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         .content{
             padding-top: 1.6rem;
@@ -28,7 +29,7 @@
         <h3>公司详情</h3>
     </header>
     <div class="content">
-        <p>郑州宇通集团有限公司（Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Z郑州宇通集团有限公司（Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以Zhengzhou Yutong Bus Co.,Ltd.，简称“宇通集团”），是以客车为核心业务，以工</p>
+        <!--填充-->
     </div>
 </div>
 </body>
@@ -38,4 +39,41 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script id="detail" type="text/html">
+    {{each data as value i}}
+    <p style="padding-left: 1.5rem">{{value.companyName}}</p>
+    <p>{{value.introduce}}</p>
+    <p>{{value.representative}}</p>
+    {{/each}}
+</script>
+<script>
+    $(function () {
+        var href=location.href.split("=")[1];
+        console.log(href);
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+            $(".content").html(template("detail",data))
+            }else if(data.code==707){
+                sweetAlert(
+                        "sorry",
+                        "对不起，网络发生错误，请您重新登录",
+                        "error"
+                ).then(function () {
+                            location.href="../login.html"
+                        })
+            }
+            else{
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+
+                )
+            }
+        }
+        myAjax({url:"/company/getCompany/"+href,async:"false",type:"get"},render);
+    })
+</script>
 </html>

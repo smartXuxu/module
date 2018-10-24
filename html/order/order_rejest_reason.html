@@ -35,9 +35,7 @@
         <h3>拒绝原因</h3>
     </header>
     <div class="content">
-        <p>
-            工作经验不相符合
-        </p>
+        <!--填充-->
     </div>
 </div>
 </body>
@@ -47,4 +45,64 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script id="reason" type="text/html">
+    <p>
+       {{data.reason}}
+    </p>
+</script>
+<script>
+    $(function () {
+        var url=location.href.split("=")[1];
+        console.log(url);
+        reder(url);
+        function reder(data){
+            $.ajax({
+                url:baseUrl+"/station/getDetailedOrder",
+                data:{
+                    stationOrderId:data
+                },
+                dataType:"json",
+                type:"post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                async:false,
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg.code==200){
+                        $(".content").html(template("reason",msg));
+                        }
+                    else if(msg.code==707){
+                        sweetAlert(
+                                "sorry",
+                                "对不起，网络发生错误，请您重新登录",
+                                "error"
+                        ).then(function () {
+                                    location.href="../login.html"
+                                })
+                    }
+                    else{
+                        sweetAlert(
+                                "sorry",
+                                msg.msg,
+                                "error"
+
+                        )
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                    sweetAlert(
+                            "sorry",
+                            "网络发生错误,请您重新登录",
+                            'error'
+                    ).then(function () {
+                                location.href="../login.html"
+                            })
+                }
+            })
+        }
+    })
+</script>
 </html>

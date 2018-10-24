@@ -68,7 +68,7 @@
         <div class="center">
             <img src="../../img/my_purse.png" alt=""/>
             <p>我的余额</p>
-            <p class="balance">￥{{balance}}</p>
+            <p class="balance">￥0</p>
         </div>
         <button class="recharge" onclick="location.href='./my_purse_recharge.html?userId={{userId}}'">充值</button>
         <button class="withdraw" onclick="location.href='./my_purse_withdaw.html?userId={{userId}}'">提现</button>
@@ -84,13 +84,13 @@
     <div class="center">
         <img src="../../img/my_purse.png" alt=""/>
         <p>我的余额</p>
-        <p class="balance">￥{{balance}}</p>
+        <p class="balance">￥{{data.balance}}</p>
     </div>
     <button class="recharge" onclick="location.href='./my_purse_recharge.html?userId={{userId}}'">充值</button>
     <button class="withdraw" onclick="location.href='./my_purse_withdaw.html?userId={{userId}}'">提现</button>
 </script>
 <script >
-    //render();
+    render();
     function render(){
         $.ajax({
             //处理session每次不唯一问题
@@ -101,17 +101,17 @@
             type: "post",
             url: baseUrl+"/pay/getWallet",
             data:{
-                type:1
+               /* type:1*/
             },
             dataType: 'json',
             success:function(data) {
                 console.log(data);
-                if(data.code=="success"||data.state==true||data.list!=="网络出了点小问题...."){
+                if(data.code=="200"){
                     //跳转页面
-                    $(".content").html(template("purse",data));
-                    $(".detail").click(function () {
+                   $(".content").html(template("purse",data));
+                   /* $(".detail").click(function () {
                         location.href='my_purse_detail.html'+"?userId="+data.userId;
-                    })
+                    })*/
                 }
             }
 

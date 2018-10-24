@@ -11,8 +11,17 @@
     <link rel="stylesheet" href="../css/header.css"/>
     <link rel="stylesheet" href="../css/addData.css"/>
     <link rel="stylesheet" href="../css/sweetalert2.css"/>
+    <style>
+        #loading{
+            display: none;
+        }
+    </style>
 </head>
 <body>
+<div id="loading">
+    <img src="../img/login.gif" alt=""/>
+    <div>请等待，正在加载...</div>
+</div>
 <div class="layer">
     <header>
         <i onclick="back()"></i>
@@ -134,6 +143,7 @@
             </div>
 
         </div>
+
         <div class="address clearfix">
             <span class="f_left">居住地址：</span>
             <input type="text" placeholder="请填写常用地址" />
@@ -161,10 +171,13 @@
 <script src="../js/common/mui.min.js"></script>
 <script src="../js/common/jquery.js"></script>
 <script src="../js/common/base.js"></script>
+
 <script src="../js/common/back.js"></script>
 <script src="../js/common/sweetalert2.js"></script>
 <script src="../js/common/fastclick.js"> </script>
 <script>
+    //fastclick 的使用
+    FastClick.attach(document.body);
         /*加个标记 判断是否隐藏 em*/
         var url=location.href.split("?")[1];
         console.log(url);
@@ -177,7 +190,6 @@
             $(".experience>em").text("已添加完成");
             $(".experience>em").css("color","#333");
         }
-
         mui.init({
         swipeBack: true //启用右滑关闭功能
     });
@@ -239,10 +251,8 @@
            // console.log(des);
         }
     }
-        //fastclick 的使用
-        $(function() {
-            FastClick.attach(document.body);
-        });
+
+
         $(".mui-navigate-right").click(function (event) {
                 event.stopPropagation();
 
@@ -296,9 +306,26 @@
                 );
                 return false;
             }
-            //省份证
+            //身份证
             var card=$("#Idcard").val();
             isCardNo(card);
+            //验证 身份证号
+            function isCardNo(card)
+            {
+                // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+                var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+                if(reg.test(card) === false)
+                {
+                    sweetAlert(
+                            "sorry",
+                            "您的身份证输入不合法",
+                            "sorry"
+                    ).then(function () {
+                                $("#Idcard").val("");
+                            })
+                    return false;
+                }
+            }
             var adderess=$(".address>input").val();
             console.log(adderess);
             if(adderess==""){
@@ -309,7 +336,7 @@
                 );
                 return false;
             }
-            //
+
             var phone_number=$(".phone_number").val();
 
             var ver_number=$(".ver_number").val();
@@ -332,7 +359,7 @@
                         'error'
                 ).then(function () {
                             $("#phone_num").val("");
-                        })
+                        });
                 return false;
             }
             if(companyName){
@@ -351,7 +378,19 @@
     var introduce=$(".introduce>textarea").val();
             console.log(introduce);
             //ajax 封装了
-                var data={"base64IdCardFront":base64IdCardFront, "base64IdCardBack": base64IdCardBack,"experience.companyName":companyName,"experience.description":description,"experience.startTime":startTime,"experience.endTime":endTime,"experience.position":job_name,"idCardNumber":card,"introduce":introduce,"userName":name,"workType":type_choose,"workYear":work_choose,"address":adderess};
+                var data={"base64IdCardFront":base64IdCardFront.replace(/"/g,""),
+                    "base64IdCardBack": base64IdCardBack.replace(/"/g,""),
+                    "experience.companyName":companyName,
+                    "experience.description":description,
+                    "experience.startTime":startTime,
+                    "experience.endTime":endTime,
+                    "experience.position":job_name,
+                    "idCardNumber":card,
+                    "introduce":introduce,
+                    "userName":name,
+                    "workType":type_choose,
+                    "workYear":work_choose,
+                    "address":adderess};
             /*ajax("/worker/updateMessage",data,"post", function (data) {
                     console.log(data);
                 })*/
@@ -364,8 +403,42 @@
                 xhrFields: {
                     withCredentials: true
                 },
+                beforeSend: function () {
+                  $("#loading").hide();
+                },
                 success: function (data) {
                     console.log(data);
+                    if(data.code==200){
+                    /*清除本地存储*/
+                        $("#loading").hide();
+                        localStorage.removeItem("code");
+                        localStorage.removeItem("companyName");
+                        localStorage.removeItem("des");
+                        localStorage.removeItem("endTime");
+                        localStorage.removeItem("job_name");
+                        localStorage.removeItem("startTime");
+                        sweetAlert(
+                                '恭喜您',
+                                data.msg,
+                                "success"
+                        ).then(function(){
+                                    if(url==undefined){
+                                        location.href='./login.html';
+                                    }else{
+                                        location.href='./mine/my_message.html';
+                                    }
+                                })
+
+                    }else{
+                        $("#loading").hide();
+                        sweetAlert(
+                            'sorry',
+                            data.msg,
+                            "error"
+                        ).then(function () {
+                                    location.href='./login.html';
+                                })
+                    }
                 }
 
             })
@@ -419,6 +492,14 @@
                     console.log(data);
                     console.log(data.data.result);
                     window.localStorage.setItem("code",JSON.stringify(data.data.result));
+                    if(data.data.result=="该交钱了"){
+                        window.localStorage.setItem("code","123456");
+                    }
+                    sweetAlert(
+                            data.data.result,
+                            '你接收不到短信验证码的，可输入123456测试',
+                            'error'
+                    )
                 }
             })
         }

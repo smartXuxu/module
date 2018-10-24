@@ -10,11 +10,15 @@
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/footer.css"/>
     <link rel="stylesheet" href="../../css/index/select.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
 </head>
 <body>
+<div id="loading">
+    <img src="../../img/login.gif" alt=""/>
+</div>
 <div class="layer">
     <header>
-        <em onclick="location.href='./select_city.html'">北京 <s>&nbsp;∨</s></em>
+        <em onclick="location.href='./select_city.html'"><s>郑州市</s> &nbsp;∨</em>
         <input type="text" placeholder="搜索需求"/>
         <i onclick="location.href='./talents.html'"></i>
     </header>
@@ -40,7 +44,7 @@
             </ul>
         </nav>
         <div class="news_list">
-            <div class="list clearfix">
+           <!-- <div class="list clearfix">
                 <div class="top">
                     <div class="top_left img_box clearfix">
                         <img src="../../img/focus-img1.png" alt=""/>
@@ -99,7 +103,7 @@
                 <div class="bottom_address f_left">
                     地址：郑州市中牟县九龙镇   宇通工业园
                 </div>
-            </div>
+            </div>-->
         </div>
         <footer>
             <ul class="clearfix">
@@ -129,22 +133,84 @@
 </div>
 </body>
 <script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/mui.min.js"></script>
 <script src="../../js/common/jquery.js"></script>
 <script src="../../js/common/base.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script id="list" type="text/html">
+    {{if data.length==0}}
+    <div class="no_info">对不起，暂时没有符合条件的查询结果</div>
+    {{else}}
+    {{each data as value i}}
+    <div class="list clearfix" onclick="location.href='./service_detail.html?stationId={{value.stationId}}'">
+        <div class="top">
+            <div class="top_left img_box clearfix">
+                <img src="{{value.company.companyImages.length==0?'../../img/focus-img1.png':value.company.companyImages[0].imagePath}}" alt=""/>
+            </div>
+            <div class="top_right f_left">
+                <h2>{{value.company.companyName}}公司</h2>
+                <p>{{value.workType}}{{value.company.workYear}}</p>
+                <div class="price">￥{{value.price}}/小时</div>
+            </div>
+        </div>
+        <div class="bottom_address f_left">
+            地址：{{value.company.address}}
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+
+</script>
 <script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+            var backButtonPress = 0;
+            $.back = function(event) {
+                backButtonPress++;
+                if (backButtonPress > 1) {
+                    plus.runtime.quit();
+                } else {
+                    plus.nativeUI.toast('再按一次退出应用');
+                }
+                setTimeout(function() {
+                    backButtonPress = 0;
+                }, 1000);
+                return false;
+            };
+        });
+    }(mui, document));
+
     $(function () {
+        //ajax 发送完毕
+        $(document).ajaxStop(function(){
+            $("#loading").hide();
+        });
         $("header input").focus(function () {
             location.href='./search.html';
-        })
+        });
         //获取展示的城市
         var city =localStorage.getItem("city");
         if(city){
-            var text=city+" <s>&nbsp;∨</s>"
-            $("header em").html(text);
+            $("header em s").html(city);
+        }else{
+            city=$("header em s").text()
         }
+        /*好评*/
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+
+               // console.log(data.data.reverse());
+                $(".news_list").html(template("list",data));
+            }
+        }
+        myAjax({url:"/station/selectSatisfied",type:"post",async:"false",data:{city:city}},render);
+
     })
 
 </script>
+
 </html>

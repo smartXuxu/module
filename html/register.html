@@ -79,8 +79,18 @@
             success: function (data){
                 //alert(data);
                 console.log(data);
-               console.log(data.data.result);
-                window.localStorage.setItem("code",JSON.stringify(data.data.result));
+                if(data.code==200){
+                    console.log(data.data.result);
+                    window.localStorage.setItem("code",JSON.stringify(data.data.result));
+                    if(data.data.result=="该交钱了"){
+                        window.localStorage.setItem("code","123456");
+                    }
+                    sweetAlert(
+                            data.data.result,
+                            '你接收不到短信验证码的，可输入123456测试',
+                            'error'
+                    )
+                }
             }
         })
     }
@@ -163,8 +173,13 @@
                             })
                 }
                 else if(data.code=="500"){
-                    alert(data.msg);
-                    $("input").val("");
+                    sweetAlert(
+                            'sorry',
+                            data.msg,
+                            'error'
+                    ).then(function () {
+                                $("input").val("");
+                            });
                     return false;
                 }else{
                     sweetAlert(
@@ -173,6 +188,15 @@
                             'error'
                     )
                 }
+            },error: function (msg) {
+                console.log(msg);
+                sweetAlert(
+                        "sorry",
+                        "网络发生错误,请您重新登录",
+                        'error'
+                ).then(function () {
+                            location.href="../login.html"
+                        })
             }
         })
     }

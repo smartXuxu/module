@@ -20,6 +20,9 @@
     font-size: 0.3rem;
     text-align: center;
 }
+.main>nav>ul>li>a{
+    font-size: 0.3rem;
+}
 nav>ul>li>a{
     display: block;
 }
@@ -51,6 +54,7 @@ box-shadow: 0 0 5px #d8d5d5
     position: absolute;
     left: 2rem;
     top: 0%;
+    width: 66%;
 }
 .tlt_r>p{
     width: 92%;

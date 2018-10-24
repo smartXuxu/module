@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../css/mui_img.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/index/personal_data.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         .layer>header{
             height: 1.8rem;
@@ -64,92 +65,11 @@
 <body>
 <div class="layer">
     <header>
-        <i onclick="back()"></i>
+        <i onclick="location.href='./mine.html'"></i>
         <h3>个人资料</h3>
     </header>
     <div class="main">
-        <div class="base">
-            <span>基本信息：</span>
-            <p>
-                <i>技工姓名：</i>
-                <em>刘烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨ddd</em>
-            </p>
-            <p>
-                <i>技工工种：</i>
-                <em>模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级工</em>
-            </p>
-            <p>
-                <i>工作年限：</i>
-                <em>3年3年3年3年3年3年3年3年3年3年3年3年3年3年3年3年dd</em>
-            </p>
-            <p>
-                <i>技工身份信息：</i>
-                <em>410720******0229</em>
-            </p>
-            <p>
-                <i>居住住址：</i>
-                <em>河南省郑州市金水区制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具</em>
-            </p>
-            <p>
-                <i>联系电话：</i>
-                <em>151****5202</em>
-            </p>
-        </div>
-        <div class="id_message">
-            <p>身份证信息：</p>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png" alt=""
-                     data-preview-src="" data-preview-group="1"/>
-            </div>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png" alt=""
-                     data-preview-src="" data-preview-group="1"/>
-            </div>
-        </div>
-        <div class="experience">
-            <span>工作经历：</span>
-            <p>
-                <i>公司名称：</i>
-                <em>刘烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨烨ddd</em>
-            </p>
-            <p>
-                <i>开始时间：</i>
-                <em>模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级工</em>
-            </p>
-            <p>
-                <i>结束时间：</i>
-                <em>3年3年3年3年3年3年3年3年3年3年3年3年3年3年3年3年dd</em>
-            </p>
-            <p>
-                <i>担任职位：</i>
-                <em>410720******0229</em>
-            </p>
-            <div class="des">
-                <h2>工作描述</h2>
-                <p>1、为项目实施制定制模方案； </p>
-                <p>2、分局产品图设计并绘制模具零件部件及装配图；分局产品图设计并绘制模具零件部件及装配图；  </p>
-                <p>3、设计、编制模具加工工艺，解决生产中出现的机械；  </p>
-                <p>4、新产品、新工艺设计模具的技术开发工作；  </p>
-            </div>
-
-        </div>
-        <div class="introduce">
-            <span>自我介绍：</span>
-            <p>本人在校期间学习成绩优异，多次获得校级奖学金。工作能力强，曾担任学生干部。另外，待人真诚友善，做人在校期间学习成绩优异，多次获得校级奖学金。工作能力强，曾担任学生干部。另外，待人真诚友善，做人在校期间学习成绩优异，多次获得校级奖学金。工作能力强，曾担任学生干部。另外，待人真诚友善，做事细心有耐性，脚踏实地，认真负
-            </p>
-        </div>
-        <div class="evaluate">
-            <p><span>评价：</span> <i>共56条评价</i></p>
-            <div class="eval_tit">
-                <img src="../../img/focus-img1.png" alt=""/>
-                <em>小小尘埃</em>
-                <i>2018-03-05</i>
-            </div>
-            <h4>之前去宇通他们这里临时做工，气氛十分融洽，不愧是大 企业，结算薪资的时候也是十分干脆</h4>
-            <div class="read_more">
-                查看更多>>
-            </div>
-        </div>
+       <!--填充-->
 
     </div>
 </div>
@@ -164,10 +84,118 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script type="text/html" id="my_data">
+    <div class="base">
+        <span>基本信息：</span>
+        <p>
+            <i>技工姓名：</i>
+            <em>{{!data.userName||data.userName==""?"模联":data.userName}}</em>
+        </p>
+        <p>
+            <i>技工工种：</i>
+            <em>{{!data.workType||data.userName==""?"未指定":data.workType}}</em>
+        </p>
+        <p>
+            <i>工作年限：</i>
+            <em>{{!data.workType||data.userName==""?"未指定":data.workType}}</em>
+        </p>
+        <p>
+            <i>技工身份信息：</i>
+            <em>{{!data.idCardNumber||data.idCardNumber==""?"未指定":str(data.idCardNumber,0,6)}}****{{!data.idCardNumber||data.idCardNumber==""?"":str(data.idCardNumber,12,12)}}</em>
+        </p>
+        <p>
+            <i>居住住址：</i>
+            <em>{{!data.address||data.address==""?"未添加":data.address}}</em>
+        </p>
+        <p>
+            <i>联系电话：</i>
+            <em>{{!data.mobilePhone||data.mobilePhone==""?"未设置":str(data.mobilePhone,0,3)}}****{{!data.mobilePhone||data.mobilePhone==""?"":str(data.mobilePhone,9,11)}}</em>
+        </p>
+    </div>
+    <div class="id_message">
+        <p>身份证信息：</p>
+        <div class="img_box">
+            <img src="{{data.idCardBack}}" alt=""
+                 data-preview-src="" data-preview-group="1"/>
+        </div>
+        <div class="img_box">
+            <img src="{{data.idCardFront}}" alt=""
+                 data-preview-src="" data-preview-group="1"/>
+        </div>
+    </div>
+    <div class="experience">
+        <span>工作经历：</span>
+        <p>
+            <i>公司名称：</i>
+            <em>{{!data.experience||data.experience.companyName==""||!data.experience.companyName?"未填写":data.experience.companyName}}</em>
+        </p>
+        <p>
+            <i>开始时间：</i>
+            <em>{{!data.experience||data.experience.startTime==""||!data.experience.startTime?"未设置":time(data.experience.startTime)}}</em>
+        </p>
+        <p>
+            <i>结束时间：</i>
+            <em>{{!data.experience||data.experience.endTime==""||!data.experience.endTime?"未设置":time(data.experience.endTime)}}</em>
+        </p>
+        <p>
+            <i>担任职位：</i>
+            <em>{{!data.experience||data.experience.position==""||!data.experience.position?"未设置":data.experience.position}}</em>
+        </p>
+        <div class="des">
+            <h2>工作描述</h2>
+            {{!data.experience||data.experience.description==""||!data.experience.description?"未设置":data.experience.description}}
+           <!-- <p>1、为项目实施制定制模方案； </p>
+            <p>2、分局产品图设计并绘制模具零件部件及装配图；分局产品图设计并绘制模具零件部件及装配图；  </p>
+            <p>3、设计、编制模具加工工艺，解决生产中出现的机械；  </p>
+            <p>4、新产品、新工艺设计模具的技术开发工作；  </p>-->
+        </div>
+
+    </div>
+    <div class="introduce">
+        <span>自我介绍：</span>
+        <p>{{data.introduce==""||!data.introduce?"未设置":data.introduce}}
+        </p>
+    </div>
+   <!-- <div class="evaluate">
+        <p><span>评价：</span> <i>共56条评价</i></p>
+        <div class="eval_tit">
+            <img src="../../img/focus-img1.png" alt=""/>
+            <em>小小尘埃</em>
+            <i>2018-03-05</i>
+        </div>
+        <h4>之前去宇通他们这里临时做工，气氛十分融洽，不愧是大 企业，结算薪资的时候也是十分干脆</h4>
+        <div class="read_more">
+            查看更多>>
+        </div>
+    </div>-->
+</script>
 <script>
 $(function(){
     mui.previewImage();
     mui('body').on('tap','a',function(){document.location.href=this.href;});
+    function render(data){
+        console.log(data);
+        if(data.code==200){
+            template.helper("str",function(str,a,b){
+                return str.substr(a,b);
+            });
+            template.helper("time",function(date){
+                var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').substr(0,9).replace(/\//g,"-");
+                return time;
+            });
+            $(".main").html(template("my_data",data))
+        }else{
+        sweetAlert(
+                "sorry",
+                "data.msg",
+                "error"
+        ).then(function () {
+                    location.href='../login.html';
+                })
+        }
+    }
+myAjax({url:"/worker/getUserMessage",type:"post",async:"false"},render);
 })
 </script>
 </html>

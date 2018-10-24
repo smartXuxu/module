@@ -100,6 +100,7 @@
         $(ele).click(function () {
             if(flag){
                 $(this).addClass("active");
+                $(this).siblings().removeClass("active");
                 flag=false;
             }else{
                 $(this).removeClass("active");
@@ -107,7 +108,7 @@
             }
         })
     }
-    var flag=true
+    var flag=true;
     getData(flag,".word_style span");
     var year=true;
     getData(year,".work_year span")
@@ -125,11 +126,19 @@
         $(ele).each(function () {
             arr.push($(this).text());
         })
-        console.log(arr);
+       /* arr=arr.join("");
+        console.log(arr);*/
     }
     $(".sure").click(function() {
-        forEach(".word_style .active",str) ;
-        forEach(".work_year .active",list) ;
+        forEach(".word_style .active",str);
+      str=str.join("");
+        localStorage.setItem("workType",str);
+        console.log(str);
+        forEach(".work_year .active",list);
+        list=list.join("");
+        console.log(list);
+        localStorage.setItem("workYear",list);
+        location.href="./talance_search.html";
     })
 
     var list=[];

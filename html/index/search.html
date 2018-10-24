@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="../../css/index/talents.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <style>
-
+        .top_right>h2{
+            height: 0.5rem;
+        }
         .layer>header>input{
             height: 0.8rem;
             line-height:0.8rem;
@@ -113,6 +115,7 @@
         </div>
     </div>
     <div class="news_list">
+      <!--  &lt;!&ndash;工作&ndash;&gt;
         <div class="list clearfix" onclick="location.href='./service_detail.html'">
             <div class="top">
                 <div class="top_left img_box clearfix">
@@ -128,6 +131,7 @@
                 地址：郑州市中牟县九龙镇   宇通工业园
             </div>
         </div>
+        &lt;!&ndash;人员&ndash;&gt;
         <div class="list" onclick="location.href='./personal_data.html'">
             <div class="title_top clearfix">
                 <img src="../../img/focus-img1.png" alt=""/>
@@ -142,7 +146,7 @@
                 <button class="phone">电话联系</button>
                 <button class="online" >在线沟通</button>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 </body>
@@ -161,7 +165,62 @@
     <span class="searchList">{{value}}</span>
     {{/each}}
     {{/if}}
-
+</script>
+<script type="text/html" id="searchResult">
+{{if data.length==0}}
+<div class="no_info">对不起，没有符合您条件的查询结果</div>
+{{else}}
+{{each data as value i }}
+<div class="list clearfix" onclick="location.href='./service_detail.html?stationId={{value.stationId}}'">
+    <div class="top">
+        <div class="top_left img_box clearfix">
+            <img src="{{value.company.companyImages.length==0?'../../img/focus-img1.png':value.company.companyImages[0].imagePath}}" alt=""/>
+        </div>
+        <div class="top_right f_left">
+            <h2>{{value.company.companyName}}公司</h2>
+            <p>{{value.workType}}{{value.company.workYear}}</p>
+            <div class="price">￥{{value.price}}/小时</div>
+        </div>
+    </div>
+    <div class="bottom_address f_left">
+        地址：{{value.company.address}}
+    </div>
+</div>
+<!--
+<div class="list clearfix" onclick="location.href='./service_detail.html'">
+    <div class="top">
+        <div class="top_left img_box clearfix">
+            <img src="../../img/focus-img1.png" alt=""/>
+        </div>
+        <div class="top_right f_left">
+            <h3>宇通公司制作轮毂模具司制作轮毂模具</h3>
+            <p>要求三位以上模具师同时作业师同时作业师同时作业</p>
+            <div class="price">￥2999/小时</div>
+        </div>
+    </div>
+    <div class="bottom_address f_left">
+        地址：郑州市中牟县九龙镇   宇通工业园
+    </div>
+</div>
+-->
+{{/each}}
+<!--人员-->
+<!--<div class="list" onclick="location.href='./personal_data.html'">
+    <div class="title_top clearfix">
+        <img src="../../img/focus-img1.png" alt=""/>
+        <div class="t_t_center">
+            <h3>李先生</h3>
+            <p>资深模具设计师</p>
+            <em>3年 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;武汉</em>
+        </div>
+        <div class="t_t_right">已认证</div>
+    </div>
+    <div class="title_bottom">
+        <button class="phone">电话联系</button>
+        <button class="online" >在线沟通</button>
+    </div>
+</div>-->
+    {{/if}}
 </script>
 <script>
     $(function(){
@@ -190,6 +249,16 @@
                 alert("请输入搜索内容");
                 return false;
             }
+            //var city=localStorage.getItem("city");
+            function render(data){
+                console.log(data);
+                //页面重绘
+                if(data.code==200){
+                   $(".news_list").html(template("searchResult",data));
+                }
+            }
+           // myAjax({url:"/station/searchByKey",data:{city:city,key:key},type:"post"},render);
+            myAjax({url:"/station/search",data:{key:key},type:"post"},render);
             /*记录这一次的搜索*/
             var arr = getHistoryData();
 

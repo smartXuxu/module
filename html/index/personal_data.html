@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/index/personal_data.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
 </head>
 <body>
 <div class="layer">
@@ -17,7 +18,7 @@
         <h3>个人资料</h3>
     </header>
 <div class="main">
-    <div class="base">
+  <!--  <div class="base">
         <span>基本信息：</span>
         <p>
             <i>技工姓名：</i>
@@ -94,7 +95,7 @@
             <a href="tel:18749986696">电话联系</a>
 
             </button>
-    </div>
+    </div>-->
 
 </div>
 </div>
@@ -106,10 +107,110 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script id="detail" type="text/html">
+    <div class="base">
+        <span>基本信息：</span>
+        <p>
+            <i>技工姓名：</i>
+            <em>{{data.userName==null||data.userName==""?"模联":data.userName.substr(0,1)}}**</em>
+        </p>
+        <p>
+            <i>技工工种：</i>
+            <em>{{!data.workType||data.userName==null?"未指定":data.workType}}</em>
+        </p>
+        <p>
+            <i>工作年限：</i>
+            <em>{{!data.workType||data.userName==null?"未指定":data.workType}}</em>
+        </p>
+        <p>
+            <i>技工身份信息：</i>
+            <em>{{!data.idCardNumber||data.idCardNumber==null?"未指定":str(data.idCardNumber,0,6)}}****{{!data.idCardNumber||data.idCardNumber==""?"":str(data.idCardNumber,12,12)}}</em>
+        </p>
+        <p>
+            <i>居住住址：</i>
+            <em>{{!data.address||data.address==null?"未添加":data.address}}</em>
+        </p>
+        <p>
+            <i>联系电话：</i>
+            <em>{{!data.mobilePhone||data.mobilePhone==null?"未设置":str(data.mobilePhone,0,3)}}****{{!data.mobilePhone||data.mobilePhone==""?"":str(data.mobilePhone,9,11)}}</em>
+        </p>
+    </div>
+    <div class="experience">
+        <span>工作经历：</span>
+        <p>
+            <i>公司名称：</i>
+            <em>{{!data.experience||data.experience.companyName==null?"未填写":data.experience.companyName}}</em>
+        </p>
+        <p>
+            <i>开始时间：</i>
+            <em>{{!data.experience||data.experience.startTime==null?"未设置":time(data.experience.startTime)}}</em>
+        </p>
+        <p>
+            <i>结束时间：</i>
+            <em>{{!data.experience||data.experience.endTime==null?"未设置":time(data.experience.endTime)}}</em>
+        </p>
+        <p>
+            <i>担任职位：</i>
+            <em>{{!data.experience||data.experience.position==null?"未设置":data.experience.position}}</em>
+        </p>
+        <div class="des">
+            <h2>工作描述</h2>
+            {{!data.experience||data.experience.description==null?"未设置":data.experience.description}}
+           <!-- <p>1、为项目实施制定制模方案； </p>
+            <p>2、分局产品图设计并绘制模具零件部件及装配图；分局产品图设计并绘制模具零件部件及装配图；  </p>
+            <p>3、设计、编制模具加工工艺，解决生产中出现的机械；  </p>
+            <p>4、新产品、新工艺设计模具的技术开发工作；  </p>-->
+        </div>
+
+    </div>
+    <div class="introduce">
+        <span>自我介绍：</span>
+        <p>{{data.introduce==null||!data.introduce?"未填写":data.introduce}}
+        </p>
+    </div>
+   <!-- <div class="evaluate">
+        <p><span>评价：</span> <i>共56条评价</i></p>
+        <div class="eval_tit">
+            <img src="../../img/focus-img1.png" alt=""/>
+            <em>小小尘埃</em>
+            <i>2018-03-05</i>
+        </div>
+        <h4>之前去宇通他们这里临时做工，气氛十分融洽，不愧是大 企业，结算薪资的时候也是十分干脆</h4>
+        <div class="read_more">
+            查看更多>>
+        </div>
+    </div>-->
+    <div class="link">
+        <button class="online" onclick="location.href='./online_ask.html?id={{data.mobilePhone}}'">在线沟通</button>
+        <button class="phone_call">
+            <a href="tel:{{data.mobilePhone}}">电话联系</a>
+
+        </button>
+    </div>
+</script>
 <script>
 $(function () {
-    var tel=15839613995;
-    $(".phone_call a").attr("href","tel:"+tel);
+  /*  var tel=15839613995;
+    $(".phone_call a").attr("href","tel:"+tel);*/
+    // /worker/getWorkerById/{workerId} 获取他人资料
+
+    var workId=location.href.split("=")[1];
+    console.log(workId);
+    var render= function (data) {
+        console.log(data);
+        if(data.code==200){
+            template.helper("str",function(str,a,b){
+                return str.substr(a,b);
+            });
+            template.helper("time",function(date){
+                var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').substr(0,9).replace(/\//g,"-");
+                return time;
+            });
+            $(".main").html(template("detail",data));
+        }
+    }
+    myAjax({url:"/worker/getWorkerById/"+workId},render);
 })
 </script>
 </html>

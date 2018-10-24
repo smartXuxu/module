@@ -7,6 +7,7 @@
     <title>我的钱包-零钱明细</title>
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         .my_purse_layer header h3{
             text-align: left;
@@ -121,35 +122,27 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
 <script id="my_detail" type="text/html">
-    {{if list.length==0}}
+    {{if data.length==0}}
     <li class="no_record">对不起，您暂时没有任何交易的记录</li>
     {{else}}
-{{each list as value i}}
+{{each data as value i}}
 <li>
     <div class="left">
-        {{if value.transactionType==1}}
-        <i>支出</i>
-        {{else if value.transactionType==2}}
-        <i>收入</i>
-        {{else if value.transactionType==3}}
-        <i>充值</i>
-        {{else}}
-        <i>提现</i>
-        {{/if}}
+        <i>{{value.introduce}}</i>
         <em>{{time(value.time)}}</em>
     </div>
     <div class="right">
-
-       {{value.transactionType==1||value.transactionType==4?"-":"+"}} {{value.price}}
+       {{value.type==2?"+":"-"}} {{value.price}}
     </div>
 </li>
 {{/each}}
 {{/if}}
 </script>
 <script >
-    var userId=location.href.split("=")[1];
-//render();
+   /* var userId=location.href.split("=")[1];*/
+render();
 function render(){
     $.ajax({
         //处理session每次不唯一问题
@@ -157,24 +150,49 @@ function render(){
             withCredentials: true
         },
         async:false,
-        type: "get",
+        type: "post",
         url: baseUrl+"/pay/getBill",
         data:{
-            type:1,
-            userId:userId
+            /*type:1,
+            userId:userId*/
         },
         dataType: 'json',
         success:function(data) {
             console.log(data);
-            if(data.code=="success"||data.state==true||data.list!=="网络出了点小问题...."){
+            if(data.code=="200"){
                 template.helper("time",function(date){
-                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').substr(5,12).replace("/","-");
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').substr(5,13).replace("/","-");
                     return time;
                     /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
                 });
                 //跳转页面
-                $(".content>ul").html(template("my_detail",data));
+               $(".content>ul").html(template("my_detail",data));
+            }else if(data.code==707){
+                sweetAlert(
+                        "sorry",
+                        "对不起，网络发生错误，请您重新登录",
+                        "error"
+                ).then(function () {
+                            location.href="../login.html"
+                        })
             }
+            else{
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+
+                )
+            }
+        } , error: function (msg) {
+            console.log(msg);
+            sweetAlert(
+                    "sorry",
+                    "网络发生错误,请您重新登录",
+                    'error'
+            ).then(function () {
+                        location.href="../login.html"
+                    })
         }
 
     })

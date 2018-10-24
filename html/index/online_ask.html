@@ -16,24 +16,27 @@
     <header class="clearfix">
         <i onclick="back()"></i>
         <h3>沟通</h3>
-        <del onclick="location.href='service_detail.html'">职位详情</del>
+        <!--<del onclick="location.href='service_detail.html'">职位详情</del>-->
     </header>
-    <div class="main clearfix">
-        <div class="left f_left">
-            <img src="../../img/focus-img1.png" class="f_left" alt=""/>
-            <div class="mess f_left">
-                Hi,感谢你报名此职务~可能 无法及时回复消息，请见谅
-            </div>
+    <section>
+        <div class="main clearfix">
+            <!-- <div class="left f_left">
+                 <img src="../../img/focus-img1.png" class="f_left" alt=""/>
+                 <div class="mess f_left">
+                     Hi,感谢您的了解，可能 无法及时回复消息，请见谅
+                 </div>
+             </div>
+             <div class="right f_right">
+                 <img src="../../img/focus-img1.png" class="f_right" alt=""/>
+                 <div class="mess f_right">
+                     Hi,感谢你报名此职务~可能 无法及时回复消息，请见谅
+                 </div>
+             </div>-->
         </div>
-        <div class="right f_right">
-            <img src="../../img/focus-img1.png" class="f_right" alt=""/>
-            <div class="mess f_right">
-                Hi,感谢你报名此职务~可能 无法及时回复消息，请见谅
-            </div>
-        </div>
-    </div>
+    </section>
+
     <div class="send">
-        <input type="text" placeholder="开始咨询" />
+        <input type="text" placeholder="开始沟通" />
         <em class="m_send">发送</em>
     </div>
 </div>
@@ -47,10 +50,17 @@
 <script src="../../js/common/template.js"></script>
 <script>
     $(function () {
+
+        var href=location.href.split("=")[1];
+        console.log(href);
+        var accid=localStorage.getItem("uName");
+    function data(data){
+        console.log(data);
+    }
+        myAjax({data:{accid:accid,faccid:href,type:1,msg:""},type:"post",url:"/im/addFriend"},data);
         $(".m_send").click(function () {
             //input的值
             var mess=$('.send>input').val();
-
             mess=$.trim(mess);
             console.log(mess);
             if(mess==''){
@@ -58,13 +68,128 @@
                         'sorry',
                         '您不能发送空消息！',
                         'error'
-                )
+                );
+                return false;
             }else{
-                var html="<div class='right f_right'><img src='../../img/focus-img1.png'class='f_right'/><div class='mess f_right'>"+mess+"</div></div>"
-                $('.main').append(html);
+              /*  var html="<div class='right f_right'><img src='../../img/focus-img1.png'class='f_right'/><div class='mess f_right'>"+mess+"</div></div>";
+
+                $('.main').append(html);*/
+                sendMsg(mess);
                 $('.send>input').val("");
             }
         })
+
+        getSessionMsg();
+        function getSessionMsg(){
+            $.ajax({
+                //处理session每次不唯一问题
+                xhrFields: {
+                    withCredentials: true
+                },
+                async:false,
+                type: "post",
+                url: baseUrl+"/im/querySessionMsg",
+                data:{
+                    to:href
+                },
+                dataType: 'json',
+                success:function(data) {
+                    //console.log(data);
+                    if(data.msg.code==200){
+                        //$('.chat_main').append(123);
+                         console.log(data);
+                        var from=localStorage.getItem("uName");
+                        console.log(from);
+                        data.msg.msgs=data.msg.msgs.reverse();
+                        for(var i=0;i<data.msg.msgs.length;i++){
+                            // $('.chat_main').append(456);
+                            if(data.msg.msgs[i].from==from){
+                                /*var html="<div class='right clearfix'><img src="+data.inAvatar+" class='f_right'/><div class='user_chat f_right'><span class=''>"+data.msg.msgs[i].body.msg+"</span> </div> </div>";*/
+                                var html="<div class='right f_right'><img src='../../img/focus-img1.png' class='f_right'/><div class='mess f_right'>"+data.msg.msgs[i].body.msg+"</div></div>";
+                                $('.main').append(html);
+                                $('section').scrollTop($('.main').scrollHeight);
+                            }else{
+                                /*var to="<div class='left clearfix'><img src="+data.toAvatar+" alt='' class='chat_info'/><div class='user_chat'> <span>"+data.msg.msgs[i].body.msg+"</span></div></div>";*/
+                                var to="<div class='left f_left'><img src='../../img/focus-img1.png' class='f_left'/><div class='mess f_left'>"+data.msg.msgs[i].body.msg+"</div> </div>";
+                                $('.main').append(to);
+                                $('section').scrollTop($('.main').scrollHeight);
+                            }
+                        }
+
+                       // $(".main").html(template("msg",data))
+                    }else{
+                        sweetAlert(
+                                'sorry',
+                                '网络错误啦，请您重新登录!',
+                                'error'
+                        ).then(function(){
+                                    location.href='./login.html'
+                                })
+                    }
+                },error: function (msg) {
+                    console.log(msg);
+                }
+
+            })
+        }
+        //刷新页面
+        setInterval(function(){
+            $(".main").html("");
+           getSessionMsg();
+        },3000);
+
+
+        //发送普通消息
+        function sendMsg(body){
+            /*  var obj={};
+             obj.ope=0;
+             obj.type=0;
+             obj.to=href;
+             obj.body=body;*/
+            //obj=JSON.stringify(obj);
+            var obj={ope:0,type:0,to:href,body:"'"+body+"'"};
+            //obj=JSON.stringify(obj);
+            $.ajax({
+                //处理session每次不唯一问题
+                xhrFields: {
+                    withCredentials: true
+                },
+                async:false,
+                type: "post",
+                beforeSend: function () {
+                    $("#loading").show()
+                },
+                url: baseUrl+"/im/sendMsg",
+                data:obj,
+                /* {
+                 ope:0,
+                 type:0,
+                 to:href,
+                 body:{'msg':body}
+                 },*/
+                dataType: 'json',
+                success:function(data) {
+                    console.log(data);
+                    if(data.code==200){
+                        $("#loading").hide();
+                        $(".main").html("");
+                        getSessionMsg();
+                    }else{
+                        sweetAlert(
+                                'sorry',
+                                '网络错误啦，请您重新登录!',
+                                'error'
+                        ).then(function(){
+                                    location.href='./login.html'
+                                })
+                    }
+
+                }
+
+            })
+        }
+
+
     })
 </script>
 </html>

@@ -12,14 +12,19 @@
     <link rel="stylesheet" href="../css/base.css"/>
     <link rel="stylesheet" href="../css/addData.css"/>
     <link rel="stylesheet" href="../css/publish/publish.css"/>
+    <link rel="stylesheet" href="../css/sweetalert2.css"/>
     <link rel="stylesheet" href="../css/data_time/mobiscroll.2.13.2.css" />
 </head>
 <body>
+<div id="loading">
+    <img src="../img/login.gif" alt=""/>
+    <div>请等待，正在加载...</div>
+</div>
 <div class="layer">
     <header>
         <i onclick="back()"></i>
         <h3>发布需求</h3>
-        <em>完成</em>
+        <em class="finish">完成</em>
     </header>
     <div class="main_content">
         <div class="type clearfix">
@@ -99,9 +104,9 @@
         </div>
         <div class="link_phone">
           <span>联系电话</span>
-            <input type="text" placeholder="请输入联系电话"/>
+            <input type="number" placeholder="请输入联系电话"/>
         </div>
-        <textarea  placeholder="具体描述您想要什么，能更快找到适合您的服务商， 如：需求背景，工作周期等"></textarea>
+        <textarea class="description" placeholder="具体描述您想要什么，能更快找到适合您的服务商， 如：需求背景，工作周期等"></textarea>
         <div class="imageBox">
             <div class="z_photo">
                 <div class="z_file">
@@ -132,9 +137,48 @@
 <script src="../js/common/data_time/mobiscroll.2.13.2.js"></script>
 <script src="../js/common/base.js"></script>
 <script src="../js/common/back.js"></script>
+<script src="../js/common/fastclick.js"></script>
+<script src="../js/common/sweetalert2.js"></script>
 <script src="../js/common/template-web.js"></script>
 <script src="../js/common/template.js"></script>
 <script>
+    FastClick.attach(document.body);
+    $.ajax({
+        url:baseUrl+"/company/getCompanyMessage",
+        dataType:"json",
+        data:{},
+        type:"post",
+        async:"false",
+        //处理session每次不唯一问题
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (data) {
+            console.log(data);
+            if(data.code==500||data.data.isAuth!==1||!data.data.isAuth){
+                sweetAlert(
+                        "sorry",
+                        "对不起，你的企业信息不完整，暂不能发布",
+                        "error"
+                ).then(function () {
+                            location.href="./mine/enterprise_certification.html";
+                        })
+                setInterval(function () {
+                    location.href="./mine/enterprise_certification.html";
+                },5000);
+            }
+        }
+    })
+
+    document.querySelector('.mui-table-view').addEventListener('selected',function(e1){
+        window.event? window.event.cancelBubble = true : e.stopPropagation();
+        console.log("工作年限为：" + e1.detail.el.innerText);
+        document.querySelector(".type_choose").innerText= e1.detail.el.innerText;
+        document.querySelector(".type_choose").style.color="#333";
+        document.querySelector("#middlePopover").style.display="none";
+        document.querySelector(".mui-backdrop").style.display="none";
+        /* alert(1);*/
+    });
     /*上传图片
      * */
     function imgChange(obj1, obj2) {
@@ -233,6 +277,137 @@
         document.getElementById(id).outerHTML='';
     }
     /*上传图片结束*/
+   $(".finish").click(function () {
+
+       var workType=$(".type_choose").text();
+       if(workType=="请选择招工类型"){
+           sweetAlert(
+                   "sorry",
+                   "请您选择招工类型",
+                   "error"
+           );
+           return false;
+       }
+       var work_name=$(".work_name>input").val();
+       if(work_name==""){
+           sweetAlert(
+                   "sorry",
+                   "请您填写岗位名称",
+                   "error"
+           );
+           return false;
+       };
+       var startTime=$("#tests").val();
+       if(startTime==""){
+           sweetAlert(
+                   "sorry",
+                   "请您设置开始时间",
+                   "error"
+           );
+           return false;
+       }else{
+startTime=new Date(startTime.replace(/-/g,"/")).getTime();
+          // console.log(startTime);
+       }
+       var endTime=$("#test").val();
+       if(endTime==""){
+           sweetAlert(
+                   "sorry",
+                   "请您设置结束时间",
+                   "error"
+           );
+           return false;
+       }else{
+           endTime=new Date(endTime.replace(/-/g,"/")).getTime();
+          // console.log(endTime);
+       }
+       var price=$(".pay>input").val();
+       if(price.trim()==""){
+           sweetAlert(
+                   "sorry",
+                   "请您填写工资薪酬/小时",
+                   "error"
+           );
+           return false;
+       }
+       var recruiting=$(".recruiting>input").val();
+       if(recruiting.trim()==""){
+           sweetAlert(
+                   "sorry",
+                   "请您招聘人数",
+                   "error"
+           );
+           return false;
+       }
+       var link_phone=$(".link_phone>input").val();
+       if(!checkTelNum(link_phone)){
+           sweetAlert(
+                   "sorry",
+                   "请您填写正确的联系电话",
+                   "error"
+           );
+           return false;
+       }
+       var description=$(".description").val();
+       var base64s=images;
+       base64s=base64s.join("。").replace(/"/g,"");;
+       //console.log(base64Images);
+      // console.log(base64s);
+       var comment=$(".etc>textarea").val();
+       var param={
+           comment:comment,
+           base64Images:base64s,
+           endTime:endTime,
+           startTime:startTime,
+           stationName:work_name,
+           workType:workType,
+           introduce:description,
+           mobilePhone:link_phone,
+           number:recruiting,
+           price:price
+       };
+
+       $.ajax({
+           url:baseUrl+"/station/pushStation",
+           dataType:"json",
+           data:param,
+           type:"post",
+        //处理session每次不唯一问题
+           xhrFields: {
+               withCredentials: true
+           },
+           beforeSend: function () {
+               $("#loading").show();
+           },
+           success: function (data) {
+               console.log(data);
+               $("#loading").hide();
+               if(data.code==200){
+                   sweetAlert(
+                           "恭喜您",
+                           "发布需求成功了",
+                           "success"
+
+                   ).then(function () {
+
+                               location.href="./index/select.html"
+                           })
+               }else{
+                   $("#loading").hide();
+                   sweetAlert(
+                           "sorry",
+                           data.msg,
+                           "error"
+
+                   ).then(function () {
+                               location.href="./index/select.html"
+                           })
+               }
+           }
+       })
+
+
+   })
 </script>
 <!--日期时间插件-->
 <script type="text/javascript">

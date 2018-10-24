@@ -596,8 +596,7 @@
 <script src="../../js/common/mui.indexedlist.js"></script>
 <script>
     //location的height
-    $('.location').css({'height':$(window).height()})
-
+    $('.location').css({'height':$(window).height()});
     mui.init();
     mui.ready(function() {
         var list = document.getElementById('list');
@@ -621,8 +620,6 @@
             //create
             window.indexedList = new mui.IndexedList(list);
             $('.mui-placeholder').css({'z-index':'-1'});
-
-
         });
         //获取高度作出padding值
         var guild = $('.guild').height();
@@ -633,29 +630,23 @@
     //获取高度作出padding值
     var guild = $('.guild').height();
     console.log(guild);
-
     $('.location .mui-indexed-list-inner').css({'padding-top':guild});
     //获取点击的城市 同时保存到本地存储 渲染到 兼职页面
         $(".mui-table-view-cell").click(function() {
             var text = $(this).text();
             localStorage.setItem("city", text);
+            console.log(text);
             // 调用接口 发给后台 成功之后 back()返回
-            //sendCity(text);
-            //console.log(text);
-            //back();
+           back();
         })
         $(".btnout").click(function(){
             var hotCity=$(this).text();
             console.log(hotCity);
             localStorage.setItem("city",hotCity);
+            back();
             // 调用接口 发给后台 成功之后 back()返回
-            sendCity(hotCity);
-
         })
-    /*if(localStorage.getItem("city")){
-
-    }*/
-    function sendCity(city){
+   /* function sendCity(city){
         $.ajax({
             //处理session每次不唯一问题
             xhrFields: {
@@ -674,7 +665,6 @@
                     back();
                 }
                 else{
-
                     sweetAlert(
                             'sorry',
                             '网络错误，请重新登录!',
@@ -688,7 +678,7 @@
             }
         })
 
-    }
+    }*/
 </script>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=bd54e4be514aab4910f8afc68209d057&plugin=AMap.CitySearch"></script>
 <script type="text/javascript">
@@ -712,6 +702,8 @@
                     console.log(cityinfo);
                     //地图显示当前城市
                     map.setBounds(citybounds);
+                    /*定位成功之后发送给后台 cityinfo*/
+                    localStorage.setItem("city",cityinfo);
                 }
             } else {
                 document.getElementById('info').innerHTML = result.info;

@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="../../css/order/order.css"/>
 </head>
 <body>
-<div class="layer">
+<div id="loading">
+    <img src="../../img/login.gif" alt=""/>
+
+</div>
+<div class="layer" style="overflow-x: hidden">
     <header>
         <h3>订单中心</h3>
     </header>
@@ -61,7 +65,7 @@
     <div class="content">
         <h3>进行中订单</h3>
         <div class="news_list">
-            <div class="list clearfix" onclick="location.href='./ordering_detail.html'">
+         <!--   <div class="list clearfix" onclick="location.href='./ordering_detail.html'">
                 <div class="top">
                     <div class="top_left img_box clearfix">
                         <img src="../../img/focus-img1.png" alt=""/>
@@ -97,7 +101,7 @@
 
 
 
-        </div>
+        </div>-->
     </div>
 </div>
 <footer>
@@ -133,4 +137,71 @@
 <script src="../../js/common/sweetalert2.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script id="apply_order" type="text/html">
+    {{if data.length==0}}
+    <div class="no_info"> 对不起，您暂时没有进行中的订单</div>
+    {{else}}
+    {{each data as value i}}
+    <!--<div class="list clearfix" onclick="location.href='./ordering_detail.html?orderId={{value.stationOrderId}}'">-->
+    <div class="list clearfix" onclick="location.href='./order_no_finish_detail.html?orderId={{value.stationOrderId}}'">
+        <div class="top">
+            <div class="top_left img_box clearfix">
+                <img src="{{value.station.company.companyImages.length==0?'../../img/focus-img1.png':value.station.company.companyImages[0].imagePath}}" alt=""/>
+            </div>
+            <div class="top_right f_left">
+                <h2>{{value.station.company.companyName}}公司{{value.station.workType}}</h2>
+                <p>时间：{{time(value.station.startTime)}}到{{time(value.station.endTime)}}</p>
+                <div class="price">地址：{{value.station.company.address}}</div>
+            </div>
+        </div>
+        <div class="bottom_address f_left">
+            <span class="see_det" >查看详情</span>
+            <span class="rej">确认收工</span>
+        </div>
+    </div>
+
+    {{/each}}
+    {{/if}}
+</script>
+
+<script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+            var backButtonPress = 0;
+            $.back = function(event) {
+                backButtonPress++;
+                if (backButtonPress > 1) {
+                    plus.runtime.quit();
+                } else {
+                    plus.nativeUI.toast('再按一次退出应用');
+                }
+                setTimeout(function() {
+                    backButtonPress = 0;
+                }, 1000);
+                return false;
+            };
+        });
+    }(mui, document));
+    $(function () {
+        isUser();
+// /station/getShouldSure 获取工作进行中的订单 待开工 临时工 发布方 共用一个接口
+    $(document).ajaxStop(function () {
+        $("#loading").hide();
+    })
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+                template.helper("time",function(date){
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                    return time;
+                    /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                });
+                $(".news_list").html(template("apply_order",data));
+            }
+        }
+        myAjax({url:"/station/getWorkingOrder",type:"post",data:"",async:"false"},render);
+
+    })
+</script>
 </html>

@@ -12,7 +12,10 @@
     <link rel="stylesheet" href="../../css/order/order.css"/>
 </head>
 <body>
-<div class="layer">
+<div id="loading">
+    <img src="../../img/login.gif" alt=""/>
+</div>
+<div class="layer" style="overflow-x: hidden">
     <header>
         <h3>订单中心</h3>
     </header>
@@ -58,22 +61,22 @@
     <div class="content">
         <h3>待评价订单</h3>
         <div class="news_list">
-            <div class="list clearfix" onclick="location.href='order_comment_detail.html'">
-                <div class="top">
-                    <div class="top_left img_box clearfix">
-                        <img src="../../img/focus-img1.png" alt=""/>
-                    </div>
-                    <div class="top_right f_left">
-                        <h2>宇通公司制作轮毂模具司制作轮毂模具</h2>
-                        <p>时间：2018-03-14到2018-08-16</p>
-                        <div class="price">地址：郑州市中牟县九龙郑州市中牟县九龙镇   宇通工业园</div>
-                    </div>
-                </div>
-                <div class="bottom_address f_left">
-                    <span class="see_det" >查看详情</span>
-                    <span class="rej">待评价</span>
-                </div>
-            </div>
+            <!-- <div class="list clearfix" onclick="location.href='order_comment_detail.html'">
+                 <div class="top">
+                     <div class="top_left img_box clearfix">
+                         <img src="../../img/focus-img1.png" alt=""/>
+                     </div>
+                     <div class="top_right f_left">
+                         <h2>宇通公司制作轮毂模具司制作轮毂模具</h2>
+                         <p>时间：2018-03-14到2018-08-16</p>
+                         <div class="price">地址：郑州市中牟县九龙郑州市中牟县九龙镇   宇通工业园</div>
+                     </div>
+                 </div>
+                 <div class="bottom_address f_left">
+                     <span class="see_det" >查看详情</span>
+                     <span class="rej">待评价</span>
+                 </div>
+             </div>-->
 
         </div>
     </div>
@@ -110,4 +113,74 @@
 <script src="../../js/common/sweetalert2.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script id="apply_order" type="text/html">
+    {{if data.length==0}}
+    <div class="no_info"> 对不起，您暂时没有待评价的订单</div>
+    {{else}}
+    {{each data as value i}}
+   <!-- <div class="list clearfix" onclick="location.href='order_comment_detail.html?orderId={{value.stationOrderId}}'">-->
+    <div class="list clearfix" onclick="location.href='order_no_finish_detail.html?orderId={{value.stationOrderId}}'">
+        <div class="top">
+            <div class="top_left img_box clearfix">
+                <img src="{{value.station.company.companyImages.length==0?'../../img/focus-img1.png':value.station.company.companyImages[0].imagePath}}" alt=""/>
+              <!--  <img src="{{value.worker.avatar}}" alt=""/>-->
+            </div>
+            <div class="top_right f_left">
+                <h2>{{value.station.company.companyName}}公司{{value.station.workType}}</h2>
+                <p>时间：{{time(value.station.startTime)}}到{{time(value.station.endTime)}}</p>
+                <div class="price">地址：{{value.station.company.address}}</div>
+            </div>
+        </div>
+        <div class="bottom_address f_left">
+            <span class="see_det" >查看详情</span>
+            <span class="rej">待评价</span>
+        </div>
+    </div>
+
+    {{/each}}
+    {{/if}}
+</script>
+
+<script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+            var backButtonPress = 0;
+            $.back = function(event) {
+                backButtonPress++;
+                if (backButtonPress > 1) {
+                    plus.runtime.quit();
+                } else {
+                    plus.nativeUI.toast('再按一次退出应用');
+                }
+                setTimeout(function() {
+                    backButtonPress = 0;
+                }, 1000);
+                return false;
+            };
+        });
+    }(mui, document));
+    $(function () {
+        isUser();
+        //ajax 发送完毕
+        $(document).ajaxStop(function(){
+            $("#loading").hide();
+        });
+
+        // /station/getNotCommentOrder 未评价的订单
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+                template.helper("time",function(date){
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                    return time;
+                    /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                });
+                $(".news_list").html(template("apply_order",data));
+            }
+        }
+        myAjax({url:"/station/getNotCommentOrder",type:"post",data:"",async:"false"},render);
+
+    })
+</script>
 </html>

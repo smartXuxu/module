@@ -231,3 +231,15 @@ address,caption,cite,code,dfn,em,th{
     margin-top: 0.2rem;
     transform: translateX(-18%);
 }
+.no_info{
+    color:#999;
+    font-size: 0.36rem;
+    margin-left: 0.4rem;
+    margin-top: 0.8rem;
+}
+.no_in{
+    color:#999;
+    font-size: 0.24rem;
+    margin-left: 0.4rem;
+    margin-top: 0.2rem;
+}

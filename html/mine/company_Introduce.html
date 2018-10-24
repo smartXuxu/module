@@ -9,22 +9,22 @@
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/addData.css"/>
     <link rel="stylesheet" href="../../css/publish/publish.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         .layer>header>em{
             color:#fff;
         }
         .main{
-
-
             padding-top: 2rem;
-
+        }
+        .layer>header>h3{
+            line-height: 1.4rem;
         }
         .com_name,.com_add,.com_phone{
             width: 100%;
             padding: 0.3rem;
             height: 0.8rem;
             line-height:0.8rem;
-
             position:relative;
         }
         .com_name>span,.com_add>span,.com_phone>span{
@@ -36,7 +36,6 @@
             text-align: right;
             height: 0.6rem;
             margin-top: 0.1rem;
-
         }
         textarea{
             height: 1.5rem;
@@ -66,20 +65,20 @@
     <header>
         <i onclick="back()"></i>
         <h3>企业介绍</h3>
-        <em>完成</em>
+       <!-- <em class="finish">完成</em>-->
     </header>
     <div class="main">
-        <div class="com_name">
+        <!--<div class="com_name">
             <span>企业名称</span>
             <input type="text" placeholder="请输入公司名称"/>
-        </div>
+        </div>-->
         <div class="com_add">
             <span>企业地址</span>
             <input type="text" placeholder="请输入企业地址"/>
         </div>
         <div class="com_phone">
             <span>联系电话</span>
-            <input type="text" placeholder="请输入联系电话"/>
+            <input type="number" placeholder="请输入联系电话"/>
         </div>
         <textarea  placeholder="请描述一下企业的详细情况.."></textarea>
         <div class="imageBox">
@@ -106,6 +105,7 @@
 <script src="../../js/common/x_rem.js"></script>
 <script src="../../js/common/jquery.js"></script>
 <script src="../../js/common/base.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
@@ -179,6 +179,7 @@
     };
     var container=document.querySelector(".z_photo");
     var images=[];
+
     function drawing(image, x, y,index) {
         var img = new Image();
         img.crossOrigin = 'anonymous';
@@ -208,5 +209,99 @@
         document.getElementById(id).outerHTML='';
     }
     /*上传图片结束*/
+    function renter(data){
+        console.log(data);
+        if(data. msg== "抱歉无此企业信息"){
+            sweetAlert(
+                    "sorry",
+                    "对不起，暂时没有你的企业信息，您还不能进行此操作",
+                    "error"
+
+            ).then(function () {
+                        location.href='./my_message.html'
+                    })
+            return false;
+        }else{
+           //localStorage.setItem("compId",data.data[0].companyId);
+        }
+    }
+    myAjax({url:"/company/getCompanyMessage",type:"post",async:"false",data:""},renter);
+    $(".submit").click(function () {
+        /*let com_name=$(".com_name>input").val();
+        if(com_name.trim()==""){
+            sweetAlert(
+                    "sorry",
+                    "请您填写企业名称",
+                    "error"
+            );
+            return false;
+        }*/
+        let com_add=$(".com_add>input").val();
+       /* if(com_add.trim()==""){
+            sweetAlert(
+                    "sorry",
+                    "请您填写企业地址",
+                    "error"
+            );
+            return false;
+
+        }*/
+        let mobile = $('.com_phone>input').val().trim();
+       /* if(!checkTelNum(mobile)){
+            sweetAlert(
+                    'sorry',
+                    '手机号码不正确！',
+                    'error'
+            ).then(function () {
+                        $('.com_phone>input').val("");
+                    });
+            return false;
+        }*/
+        let textarea=$("textarea").val();
+       // var base64s=images;
+        var base64s=images;
+        base64s=base64s.join("。").replace(/"/g,"");
+        console.log(base64s);
+        /*var param={};
+        param.address=com_add;
+        param.base64Images=images;
+        param.mobilePhone=mobile;
+        param.introduce=textarea;
+        param.companyId=localStorage.getItem("compId");*/
+        //console.log(param);
+        //let companyId=localStorage.getItem("compId");
+        //console.log(companyId);
+        $.ajax({
+            xhrFields: {
+                withCredentials: true
+            },
+            async:false,
+            type:"post",
+            dataType:"json",
+            url:baseUrl+"/company/updateCompanyMessage",
+            data:{
+                    "address":com_add,
+                   "base64s":base64s,
+                    "mobilePhone":mobile,
+                    "introduce":textarea,
+                    //companyId:companyId
+            },
+
+            success: function (data) {
+                console.log(data);
+                if(data.code==200){
+                    sweetAlert(
+                            '恭喜您',
+                            '您的企业介绍完善成功了！',
+                            'success'
+                    ).then(function () {
+                                location.href='./my_message.html';
+                                //localStorage.removeItem("compId");
+                            });
+                }
+            }
+
+        })
+    })
 </script>
 </html>

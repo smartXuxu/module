@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/mine/my_comment.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         .email>ul>li:nth-of-type(1) span{
             background-image: url("../../img/uhappy_e.png");
@@ -25,7 +26,8 @@
         <h3>评价</h3>
     </header>
     <div class="mian">
-    <div class="top">
+        <!--填充-->
+  <!--  <div class="top">
         <img src="../../img/focus-img1.png" alt=""/>
         <div class="center">
             <p>李先生</p>
@@ -61,7 +63,7 @@
             </div>
         </div>
         <button class="submit">提交</button>
-
+-->
     </div>
 </div>
 </body>
@@ -71,15 +73,168 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script id="comment" type="text/html">
+    <div class="top">
+        <img src="{{data.stationOrder.worker.avatar}}" alt=""/>
+        <div class="center">
+            <p>{{data.stationOrder.worker.userName.substr(0,1)}}**</p>
+            <h4>{{data.stationOrder.worker.workType}}</h4>
+        </div>
+    </div>
+    <div class="email">
+        <ul>
+            <li>
+                <a href="./my_order_comment_nosat.html?url={{data.stationOrder.stationOrderId}}">
+                    <span></span>
+                    不满意
+                </a>
+            </li>
+            <li>
+                <a href="./my_order_comment.html?url={{data.stationOrder.stationOrderId}}" class="active">
+                    <span></span>
+                    满意
+                </a>
+
+            </li>
+        </ul>
+    </div>
+    <div class="reason_satisfaction">
+        <p>请选择满意的原因(必选）</p>
+        <div class="reason_detail">
+            <span data-value="1" class="active">效率高</span>
+            <span data-value="2">态度好</span>
+            <span data-value="3">仪表整洁</span>
+            <span data-value="4">沟通良好</span>
+            <span data-value="5">热情礼貌</span>
+            <span data-value="6">风雨无阻</span>
+        </div>
+    </div>
+    <button class="submit">提交</button>
+
+</script>
 <script>
     $(function () {
-        var flag=true;
-        getData(flag,".reason_detail span");
-        var  arr=[];
-        $(".submit").click(function () {
-            forEach(".reason_detail>.active",arr);
-            console.log(arr.join(","));
-        })
+
+        // 渲染页面 work的头像 啥的
+        // 先要获取 所有的
+        //页面多个传参 确定详情
+        var data=location.href.split("=")[1];
+        console.log(data);
+        reder(data);
+        function reder(data){
+            $.ajax({
+                url:baseUrl+"/station/getDetailedOrder",
+                data:{
+                    stationOrderId:data
+                },
+                dataType:"json",
+                type:"post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                async:false,
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg.code==200){
+                        function formatSeconds(value) {
+                            var secondTime = parseInt(value);// 秒
+                            var minuteTime = 0;// 分
+                            var hourTime = 0;// 小时
+                            if(secondTime > 60) {//如果秒数大于60，将秒数转换成整数
+                                //获取分钟，除以60取整数，得到整数分钟
+                                minuteTime = parseInt(secondTime / 60);
+                                //获取秒数，秒数取佘，得到整数秒数
+                                secondTime = parseInt(secondTime % 60);
+                                //如果分钟大于60，将分钟转换成小时
+                                if(minuteTime > 60) {
+                                    //获取小时，获取分钟除以60，得到整数小时
+                                    hourTime = parseInt(minuteTime / 60);
+                                    //获取小时后取佘的分，获取分钟除以60取佘的分
+                                    minuteTime = parseInt(minuteTime % 60);
+                                }
+                            }
+                            var result = "" + parseInt(secondTime);
+
+                            if(minuteTime > 0) {
+                                result = "" + parseInt(minuteTime) + ":" + result;
+                            }
+                            if(hourTime > 0) {
+                                result = "" + parseInt(hourTime) + ":" + result;
+                            }
+                            return result;
+                        }
+                        template.helper("time",function(date){
+                            var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                            return time;
+                            /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                        });
+                       $(".mian").html(template("comment",msg));
+                        var flag=true;
+                        getData(flag,".reason_detail span");
+                        var  arr=[];
+                        $(".submit").click(function () {
+                            forEach(".reason_detail>.active",arr);
+                            console.log(arr.join(","));
+                            arr=arr.join(",");
+                            console.log(arr);
+                            function recomment(data){
+
+                                console.log(data);
+                                if(data.code==200){
+                                    $(".submit").text("已评价");
+                                    sweetAlert(
+                                            "恭喜您",
+                                            "评价成功了",
+                                            "success"
+                                    ).then(function () {
+                                                location.href='./my_nocomment.html';
+                                            })
+                                }else{
+                                    sweetAlert(
+                                            "sorry",
+                                            data.msg,
+                                            "error"
+                                    ).then(function () {
+                                                location.href='../login.html';
+                                            })
+                                }
+                            }
+                            myAjax({url:"/station/commentWorker",data:{appraise:arr,satisfied:"满意",stationOrderId:msg.data.stationOrder.stationOrderId},type:"post"},recomment)
+                        })
+
+
+                    }else if(msg.code==707){
+                        sweetAlert(
+                                "sorry",
+                                "对不起，网络发生错误，请您重新登录",
+                                "error"
+                        ).then(function () {
+                                    location.href="../login.html"
+                                })
+                    }
+                    else{
+                        sweetAlert(
+                                "sorry",
+                                data.msg,
+                                "error"
+
+                        )
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                    sweetAlert(
+                            "sorry",
+                            "网络发生错误,请您重新登录",
+                            'error'
+                    ).then(function () {
+                                location.href="../login.html"
+                            })
+                }
+            })
+        }
     })
 </script>
 </html>

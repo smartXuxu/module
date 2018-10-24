@@ -7,6 +7,7 @@
     <title>发表评价</title>
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         
         html{
@@ -50,7 +51,7 @@
     </header>
     <div class="content">
         <textarea placeholder="请输入评价内容..."></textarea>
-        <button>提交</button>
+        <button class="submit">提交</button>
     </div>
 </div>
 </body>
@@ -60,4 +61,46 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script>
+    $(function () {
+    // /station/commentOrder
+        var href=location.href.split("=")[1];
+        $(".submit").click(function () {
+            var comment=$("textarea").val().trim();
+            if(comment=="") {
+                sweetAlert(
+                        "sorry",
+                        "对不起，你还没有评价",
+                        "error"
+                )
+                return false;
+            }
+            else{
+                function render(data){
+                    console.log(data);
+                    if(data.code==200){
+                        sweetAlert(
+                                "恭喜您",
+                                "您已经成功完成了评价",
+                                "success"
+                        ).then(function () {
+                                    back();
+                                })
+                    }else{
+                        sweetAlert(
+                                "sorry",
+                                data.msg,
+                                "error"
+                        ).then(function () {
+                                 location.href="../login.html"
+                                })
+                    }
+                }
+                myAjax({url:"/station/commentOrder",data:{comment:comment,stationOrderId:href},type:"post"},render);
+            }
+        })
+
+    })
+</script>
 </html>

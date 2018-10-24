@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+
+    <title>拒绝原因</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
+    <style>
+        html{
+            background-color: #eeeeee;
+        }
+        .content{
+            padding:0 0.3rem;
+            padding-top: 2.2rem;
+        }
+        .content>textarea{
+            width: 90%;
+            position: relative;
+            height: 5rem;
+            background-color: #fff;
+            border-radius: 10px;
+            padding:0.3rem;
+            font-size: 0.3rem;
+            color: #999999;
+            text-indent: 2em;
+            border: none;
+        }
+        .reason{
+
+            width: 95%;
+            height: 0.8rem;
+            line-height: 0.8rem;
+            background-color: #009afb;
+            color:#fff;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.3rem;
+            position: relative;
+            left: 3%;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>拒绝原因</h3>
+    </header>
+    <div class="content">
+        <textarea placeholder="请填写拒绝原因"></textarea>
+        <button class="reason">提交</button>
+    </div>
+</div>
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/back.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script>
+    $(function () {
+        var id=location.href.split("=")[1];
+        console.log(id);
+        $(".reason").click(function () {
+            var reason=$("textarea").val().trim();
+            if(reason==""){
+                sweetAlert(
+                        "sorry",
+                        "请您填写拒绝原因",
+                        "error"
+                );
+                return false;
+            }else{
+                function render(data){
+                    console.log(data);
+                    if(data.code==200){
+                        sweetAlert(
+                                "恭喜您",
+                                "您成功完成了操作",
+                                "success"
+                        ).then(function () {
+                                    $(".reason").text("已成功拒绝");
+                                });
+                    }
+                }
+                 myAjax({url:"station/dealApplyOrder",type:"post",data:{reason :reason,resultType:2,stationOrderId:id}},render)
+            }
+        })
+
+    })
+</script>
+</html>

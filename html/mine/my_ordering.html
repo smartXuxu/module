@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="../../css/mine/my_order.css"/>
 </head>
 <body>
+<div id="loading">
+    <img src="../../img/login.gif" alt=""/>
+</div>
 <div class="layer">
     <header>
         <i onclick="location.href='./mine.html'"></i>
@@ -19,7 +22,7 @@
     <div class="main">
         <nav>
             <ul class="clearfix">
-                <li ><a href="./my_allOrder.html" >全部</a></li>
+                <li ><a href="./my_allOrder.html" >我的发布</a></li>
                 <li><a href="./my_neworder.html" >新订单</a></li>
                 <li><a href="./my_wait.html">待完成</a></li>
                 <li><a href="./my_ordering.html" class="active" >进行中</a></li>
@@ -28,7 +31,7 @@
             </ul>
         </nav>
         <div class="all_list">
-            <div class="list" onclick="location.href='./my_order_detail.html'">
+            <!--<div class="list" onclick="location.href='./my_order_detail.html'">
                 <div class="tlt clearfix">
                     <img src="../../img/focus-img1.png" alt=""/>
                     <div class="tlt_r">
@@ -42,7 +45,7 @@
                     <button >查看详情</button>
                     <button>进行中</button>
                 </div>
-            </div>
+            </div>-->
 
         </div>
     </div>
@@ -54,4 +57,65 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script type="text/html" id="order">
+    {{if data.length==0}}
+    <div class="no_info">对不起，您暂时没有进行中的订单</div>
+    {{else}}
+    {{each data as value i}}
+    <div class="list" onclick="location.href='./my_order_detail.html?orderId={{value.stationOrderId}}'">
+        <div class="tlt clearfix">
+            <img src="{{value.worker.avatar}}" alt=""/>
+            <div class="tlt_r">
+                <p>接单姓名：{{value.worker.userName.substr(0.1)}}**</p>
+                <p>岗位名称：{{value.worker.workType}}</p>
+                <p>工资薪酬：￥{{value.station.price}}/时</p>
+                <p>接单时间：{{time(value.orderTime)}}</p>
+            </div>
+        </div>
+        <div class="bottom">
+            <button >查看详情</button>
+            <button>进行中</button>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+</script>
+<script>
+    /*进行中的订单*/
+    $(function () {
+        //ajax 发送完毕
+        $(document).ajaxStop(function(){
+            $("#loading").hide();
+        });
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+                template.helper("time",function(date){
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                    return time;
+                    /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                });
+               $(".all_list").html(template("order",data));
+            }else if(data.code==707){
+                sweetAlert(
+                        "sorry",
+                        "对不起，网络发生错误，请您重新登录",
+                        "error"
+                ).then(function () {
+                            location.href="../login.html"
+                        })
+            }
+            else{
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+
+                )
+            }
+        }
+        myAjax({url:"/station/getWorkingOrder",type:"post",data:"",async:"false"},render);
+    })
+</script>
+
 </html>

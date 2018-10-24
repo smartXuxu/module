@@ -10,15 +10,28 @@
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/footer.css"/>
     <link rel="stylesheet" href="../../css/message/message.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
 
 </head>
 <body>
+<div id="loading">
+    <img src="../../img/login.gif" alt=""/>
+
+</div>
 <div class="layer">
     <header>
         <h3>消息列表</h3>
     </header>
     <div class="content">
-        <div class="list" onclick="location.href='../index/online_ask.html'">
+      <!--  <div class="list" onclick="location.href='../index/online_ask.html'">
+            <img src="../../img/focus-img1.png" alt=""/>
+            <div class="center">
+                <em>宇通客服</em>
+                <span>请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？</span>
+            </div>
+            <i>08:00</i>
+        </div>-->
+        <!--<div class="list" onclick="location.href='../index/online_ask.html'">
             <img src="../../img/focus-img1.png" alt=""/>
             <div class="center">
                 <em>宇通客服</em>
@@ -41,15 +54,7 @@
                 <span>请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？</span>
             </div>
             <i>08:00</i>
-        </div>
-        <div class="list" onclick="location.href='../index/online_ask.html'">
-            <img src="../../img/focus-img1.png" alt=""/>
-            <div class="center">
-                <em>宇通客服</em>
-                <span>请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？请问明天能准时到吗？</span>
-            </div>
-            <i>08:00</i>
-        </div>
+        </div>-->
     </div>
     <footer>
         <ul class="clearfix">
@@ -78,8 +83,115 @@
 </div>
 </body>
 <script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/mui.min.js"></script>
 <script src="../../js/common/jquery.js"></script>
 <script src="../../js/common/base.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+
+<script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+            var backButtonPress = 0;
+            $.back = function(event) {
+                backButtonPress++;
+                if (backButtonPress > 1) {
+                    plus.runtime.quit();
+                } else {
+                    plus.nativeUI.toast('再按一次退出应用');
+                }
+                setTimeout(function() {
+                    backButtonPress = 0;
+                }, 1000);
+                return false;
+            };
+        });
+    }(mui, document));
+
+    $(function () {
+        isUser();
+        //ajax 发送完毕
+        $(document).ajaxStop(function(){
+            $("#loading").hide();
+        });
+        //创建一个数组
+        var arr=[];
+        //好友列表
+        $.ajax({
+            type:"post",
+            url:baseUrl+"/im/friendsList",
+            xhrFields: {
+                withCredentials: true
+            },
+            data:{
+
+            },
+            success:function(data){
+                console.log(data);
+                if(data==""){
+                    console.log("1");
+                    var list="<div class='no_info'>对不起，您暂时没有任何消息</div>";
+                    $(".content").html(list);
+                }
+               if(data.states==true){
+                   var Phone,userName;
+                   for(let i=0; i<data.list.length; i++){
+                       //将手机号和用户名以数组的方式放入arr中。使其成为一个二维数组
+                       arr.push([data.list[i].worker.mobilePhone,data.list[i].worker.userName,data.list[i].worker.avatar]);
+                       console.log(arr);
+
+                   }
+               }
+
+                getMessage()
+       }
+
+        })
+        //历史聊天
+        function to_time(date){
+                var time1=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                return time1;
+       }
+        function getMessage(){
+            var html = "";
+            for(let i=0;i<arr.length;i++){
+
+                $.ajax({
+                    type:"post",
+                    url:baseUrl+"/im/querySessionMsg",
+                    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+                    async:false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    data: {
+                        "to": arr[i][0],
+                    },
+                    success:function(data){
+                        console.log(data);
+                        var msgs = data.msg.msgs.length==0;
+                        console.log(msgs);
+                         if(msgs == false){
+                            html+=`<div class='list' onclick="location.href='../index/online_ask.html?url=${arr[i][0]}'"><img src='${arr[i][2]}' /><div class='center'><em>${arr[i][1]}</em><span>${data.msg.msgs[0].body.msg}</span></div> <i>${to_time(data.msg.msgs[0].sendtime)}</i></div>`
+                        }
+                        $(".content").html(html);
+
+                    }
+
+                })
+
+
+            }
+
+
+        }
+
+
+    })
+
+
+
+</script>
 </html>

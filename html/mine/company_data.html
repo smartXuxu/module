@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../css/mui.min.css"/>
     <link rel="stylesheet" href="../../css/mui_img.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <link rel="stylesheet" href="../../css/index/personal_data.css"/>
     <style>
         .layer>header{
@@ -100,72 +101,10 @@
 <div class="layer">
     <header>
         <i onclick="back()"></i>
-        <h3>个人资料</h3>
+        <h3>企业资料</h3>
     </header>
     <div class="main">
-        <div class="base">
-            <span>基本信息：</span>
-            <p>
-                <i>企业名称：</i>
-                <em>宇通XXXXXXX</em>
-            </p>
-            <p>
-                <i>企业注册人：</i>
-                <em>刘先生</em>
-            </p>
-            <p>
-                <i>企业注册时间：</i>
-                <em>2015年8月16日</em>
-            </p>
-            <p>
-                <i>注册人身份证号：</i>
-                <em>410720******0229</em>
-            </p>
-            <p>
-                <i>企业地址：</i>
-                <em>河南省郑州市金水区制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具制造高级模具</em>
-            </p>
-            <p>
-                <i>联系电话：</i>
-                <em>151****5202</em>
-            </p>
-        </div>
-        <div class="id_message">
-            <p>身份证信息：</p>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png" alt=""
-                     data-preview-src="" data-preview-group="1"/>
-            </div>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png" alt=""
-                     data-preview-src="" data-preview-group="1"/>
-            </div>
-        </div>
-        <div class="license">
-            <p>营业执照:</p>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png"   data-preview-src="" data-preview-group="2" alt=""/>
-            </div>
-        </div>
-        <div class="company_picture">
-            <p>企业照片:</p>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png"  data-preview-src="" data-preview-group="3" alt=""/>
-            </div>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png"  data-preview-src="" data-preview-group="3" alt=""/>
-            </div>
-            <div class="img_box">
-                <img src="../../img/focus-img1.png"  data-preview-src="" data-preview-group="3" alt=""/>
-            </div>
-        </div>
-        
 
-        <div class="introduce">
-            <span>企业介绍：</span>
-            <p>本人在校期间学习成绩优异，多次获得校级奖学金。工作能力强，曾担任学生干部。另外，待人真诚友善，做人在校期间学习成绩优异，多次获得校级奖学金。工作能力强，曾担任学生干部。另外，待人真诚友善，做人在校期间学习成绩优异，多次获得校级奖学金。工作能力强，曾担任学生干部。另外，待人真诚友善，做事细心有耐性，脚踏实地，认真负
-            </p>
-        </div>
         <!--
         <div class="evaluate">
             <p><span>评价：</span> <i>共56条评价</i></p>
@@ -193,10 +132,114 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script type="text/html" id="my_data">
+    {{if data.length==0}}
+    <div class="no_info">对不起，暂时没有企业信息</div>
+    {{else}}
+    <div class="base">
+        <span>基本信息：</span>
+        <p>
+            <i>企业名称：</i>
+            <em>{{data.companyName}}</em>
+        </p>
+        <p>
+            <i>企业注册人：</i>
+            <em>{{data.companyName}}</em>
+        </p>
+        <p>
+            <i>企业注册时间：</i>
+            <em>{{time(data.companyRegisterTime)}}</em>
+        </p>
+        <p>
+            <i>注册人身份证号：</i>
+            <em>{{!data.idCardNumber||data.idCardNumber==""?"未指定":str(data.idCardNumber,0,6)}}****{{!data.idCardNumber||data.idCardNumber==""?"":str(data.idCardNumber,12,12)}}</em>
+        </p>
+        <p>
+            <i>企业地址：</i>
+            <em>{{data.address}}</em>
+        </p>
+        <p>
+            <i>联系电话：</i>
+            <em>{{!data.mobilePhone||data.mobilePhone==""?"未设置":str(data.mobilePhone,0,3)}}****{{!data.mobilePhone||data.mobilePhone==""?"":str(data.mobilePhone,9,11)}}</em>
+        </p>
+    </div>
+    <div class="id_message">
+        <p>身份证信息：</p>
+        <div class="img_box">
+
+            <img src="{{data.idCardBack==''||!data.idCardBack?'':data.idCardBack}}" alt="" onerror="this.src='../../img/focus-img1.png'"
+                 data-preview-src="" data-preview-group="1"/>
+        </div>
+        <div class="img_box">
+            <img src="{{data.idCardFront==''||!data.idCardFront?'':data.idCardFront}}" alt=""  onerror="this.src='../../img/focus-img1.png'"
+                 data-preview-src="" data-preview-group="1"/>
+        </div>
+    </div>
+    <div class="license">
+        <p>营业执照:</p>
+        <div class="img_box">
+            <img src="{{data.businessLicence==''||!data.businessLicence?'':data.businessLicence}}"   onerror="this.src='../../img/focus-img1.png'" data-preview-src="" data-preview-group="2" alt=""/>
+        </div>
+    </div>
+    <div class="company_picture">
+        <p>企业照片:</p>
+        {{if data.companyImages.length==0|| !data.companyImages}}
+        {{else}}
+        {{each data.companyImages as img i}}
+        <div class="img_box">
+            <img src="{{img.imagePath}}"  data-preview-src="" data-preview-group="3" alt=""/>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+
+
+    <div class="introduce">
+        <span>企业介绍：</span>
+        <p>{{data.representative}}
+        </p>
+    </div>
+
+    {{/if}}
+</script>
 <script>
     $(function(){
         mui.previewImage();
         mui('body').on('tap','a',function(){document.location.href=this.href;});
+    // /company/getCompanyMessage
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+                template.helper("str",function(str,a,b){
+                    return str.substr(a,b);
+                });
+                template.helper("time",function(date){
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').substr(0,9).replace(/\//g,"-");
+                    return time;
+                });
+               $(".main").html(template("my_data",data))
+            }else if(data.code==500){
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+                ).then(function () {
+                            location.href='./enterprise_certification.html';
+                        })
+            }
+            else{
+                sweetAlert(
+                        "sorry",
+                       data.msg,
+                        "error"
+                ).then(function () {
+                            location.href='../login.html';
+                        })
+            }
+        }
+        myAjax({url:"/company/getCompanyMessage",type:"post",async:"false"},render);
+
     })
 </script>
 </html>

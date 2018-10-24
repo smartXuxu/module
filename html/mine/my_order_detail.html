@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../css/mui_img.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/index/service_detail.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
             padding: 0;
@@ -18,6 +19,9 @@
         input{
             -webkit-user-select: auto;!important;
         }
+      /*  #mask{
+            z-index: 145546545412125;
+        }*/
     </style>
 </head>
 <body>
@@ -26,14 +30,14 @@
 
     </div>
     <div id="share">
-       <div class="box">
-           <input type="number"  class="data" /> &nbsp;天&nbsp;
-           <input type="number"  class="hour" /> &nbsp;时&nbsp;
-           <input type="number" class="min"  /> &nbsp;分&nbsp;
-           <input type="number" class="second"  /> &nbsp;秒&nbsp;
-       </div>
+        <div class="box">
+            <input type="number"  class="data" /> &nbsp;天&nbsp;
+            <input type="number"  class="hour" /> &nbsp;时&nbsp;
+            <input type="number" class="min"  /> &nbsp;分&nbsp;
+            <input type="number" class="second"  /> &nbsp;秒&nbsp;
+        </div>
         <button class="quit">取消</button>
-        <button class="confirm">确定</button>
+        <button class="confirm" >确定</button>
 
     </div>
     <header>
@@ -42,11 +46,12 @@
         <del></del>
     </header>
     <div class="main">
-        <div class="top_info">
+    <!--各种详情的填充-->
+    <!--    <div class="top_info">
             <img src="../../img/focus-img1.png" alt=""/>
             <div class="top_info_mid">
                 <h2>李先生</h2>
-                <p>高级模具设计师</p>
+                <p>达到</p>
             </div>
             <div class="top_info_rig" onclick="location.href='../index/personal_data.html'">
                 个人资料
@@ -84,11 +89,11 @@
             <div class="address clearfix">地址：郑州市中牟县九龙镇宇通工业园
             </div>
         </div>
-        <!--if 判断是否显示-->
+        &lt;!&ndash;if 判断是否显示&ndash;&gt;
         <div class="work_time">
             <span>工作时长</span>
-            <!--会自动增加时长-->
-            <div class="tot_time clearfix">当前工作时长为：02:12:36
+            &lt;!&ndash;会自动增加时长&ndash;&gt;
+            <div class="tot_time clearfix">当前工作时长为：<del>02:12:36</del>
                 <em class="change_time">修改工时</em>
             </div>
 
@@ -99,8 +104,8 @@
             <div class="tot_pay clearfix">当前工资为：￥200
             </div>
         </div>
-        <!--评价 -->
-        <!--<div class="work_time">
+        &lt;!&ndash;评价 &ndash;&gt;
+        &lt;!&ndash;<div class="work_time">
             <span>工作时长</span>
             &lt;!&ndash;会自动增加时长&ndash;&gt;
             <div class="tot_time clearfix">总时长为：02:12:36
@@ -111,8 +116,8 @@
             <span>当前工资</span>
             <div class="tot_pay clearfix">已发工资为：￥200
             </div>
-        </div>-->
-        <!--评价结束-->
+        </div>&ndash;&gt;
+        &lt;!&ndash;评价结束&ndash;&gt;
         <div class="appraise ">
             <div class="title clearfix">
                 <span class="f_left"> 评价（56）</span>
@@ -134,23 +139,23 @@
             <p>郑州宇通集团有限公司，是以客车为核心任务，以 工程机械、汽车零部州宇通集团有限公司，是以客车为核心任务，以 工程机械、汽车零部件、房地产为战略业务...</p>
             <div class="read_more" onclick="location.href='company_detail.html'" >查看更多>></div>
         </div>
-        <!--在线咨询-->
+        &lt;!&ndash;在线咨询&ndash;&gt;
 
         <div class="online">
-            <!--评价-->
+            &lt;!&ndash;评价&ndash;&gt;
             <button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
             <button class="sure_work" onclick="location.href='./my_order_comment.html'">评&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价</button>
-            <!--进行中-->
-            <!--<button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
-            <button class="sure_work">进 行 中</button>-->
-            <!--待完成-->
-           <!-- <button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
-            <button class="sure_work">待 完 成</button>-->
-            <!--新订单-->
-           <!-- <button class="refer">拒绝订单</button>
-            <button class="sure_work">确认订单</button>-->
+            &lt;!&ndash;进行中&ndash;&gt;
+            &lt;!&ndash;<button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
+            <button class="sure_work">进 行 中</button>&ndash;&gt;
+            &lt;!&ndash;待完成&ndash;&gt;
+            &lt;!&ndash; <button class="refer" onclick="location.href='../index/online_ask.html'">在线咨询</button>
+             <button class="sure_work">待 完 成</button>&ndash;&gt;
+            &lt;!&ndash;新订单&ndash;&gt;
+            &lt;!&ndash; <button class="refer">拒绝订单</button>
+             <button class="sure_work">确认订单</button>&ndash;&gt;
         </div>
-    </div>
+    </div>-->
 </div>
 </body>
 <script src="../../js/common/x_rem.js"></script>
@@ -162,41 +167,437 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script src="../../js/common/fastclick.js"></script>
+<script id="detail" type="text/html">
+    <div class="top_info">
+        {{if data.stationOrder.worker.avatar==null}}
+        <img src="../../img/focus-img1.png" alt=""/>
+        {{else}}
+        <img src="{{data.stationOrder.worker.avatar}}" alt=""/>
+        {{/if}}
+        <div class="top_info_mid">
+            <h2>{{data.stationOrder.worker.userName==null?"未设置":data.stationOrder.worker.userName.substr(0,1)}}**</h2>
+            <p>{{data.stationOrder.worker.workType==null?"未设置":data.stationOrder.worker.workType}}</p>
+        </div>
+        <div class="top_info_rig" onclick="location.href='../index/personal_data.html?url={{data.stationOrder.worker.workerId}}'">
+            个人资料
+        </div>
+    </div>
+    <div class="top_title clearfix">
+        <div class="tit_left f_left">
+            <h3>{{data.stationOrder.station.company.companyName}}公司</h3>
+            <span>要求:{{data.stationOrder.station.workType}}{{data.stationOrder.station.introduce}}</span>
+            <em >￥<del class="re_pice">{{data.stationOrder.station.price}}</del>/小时</em>
+        </div>
+
+    </div>
+    <div class="img_big_box">
+        {{if data.stationOrder.station.company.companyImages.length==0}}
+        {{else}}
+        {{each data.stationOrder.station.company.companyImages as img i}}
+        <div class="img_box">
+            <img src="{{img.imagePath}}" data-preview-src="" data-preview-group="1" alt=""/>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+    <div class="promise">
+        保障：大企业信誉保证
+    </div>
+    <div class="work_time">
+        <span>工作时间</span>
+        <div class="time clearfix">{{time(data.stationOrder.station.startTime)}}到{{time(data.stationOrder.station.endTime)}}
+            <em class="f_right">每天08:00～18:00</em></div>
+    </div>
+    <div class="work_address">
+        <span>工作地点</span>
+        <div class="address clearfix">地址：{{data.stationOrder.station.company.address}}
+        </div>
+    </div>
+    {{if data.stationOrder.resultType==4}}
+    <!--if 判断是否显示-->
+    <div class="work_time">
+        <span>工作时长</span>
+        <!--会自动增加时长-->
+        <div class="tot_time clearfix">当前工作时长为：<del>{{data.stationOrder.workTime}}</del>
+            <em class="change_time">修改工时</em>
+        </div>
+    </div>
+    <div class="work_pay">
+        <span>应付工资</span>
+        <div class="tot_pay clearfix">应付工资为：￥<em>{{data.stationOrder.price==null?"0，时间太短":data.stationOrder.price}}</em>
+        </div>
+    </div>
+    {{/if}}
+    <!--待完工时 修改一次-->
+    {{if data.stationOrder.resultType==3}}
+    <!--if 判断是否显示-->
+    <div class="work_time">
+        <span>工作时长</span>
+        <!--会自动增加时长-->
+        <div class="tot_time clearfix">当前工作时长为：<del  class="add_time">{{data.stationOrder.workTime}}</del>
+        </div>
+
+    </div>
+
+    <div class="work_pay">
+        <span>当前工资</span>
+        <div class="tot_pay clearfix">当前工资为：￥{{data.stationOrder.price==null?"计时中":data.stationOrder.price}}
+        </div>
+    </div>
+
+    {{/if}}
+    <!--评价 -->
+    {{if data.stationOrder.resultType==5}}
+    <div class="work_time">
+        <span>工作时长</span>
+        <!--会自动增加时长-->
+        <div class="tot_time clearfix">总时长为：{{data.stationOrder.workTime}}
+        </div>
+
+    </div>
+    <div class="work_pay">
+        <span>当前工资</span>
+        <div class="tot_pay clearfix">已发工资为：￥{{data.stationOrder.price}}
+        </div>
+    </div>
+    {{/if}}
+
+    <!--评价结束-->
+    <div class="appraise ">
+        <div class="title clearfix">
+            <span class="f_left"> 评价（{{data.comments.length}}）</span>
+            <i class='f_right mui-icon mui-icon-arrowright' onclick="location.href='./appraise_detail.html?url={{data.stationOrder.station.stationId}}'"></i>
+        </div>
+        {{if data.comments.length!==0}}
+        <div class="appraise_det">
+            <div class="det_top clearfix">
+                <img src="{{data.comments[0].worker.avatar}}" alt=""/>
+                <em>{{data.comments[0].worker.userName.substr(0,1)}}**</em>
+                <span class="f_right">{{time(data.comments[0].commentTime)}}</span>
+            </div>
+            <div class="det_b">
+                {{data.comments[0].message}}
+            </div>
+        </div>
+        {{else}}
+        <div class="no_info">对不起，暂时没有评价</div>
+        {{/if}}
+    </div>
+    <div class="intro">
+        <span>详情介绍</span>
+        <p>{{data.stationOrder.station.company.representative}}</p>
+        <div class="read_more" onclick="location.href='../index/company_detail.html?id={{data.stationOrder.station.company.companyId}}'" >查看更多>></div>
+    </div>
+    <!--在线咨询-->
+
+    <div class="online">
+        <!--评价-->
+        {{if data.stationOrder.resultType==5}}
+        <button class="refer" onclick="location.href='../index/online_ask.html?url={{data.stationOrder.station.mobilePhone}}'">在线咨询</button>
+        <button class="sure_work" onclick="location.href='./my_order_comment.html?url={{data.stationOrder.stationOrderId}}'">评&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价</button>
+        {{/if}}
+        <!--进行中-->
+        {{if data.stationOrder.resultType==3}}
+        <button class="refer" onclick="location.href='../index/online_ask.html?url={{data.stationOrder.station.mobilePhone}}'">在线咨询</button>
+        <button class="sure_work">进 行 中</button>
+        {{/if}}
+        {{if data.stationOrder.resultType==4}}
+        <button class="refer" onclick="location.href='../index/online_ask.html?url={{data.stationOrder.station.mobilePhone}}'">在线咨询</button>
+        <button class="sure_work" onclick="complate_work('{{data.stationOrder.price}}','{{data.stationOrder.stationOrderId}}','{{data.stationOrder.workTime}}')" >确认完工</button>
+        {{/if}}
+       <!-- 待完成-->
+        {{if data.stationOrder.resultType==1}}
+         <button class="refer" onclick="location.href='../index/online_ask.html?url={{data.stationOrder.station.mobilePhone}}'">在线咨询</button>
+         <button class="sure_work">待 完 成</button>
+        {{/if}}
+        <!--新订单-->
+        {{if data.stationOrder.resultType==0||data.stationOrder.resultType==1||data.stationOrder.resultType==2}}
+         <button class="refer" onclick="location.href='./rejest_reason.html?id={{data.stationOrder.stationOrderId}}'">拒绝订单</button>
+         <button class="sure_work" onclick="sure_order('{{data.stationOrder.stationOrderId}}',1)">确认订单</button>
+        {{/if}}
+        {{if data.stationOrder.resultType==2}}
+         <button class="refer">已拒绝</button>
+        {{/if}}
+        {{if data.stationOrder.resultType==0}}
+        <button class="sure_work">等待审核</button>
+        {{/if}}
+    </div>
+</script>
 <script>
     //根据状态 渲染模板 确定操作类型 参考树洞
+
+    //确定订单
+    function order(data){
+        console.log(data);
+        if(data.code==200){
+            $(".sure_work").text("已同意");
+        }
+    }
+    function sure_order(id,type){
+        myAjax({url:"/station/dealApplyOrder",data: {stationOrderId:id,resultType:type},type:"post"},order)
+    }
+    //发布方 确认完工
+    function completeWork(data){
+        console.log(data);
+        if(data.code==200){
+            sweetAlert(
+                    "恭喜您",
+                    "确认完工，并支付成功",
+                    "success"
+            ).then(function () {
+                        $(".sure_work").text("已支付");
+                    })
+        }else if(data.code==707){
+            sweetAlert(
+                    "sorry",
+                    "网络发生错误，请您重试",
+                    "error"
+            ).then(function () {
+                       location.href='../login.html';
+                    })
+        }
+        else{
+            sweetAlert(
+                    "sorry",
+                    "你的余额可能不足",
+                    "error"
+            ).then(function () {
+                        location.href="./my_wallet.html";
+                    })
+        }
+    }
+    function complate_work(price,id,time){
+        myAjax({url:"/station/completeOrder",data:{price:price,stationOrderId:id,workTime:time},type:"post"},completeWork)
+    };
     $(function () {
         mui.previewImage();
         mui('body').on('tap','a',function(){document.location.href=this.href;});
+        FastClick.attach(document.body);
 /*新订单与待完成订单 没有工作时长 工资等
  * 进行中的订单有 工作时长 当前工资
   * 待完工 工作时长 当前工资 修改工时
   * 待评价 工作时长 当前工资 已发工资*/
 
-        $(".change_time").click(function () {
-            $("#mask").show();
-            $("#share").show();
-            $("body").css("overflow", "hidden");
-            $("body").on("touchmove", function () {
-                event.preventDefault();
-            });
-            var event = event || window.event;
+        //修改工作时间
+        function changeTime(data){
+            console.log(data);
+            if(data.code==200){
+                //若 更改成功，那么下面的工资也应该发生相应的变化
+                //应付工资
+                sweetAlert(
+                        "恭喜您",
+                        "修改工作时间成功了",
+                        "success"
+                ).then(function () {
+                            $(".tot_pay>em").text(data.data[0].price);
+                            reder(data.data[0].stationOrderId);
+                        })
 
-            if (event.stopPropagation) {
-                event.stopPropagation();
-            } else {
-                event.cancelBubble = true;
+            }else{
+                sweetAlert(
+                        "sorry",
+                        "操作失败",
+                        "error"
+                )
             }
-        })
-        $(".quit").click(function () {
-            $("#mask").hide();
-            $("#share").hide();
-        })
-        $(".confirm").click(function () {
-            $("#mask").hide();
-            $("#share").hide();
+        }
+        function getTime(id,time){
+            myAjax({url:'/station/getUpdatePrice',data:{stationOrderId:id,workTime:time},type:"post"},changeTime);
+        }
+        //页面多个传参 确定详情
+        var data=location.href.split("=")[1];
+        console.log(data);
+        reder(data);
+        function reder(data){
+            $.ajax({
+                url:baseUrl+"/station/getDetailedOrder",
+                data:{
+                    stationOrderId:data
+                },
+                dataType:"json",
+                type:"post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                async:false,
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg.code==200){
+                        function formatSeconds(value) {
+                            var secondTime = parseInt(value);// 秒
+                            var minuteTime = 0;// 分
+                            var hourTime = 0;// 小时
+                            if(secondTime > 60) {//如果秒数大于60，将秒数转换成整数
+                                //获取分钟，除以60取整数，得到整数分钟
+                                minuteTime = parseInt(secondTime / 60);
+                                //获取秒数，秒数取佘，得到整数秒数
+                                secondTime = parseInt(secondTime % 60);
+                                //如果分钟大于60，将分钟转换成小时
+                                if(minuteTime > 60) {
+                                    //获取小时，获取分钟除以60，得到整数小时
+                                    hourTime = parseInt(minuteTime / 60);
+                                    //获取小时后取佘的分，获取分钟除以60取佘的分
+                                    minuteTime = parseInt(minuteTime % 60);
+                                }
+                            }
+                            var result = "" + parseInt(secondTime);
 
-            //console.log($("input[type='number']").val());
-        })
+                            if(minuteTime > 0) {
+                                result = "" + parseInt(minuteTime) + ":" + result;
+                            }
+                            if(hourTime > 0) {
+                                result = "" + parseInt(hourTime) + ":" + result;
+                            }
+                            return result;
+                        }
+                        template.helper("time",function(date){
+                            var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                            return time;
+                            /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                        });
+                        $(".main").html(template("detail",msg));
+                        //console.log(msg.data.station.price);
+                        //当前工作时长++
+                        if($(".tot_time>.add_time"))
+                        {
+                            // 换个思路
+                            var tot_time=$(".tot_time>.add_time").text();
+                            tot_time=tot_time.split(":");
+                            var sec=tot_time[2];
+                            var min=tot_time[1];
+                            var hour=tot_time[0];
+                            setInterval(function () {
+                                sec++;
+                                if(sec>60){
+                                    sec=0;
+                                    min++;
+                                }
+                                if(min>60){
+                                    hour++;
+                                    min=0;
+                                }
+                                var time=hour+":"+min+":"+sec;
+                                $(".tot_time>.add_time").text(time);
+                            },1000);
+                            /* var tot_time=$(".tot_time del").text();
+                             console.log(tot_time);
+                             tot_time=tot_time.split(":");
+                             var hour=tot_time[0];
+                             var min=tot_time[1];
+                             var sec=tot_time[2];
+                             var tot_sec=(hour*3600)-0+(min*60-0)+(sec-0);
+
+                             console.log(tot_sec);
+                             setInterval(function () {
+                             tot_time=$(".tot_time del").text();
+                             console.log(tot_time);
+                             tot_time=tot_time.split(":");
+                             hour=tot_time[0];
+                             min=tot_time[0];
+                             sec=tot_time[1];
+                             tot_sec=(hour*3600-0)+(min*60-0)+(sec-0);
+                             tot_sec=tot_sec++;
+                             var time=formatSeconds(tot_sec);
+                             console.log(time);
+                             $(".tot_time del").text(time);
+                             },1000)*/
+                        }
+
+                        //修改工作时长
+                        $(".change_time").click(function () {
+                            $("#mask").show();
+                            $("#share").show();
+                            $("body").css("overflow", "hidden");
+                            $("body").on("touchmove", function () {
+                                event.preventDefault();
+                            });
+                            var event = event || window.event;
+                            if (event.stopPropagation) {
+                                event.stopPropagation();
+                            } else {
+                                event.cancelBubble = true;
+                            }
+                        });
+                        $("#share .quit").click(function () {
+                            $("#share").hide();
+                            $("#mask").hide();
+                            $('body').css("overflow", "auto")
+                        });
+                        $("#share .confirm").click(function () {
+                            var data=$(".data").val().trim();
+                            var hour=$(".hour").val().trim();
+                            var min=$(".min").val().trim();
+                            var second=$(".second").val().trim();
+                            //console.log(data+''+hour+""+min);
+                             if(data==""&&hour==""&&min==""&&second==""){
+                             alert("对不起，不能为空");
+                             return false;
+                             }
+                             if(data == ""){
+                             data=0;
+                             }
+                             if(hour==""){
+                             hour=0;
+                             }
+                             if(min==""){
+                             min=0;
+                             }
+                             if(second==""){
+                             second=0;
+                             }
+
+                            $(".tot_time del").text(data+"天"+hour+"小时"+min+"分"+second+"秒");
+                            if(min>="15"){
+                                hour=hour-0+1;
+                            }
+                            console.log(hour);
+                            data=data*24;
+                            var time=(hour-0)+(data-0);
+                            console.log(time);
+                            $("#share").hide();
+                            $("#mask").hide();
+                            $('body').css("overflow", "auto");
+                          /*var id=$(this).data("id");
+                            console.log(id);*/
+
+                         getTime(msg.data.stationOrderId,time);
+
+                        });
+
+                    }else if(msg.code==707){
+                        sweetAlert(
+                                "sorry",
+                                "对不起，网络发生错误，请您重新登录",
+                                "error"
+                        ).then(function () {
+                                    location.href="../login.html"
+                                })
+                    }
+                    else{
+                        sweetAlert(
+                                "sorry",
+                                data.msg,
+                                "error"
+
+                        )
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                    sweetAlert(
+                            "sorry",
+                            "网络发生错误,请您重新登录",
+                            'error'
+                    ).then(function () {
+                                location.href="../login.html"
+                            })
+                }
+            })
+        }
+
 
     })
 </script>

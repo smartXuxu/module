@@ -28,9 +28,9 @@ body{
     position: absolute;
     left: 38%;
     width: 0.6rem;
-    height: 0.8rem;
+    height: 0.6rem;
     content: "";
-    top: 42%;
+    top: 52%;
     background:url("../../img/search.png") no-repeat center;
     -webkit-background-size: 90%;
     background-size: 90%;
@@ -39,8 +39,8 @@ body{
     display: inline-block;
     width: 59%;
     border-radius: 5px;
-    height: 0.8rem;
-    line-height: 0.8rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
     margin-left: 2.1rem;
     font-size: 0.36rem;
     text-align: center;
@@ -83,6 +83,7 @@ nav>ul>li{
     width: 25%;
     height: 100%;
     float: left;
+    font-size: 0.3rem;
 }
 nav>ul>li .active{
     color:#009afb;
@@ -106,7 +107,8 @@ nav>ul>li .active{
 }
 .list>.top>.top_right{
     width: 3.6rem;
-    border-bottom: 1px solid #cccccc;
+    padding-bottom: 0.05rem;
+    border-bottom: 1px solid #eee;
     margin-left: 0.2rem;
 }
 .top_left{

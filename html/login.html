@@ -53,12 +53,28 @@
 <script src="../js/common/back.js"></script>
 <script src="../js/common/sweetalert2.js"></script>
 <script>
-
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+            var backButtonPress = 0;
+            $.back = function(event) {
+                backButtonPress++;
+                if (backButtonPress > 1) {
+                    plus.runtime.quit();
+                } else {
+                    plus.nativeUI.toast('再按一次退出应用');
+                }
+                setTimeout(function() {
+                    backButtonPress = 0;
+                }, 1000);
+                return false;
+            };
+        });
+    }(mui, document));
     //判断 本地有没有密码 和 账号 实现 记住密码的功能；
    /* if(localStorage.getItem("uName")&&localStorage.getItem("pwd")){
         location.href="./focus.html";
     }*/
-
     //点击小眼睛 改变input的状态
     var flag=true;
     $(".eye").click(function(){
@@ -84,7 +100,9 @@
                 return false;
             }
             else {
-                obj.mobilePhone = uName;
+                //
+                //obj.mobilePhone = uName;
+                uName=uName;
             }
         }
         else {
@@ -93,7 +111,8 @@
             return false;
         }
         if (isNotBlank(pwd)) {
-            obj.password = pwd;
+            //obj.password = pwd;
+            pwd=pwd;
         } else {
             alert('密码不能为空');
             $("#pwd").val("");
@@ -101,25 +120,22 @@
         }
         //console.log(JSON.stringify(obj));
         //还需要验证数据库里面有没有这个手机号的记录需要发送ajax
-       /* $.ajax({
+        $.ajax({
             xhrFields: {
                 withCredentials: true
             },
             type: "post",
             async: false,
-            url: baseUrl+"/student/mobilePhoneLogin",
-            data: obj,
+            //contentType: "application/json",
+            url: baseUrl+"/worker/workerLogin",
+            data: {
+                mobilePhone:uName,
+                password:pwd
+            },
             dataType: 'json',
             success: function (data) {
                 console.log(data);
-                /!*if (data.msg == "账号错误") {
-                    alert("该账号不存在，请您查证后输入");
-                    $("input").val("");
-                }else if(data.msg == "密码错误"){
-                    alert("密码错误");
-                    $("#pwd").val("");
-                }*!/
-                if (data.code == "success") {
+                if (data.msg == "登录成功") {
                     localStorage.setItem('userId',data.userId);
                     localStorage.setItem('user', data.code);
                     //用户登录成功之后 存储用户输入的值
@@ -130,27 +146,33 @@
                         var loPass = localStorage.setItem('pwd',pwd);
 
                     };
-                    window.location.href = "./news.html";
+                    window.location.href = "./index/select.html";
                 }else{
                     sweetAlert(
                             '登录失败',
                             '用户名/密码错误！',
                             'error'
-                    )
-                    //alert("用户名/密码错误");
+                    ).then(function () {
+                                location.href="./login.html"
+                            });
                 }
+            },error: function (msg) {
+                console.log(msg);
+                sweetAlert(
+                        "sorry",
+                        "网络发生错误,请您重新登录",
+                        'error'
+                ).then(function () {
+                            location.href="./login.html"
+                        })
             }
-        })*/
-
+        })
     }
     //页面加载 渲染的时候要判断是否存在
-
-
     function isChecked(){
-        //获取cookie
+        //获取localStorage
         var cusername = localStorage.getItem("uName");
         var cpassword = localStorage.getItem("pwd");
-
         if(cusername != "" && cpassword != ""){
             $("#name").val(cusername);
             $("#pwd").val(cpassword);
@@ -163,7 +185,6 @@
     /*点击的登录 调用此函数  */
     $(".login_Button").click(function(){
         login();
-
     });
     //点击注册 跳转到注册界面
     $(".register_Button").click(function(){

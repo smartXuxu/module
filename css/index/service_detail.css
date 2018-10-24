@@ -120,7 +120,7 @@ body{
     border-bottom: 0.1rem solid #eeeeee;
 }
 .appraise>.title{
-    border-bottom: 1px solid #eeeeee;
+    /*border-bottom: 1px solid #eeeeee;*/
 }
 .appraise>.title>span{
     font-size: 0.3rem;
@@ -163,7 +163,7 @@ body{
 }
 .intro{
     padding:0.2rem 0.3rem;
-    border-bottom: 0.1rem solid #eeeeee;
+    /*border-bottom: 0.1rem solid #eeeeee;*/
 }
 .intro>span{
     font-size: 0.3rem;
@@ -257,7 +257,10 @@ body{
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    margin-left: 22%;
+    margin-left: 60%;
+    display: block;
+    width: 25%;
+    text-align: center;
 
 }
 #mask{
@@ -309,7 +312,6 @@ body{
 #share>button:first-of-type{
     border-radius: 0 0 0 10px;
     border-right: 1px solid #eeeeee;
-
 }
 #share>button:last-of-type{
     border-radius: 0 0 10px 0;

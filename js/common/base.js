@@ -33,12 +33,20 @@ function back(){
     history.go(-1);
 }
 
-function isUserID(){
-    var userId=localStorage.getItem('userId');
-    if(userId){
-        userId.replace(/\"/g,"");
+function isUser(){
+    var uName=localStorage.getItem('uName');
+    if(uName){
+        uName.replace(/\"/g,"");
+        console.log("已经登录过了");
     }else{
-        window.location.href="./login.html";
+        sweetAlert(
+            "sorry",
+            "您还没有登录，请您先登录",
+            "error"
+        ).then(function () {
+                window.location.href="../login.html";
+            })
+
     }
 }
  /* mui.back = function(){
@@ -81,7 +89,7 @@ function isNotBlank(data) {
 }
 // 上传图片
 
-var baseUrl="http://192.168.1.125/";
+var baseUrl="http://39.104.127.252:8080/molian/";
 
 //获取所有的头像
  function getAvatar(ele){
@@ -91,7 +99,7 @@ var baseUrl="http://192.168.1.125/";
          },
          type: "post",
          //async:false,
-         url: baseUrl+"/student/findAvatar",
+         url: baseUrl+"/worker/updateAvatar",
          dataType: 'json',
          success:function(data){
              console.log(data);
@@ -130,70 +138,7 @@ function userInfo(ele){
         }
     })
 }
-//增加 校园资讯的 浏览次数
-function addLookNumber(href){
-    $.ajax({
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "post",
-        url: baseUrl+"/schoolMessage/addLookNumber",
-        dataType: 'json',
-        data:{
-            schoolMessageId:href
-        },
-        success:function(data){
-            console.log(data);
 
-        },
-        error:function(data){
-            console.log(data);
-        }
-    })
-}
-//增加 商城的浏览次数
-
-function goodsAddLookNumber(href){
-    $.ajax({
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "post",
-        url: baseUrl+"/goods/addLookNumber",
-        dataType: 'json',
-        data:{
-            goodsId:href
-        },
-        success:function(data){
-            console.log(data);
-
-        },
-        error:function(data){
-            console.log(data);
-        }
-    })
-}
-//增加 帖子的浏览次数 /noteMessage/addLookNumber
-function noteMessageLookNumber(href){
-    $.ajax({
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "post",
-        url: baseUrl+"/noteMessage/addLookNumber",
-        dataType: 'json',
-        data:{
-            noteMessageId:href
-        },
-        success:function(data){
-            console.log(data);
-
-        },
-        error:function(data){
-            console.log(data);
-        }
-    })
-}
 
 //多选 span active 函数
 function getData(flag,ele){
@@ -214,6 +159,32 @@ function forEach(ele,arr){
     })
     console.log(arr);
 }
+function myAjax(parm,callback){
+    $.ajax({
+        type:parm.type||'get',
+        dataType:"JSON",
+        data:parm.data,
+        url:baseUrl+parm.url,
+        xhrFields: {
+            withCredentials: true
+        },
+        async:parm.async||"true",
+        success: function (data) {
+            callback&&callback(data);
+        },
+        error: function (msg) {
+            console.log(msg);
+            sweetAlert(
+                "sorry",
+                "网络发生错误,请您重新登录",
+                'error'
+            ).then(function () {
+                location.href="../login.html"
+            })
+        }
+    })
+}
+/*
 function ajax(url,data,type,callback){
     $.ajax({
         url:baseUrl+url,
@@ -228,4 +199,4 @@ function ajax(url,data,type,callback){
         }
 
     })
-}
+}*/

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>我发布的订单，查看详情</title>
+    <link rel="stylesheet" href="../../css/base.css"/>
+    <link rel="stylesheet" href="../../css/mui.min.css"/>
+    <link rel="stylesheet" href="../../css/mui_img.css"/>
+    <link rel="stylesheet" href="../../css/header.css"/>
+    <link rel="stylesheet" href="../../css/index/service_detail.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
+    <style>
+        .main{
+            padding-bottom: 0;
+        }
+        .intro{
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<div class="layer">
+    <header>
+        <i onclick="back()"></i>
+        <h3>订单详情</h3>
+       <!-- <del></del>-->
+    </header>
+    <div class="main">
+       <!--填充-->
+
+    </div>
+</div>
+
+</body>
+<script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/mui.min.js"></script>
+<script src="../../js/common/mui.zoom.js"></script>
+<script src="../../js/common/mui.preview.js"></script>
+<script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/base.js"></script>
+<script src="../../js/common/template-web.js"></script>
+<script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script id="detail" type="text/html">
+
+    <div class="top_title clearfix">
+        <div class="tit_left f_left">
+            <h3>{{data.station.company.companyName}}</h3>
+            <span>{{data.station.workType}}{{data.station.stationName}}</span>
+            <em>￥{{data.station.price}}/小时</em>
+        </div>
+        <div class="f_right tit_right">
+            <a href="tel:{{data.station.mobilePhone}}">电话咨询</a>
+        </div>
+    </div>
+    <div class="img_big_box">
+        {{if data.station.company.companyImages.length==0}}
+        {{else}}
+        {{each data.station.company.companyImages as img i}}
+        <div class="img_box">
+            <img src="{{img.imagePath}}" data-preview-src="" data-preview-group="1" alt=""/>
+        </div>
+        {{/each}}
+        {{/if}}
+       <!-- <div class="img_box">
+            <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+        </div>
+        <div class="img_box">
+            <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+        </div>
+        <div class="img_box">
+            <img src="../../img/focus-img1.png" data-preview-src="" data-preview-group="1" alt=""/>
+        </div>-->
+    </div>
+    <div class="promise">
+        保障：大企业信誉保证
+    </div>
+    <div class="work_time">
+        <span>工作时间</span>
+        <div class="time clearfix">{{time(data.station.startTime)}}到{{time(data.station.endTime)}}
+            <!--<em class="f_right">每天08:00～18:00</em></div>-->
+    </div>
+    <div class="work_address">
+        <span>工作地点</span>
+        <div class="address clearfix">地址：{{data.station.company.address}}
+        </div>
+    </div>
+    <div class="insurance">
+        <span>保险详情</span>
+        <h3>1.短期工，临时工需扣除保险临时工需扣除保险临时工需扣除保险：￥20/天</h3>
+        <h3>2.短期工，临时工需扣时工需扣时工需扣除保险：￥20/天</h3>
+    </div>
+        <div class="appraise ">
+            <div class="title clearfix">
+                <span class="f_left"> 评价（{{data.comments.length}}）</span>
+                <i class='f_right mui-icon mui-icon-arrowright' onclick="location.href='../index/appraise_detail.html?url={{data.station.stationId}}'"></i>
+            </div>
+            {{if data.comments.length !==0}}
+            <div class="appraise_det">
+                <div class="det_top clearfix">
+                    <img src="{{data.comments[0].worker.avatar}}" alt=""/>
+                    <em> {{data.comments[0].worker.userName.substr(0,1)}}**</em>
+                    <span class="f_right">{{time(data.comments[0].commentTime)}}</span>
+                </div>
+                <div class="det_b">
+                    {{data.comments[0].message}}
+                </div>
+            </div>
+            {{else}}
+           <div class="no_in">对不起，暂时没有评价</div>
+            {{/if}}
+        </div>
+    <div class="intro">
+        <span>详情介绍</span>
+        <p>{{data.station.company.representative}}</p>
+        <div class="read_more" onclick="location.href='../index/company_detail.html?companyId={{data.station.company.companyId}}'" >查看更多>></div>
+    </div>
+</script>
+<script>
+    $(function () {
+        mui.previewImage();
+        mui('body').on('tap','a',function(){document.location.href=this.href;});
+        var href=location.href.split("=")[1];
+        console.log(href);
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+                template.helper("time",function(date){
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                    return time;
+                    /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                });
+                $(".main").html(template("detail",data));
+            }else if(data.code==707){
+                sweetAlert(
+                        "sorry",
+                        "对不起，网络发生错误，请您重新登录",
+                        "error"
+                ).then(function () {
+                            location.href="../login.html"
+                        })
+            }
+            else{
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+                )
+            }
+        }
+        myAjax({url:"/station/findStation",data:{stationId:href},async:"false",type:"post"},render)
+    })
+</script>
+</html>

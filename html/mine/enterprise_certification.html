@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/header.css"/>
     <link rel="stylesheet" href="../../css/addData.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
     <style>
         .layer>header{
             height: 1.3rem;
@@ -64,14 +65,26 @@
             left: 50%;
             transform:translateX(-50%);
             height: 2rem;
+            opacity: 0;
         }
-
+        .main_content>.company_register>input{
+            width: 50%;
+            margin-top: -0.2rem;
+            background-color: #fff;
+        }
+        #loading {
+            display:none;
+        }
     </style>
 </head>
 <body>
+<div id="loading">
+    <img src="../../img/login.gif" alt=""/>
+    <div>请等待，正在加载...</div>
+</div>
 <div class="layer">
     <header>
-        <i onclick="back()"></i>
+        <i onclick='location.href="./my_message.html"'></i>
         <h3>企业认证</h3>
     </header>
     <div class="main_content">
@@ -90,7 +103,7 @@
         </div>
         <div class="company_register clearfix">
             <span class="f_left">公司注册时间:</span>
-            <input type="text" id="" placeholder="请输入公司注册时间"/>
+            <input type="date" id="" placeholder="请输入公司注册时间"/>
         </div>
         <div class="Id_photo clearfix">
             <span class="f_left">申请人身份证：</span>
@@ -123,8 +136,6 @@
                     <img src="" alt=""/>
                 </div>
             </div>
-
-
         </div>
 
 
@@ -132,6 +143,7 @@
         <button class="add_data">保存资料</button>
     </div>
 
+    </div>
 </div>
 
 </body>
@@ -140,9 +152,9 @@
 <script src="../../js/common/jquery.js"></script>
 <script src="../../js/common/base.js"></script>
 <script src="../../js/common/back.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
 
 <script>
-
 
     //验证身份证 电话不为空 11位的函数都在base.js里面了
 
@@ -150,12 +162,15 @@
     document.querySelector("#against").onchange=function () {
         var file=document.querySelector("#against").files;
         html5Reader(file,".against_box")
+
     }
     document.querySelector("#just").onchange=function () {
         var file=document.querySelector("#just").files;
         html5Reader(file,".open_box")
+
     }
     document.querySelector("#license").onchange=function(){
+        $(".business_license .img_box>img").css("opacity",1);
         var file=document.querySelector("#license").files;
         html5ReaderAppend(file);
     }
@@ -182,6 +197,134 @@
 
         }
     }
+    //console.log($(".img_box>img").attr("src"));
+    /*
+     /company/registerCompany */
+    $(".add_data").click(function () {
+        var companyName=$(".name>input").val();
+        if(companyName.trim()==""){
+            sweetAlert(
+                    "sorry",
+                    "请您填写公司名称",
+                    "error"
+            );
+            return false;
+        }
+        var representative=$(".registered_person>input").val();
+        if(representative.trim()==""){
+            sweetAlert(
+                    "sorry",
+                    "请您填写企业的注册人",
+                    "error"
+            );
+            return false;
+        }
+        var companyRegisterTime=$(".company_register>input").val();
+        console.log(companyRegisterTime);
+        companyRegisterTime=new Date(companyRegisterTime.replace(/-/g,"/")).getTime();
+        console.log(companyRegisterTime);
+        if(isNaN(companyRegisterTime)){
+           sweetAlert(
+                   "sorry",
+                   "请您设置公司注册时间",
+                   "error"
+           );
+            return false;
+        }
+        var idCardNumber=$("#Idcard").val();
+        //身份证
+        isCardNo(idCardNumber);
+        //验证 身份证号
+        function isCardNo(card)
+        {
+            // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+            var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if(reg.test(card) === false)
+            {
+                sweetAlert(
+                        "sorry",
+                        "您的身份证输入不合法",
+                        "error"
+                ).then(function () {
+                            $("#Idcard").val("");
+                        })
+                return false;
+            }
+        }
+        var base64IdCardBack=$(".against_box").css('backgroundImage').replace('url(','').replace(')','');
+        //console.log(base64IdCardBack);
+        if(base64IdCardBack.replace(/\"/g,"") =="http://localhost:63342/MU/img/against.png"){
+            base64IdCardBack="";
+        }else{
+            base64IdCardBack=base64IdCardBack;
+        }
+        // console.log(base64IdCardBack);
+        var base64IdCardFront=$(".open_box").css('backgroundImage').replace('url(','').replace(')','');
+        //console.log(base64IdCardFront);
+        if(base64IdCardFront.replace(/\"/g,"")=="http://localhost:63342/MU/img/just.jpg"){
+            base64IdCardFront="";
+        }else{
+            base64IdCardFront=base64IdCardFront;
+        }
+
+        //var base64BusinessLicence=$(".img_box>img")[0].src;
+        var base64BusinessLicence=$(".img_box>img").attr("src");
+        console.log(base64BusinessLicence);
+        /*if(base64BusinessLicence==""){
+
+        }*/
+        //ajax 封装了
+        var data={"base64IdCardFront":base64IdCardFront.replace(/"/g,""),
+            "base64IdCardBack": base64IdCardBack.replace(/"/g,""),
+            "base64BusinessLicence":base64BusinessLicence.replace(/"/g,""),
+            "companyName":companyName,
+            "companyRegisterTime":companyRegisterTime,
+            "idCardNumber":idCardNumber,
+            "representative":representative
+            };
+        /*ajax("/worker/updateMessage",data,"post", function (data) {
+         console.log(data);
+         })*/
+        $.ajax({
+            url:baseUrl+"/company/registerCompany",
+            data:data,
+            async:false,
+            dataType:"JSON",
+            type:"post",
+            xhrFields: {
+                withCredentials: true
+            },
+            beforeSend:function(){
+               $("#loading").show();
+            },
+            success: function (data) {
+                console.log(data);
+                $("#loading").hide();
+                if(data.code==200){
+                    sweetAlert(
+                            '恭喜您',
+                            data.msg,
+                            "success"
+                    ).then(function () {
+                                location.href='./my_message.html';
+
+                            })
+
+                }else{
+                    $("#loading").hide();
+                    sweetAlert(
+                            'sorry',
+                            data.msg,
+                            "error"
+                    ).then(function () {
+                                location.href='../login.html';
+                            })
+                }
+            }
+
+        })
+    })
+
 
 </script>
 </html>

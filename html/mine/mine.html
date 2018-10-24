@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="../../css/base.css"/>
     <link rel="stylesheet" href="../../css/footer.css"/>
     <link rel="stylesheet" href="../../css/mine/mine.css"/>
+    <link rel="stylesheet" href="../../css/sweetalert2.css"/>
 </head>
 <body>
 <div class="layer">
    <header>
+      <!--填充-->
        <div class="box">
            <img src="../../img/focus-img1.png" alt="" onclick="location.href='./head.html'"/>
            <em>技术大神</em>
@@ -115,10 +117,74 @@
 </body>
 <script src="../../js/common/x_rem.js"></script>
 <script src="../../js/common/jquery.js"></script>
+<script src="../../js/common/mui.min.js"></script>
 <script src="../../js/common/base.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script src="../../js/common/sweetalert2.js"></script>
+<script type="text/html" id="info">
+<div class="box">
+    {{if data.avatar=="" || !data.avatar}}
+    <img src="../../img/focus-img1.png" alt="" onclick="location.href='./head.html'"/>
+    {{else}}
+    <img src="{{data.avatar}}" alt="" onclick="location.href='./head.html'"/>
+    {{/if}}
+    <em>{{!data.userName||data.userName==""?"模联":data.userName}}</em>
+    <i onclick="location.href='./seting.html'"></i>
+</div>
+</script>
 <script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+            var backButtonPress = 0;
+            $.back = function(event) {
+                backButtonPress++;
+                if (backButtonPress > 1) {
+                    plus.runtime.quit();
+                } else {
+                    plus.nativeUI.toast('再按一次退出应用');
+                }
+                setTimeout(function() {
+                    backButtonPress = 0;
+                }, 1000);
+                return false;
+            };
+        });
+    }(mui, document));
 
+    $(function () {
+        isUser();
+        var param={};
+        param.url="/worker/getUserMessage";
+        param.type="post";
+        param.async="false";
+        function data(data){
+            console.log(data);
+            if(data.code==200){
+                $("header").html(template("info",data));
+            }else if(data.code==707){
+                sweetAlert(
+                        "sorry",
+                        "对不起，网络发生错误，请您重新登录",
+                        "error"
+                ).then(function () {
+                            location.href="../login.html"
+                        })
+            }
+            else{
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+
+                )
+            }
+
+        }
+        myAjax(param,data);
+
+
+    })
 </script>
 </html>

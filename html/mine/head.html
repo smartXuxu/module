@@ -111,11 +111,14 @@
 <script type="text/javascript" src="../../js/common/head/cropper.min.js"></script>
 <script type="text/javascript" src="../../js/common/template-web.js"></script>
 <script id="getPic" type="text/html">
-    {{if message=="" || !message}}
-    <img id="finalImg" src="../img/focus-img1.png"  style="border-radius: 50%;">
+
+    {{if data.avatar=="" || !data.avatar}}
+    <img id="finalImg" src="../../img/focus-img1.png"  style="border-radius: 50%;">
     {{else}}
-    <img id="finalImg" src="{{message}}" style="border-radius: 50%;">
+    <img id="finalImg" src="{{data.avatar}}" style="border-radius: 50%;">
     {{/if}}
+
+
 </script>
 <script type="text/javascript">
 
@@ -236,8 +239,8 @@
 
     //更换头像，发送base64给后台
     $(".confirm").on("click",function () {
-        var headePIc=$("#finalImg").attr('src');
-        //sendHeadpic(headePIc);
+        var headePIc=$("#finalImg").attr('src').replace(/"/g,"");
+        sendHeadpic(headePIc);
     })
     function sendHeadpic(headpicPath){
         $.ajax({
@@ -245,14 +248,14 @@
                 withCredentials: true
             },
             type: "post",
-            url:baseUrl+"/student/updateAvatar",
+            url:baseUrl+"/worker/updateAvatar",
             data:{
-                image:headpicPath
+                base64Image:headpicPath
             },
             dataType: 'json',
             success:function(data){
                 console.log(data);
-                if(data.code=="success"){
+                if(data.code=="200"){
                    back();
                 }
             },
@@ -269,20 +272,23 @@
             },
             type: "post",
             async: false,
-            url: baseUrl+"/student/findAvatar",
-
+            url: baseUrl+"/worker/getUserMessage",
             dataType: 'json',
             success:function(data){
                 console.log(data);
-                var html=template("getPic",data);
+                if(data.code=="200"){
+                     var html=template("getPic",data);
+                   console.log(data.data.avatar);
                     $(".getPic").html(html);
+                }
+
             },
             error:function(data){
                 console.log(data);
             }
         })
     }
-    //getHeadpic()
+  getHeadpic()
 </script>
 
 </body>

@@ -96,7 +96,7 @@
             <input name="checkbox" value="Item 1" type="checkbox" >
         </div>
         <div class="mui-input-row mui-checkbox mui-left">
-            <label  order="4">其他</label>
+            <label  order="4">其它</label>
             <input name="checkbox" value="Item 1" type="checkbox" >
         </div>
 
@@ -105,14 +105,12 @@
     <!--存在点击按钮的时候button innertext 替换 同时提交给后台-->
 </div>
 <script src="../../js/common/x_rem.js"></script>
+<script src="../../js/common/base.js"></script>
 <script src="../../js/common/mui.min.js"></script>
 <script src="../../js/common/jquery.js"></script>
 <script src="../../js/common/back.js"></script>
 <script>
     $(function(){
-        function back(){
-            history.go(-1);
-        }
         mui.init({
             swipeBack:true //启用右滑关闭功能
         });
@@ -136,15 +134,17 @@
                     withCredentials: true
                 },
                 type: "post",
-                url: "http://192.168.1.126/student/pushProposal ",
+                url: baseUrl+"/worker/pushMessageBack",
                 data:{
-                    type:this_report
+                    question:this_report,
+                    base64Images:"",
+                    introduce:""
                 },
                 dataType: 'json',
                 success:function(data){
                     console.log(data);
-                    if(data.code=="success"){
-                        $(".report").text("已举报，受理中");
+                    if(data.code=="200"){
+                        $(".report").text("已反馈，受理中");
                     }
                 },
                 error:function(data){

@@ -17,7 +17,7 @@
             width: 100%;
             height: auto;
             border-bottom: 1px solid #eeeeee;
-            padding-bottom: 0.2rem;
+            padding: 0.2rem 0;
         }
         .list:last-of-type{
             border-bottom: none;
@@ -55,7 +55,7 @@
         <h3>评价</h3>
     </header>
     <div class="content">
-        <div class="list">
+     <!--   <div class="list">
             <div class="list_tit clearfix">
                 <img src="../../img/focus-img1.png" alt=""/>
             <em>宝宝</em>
@@ -77,29 +77,8 @@
                 之前去宇通他们这里临时做工，气氛十分融洽，不 愧是大企业，结算薪资的时候也是十分之前去宇通他们这里临时做工，气氛十分融洽，不 愧是大企业，结算薪资的时候也是十分干脆
             </p>
 
-        </div>
-        <div class="list">
-            <div class="list_tit clearfix">
-                <img src="../../img/focus-img1.png" alt=""/>
-            <em>宝宝</em>
-                <i class="f_right">2018-03-14 08:30</i>
-            </div>
-            <p>
-                之前去宇通他们这里临时做工，气氛十分融洽，不 愧是大企业，结算薪资的时候也是十分之前去宇通他们这里临时做工，气氛十分融洽，不 愧是大企业，结算薪资的时候也是十分干脆
-            </p>
+        </div>-->
 
-        </div>
-        <div class="list">
-            <div class="list_tit clearfix">
-                <img src="../../img/focus-img1.png" alt=""/>
-            <em>宝宝</em>
-                <i class="f_right">2018-03-14 08:30</i>
-            </div>
-            <p>
-                之前去宇通他们这里临时做工，气氛十分融洽，不 愧是大企业，结算薪资的时候也是十分之前去宇通他们这里临时做工，气氛十分融洽，不 愧是大企业，结算薪资的时候也是十分干脆
-            </p>
-
-        </div>
     </div>
 </div>
 </body>
@@ -109,5 +88,57 @@
 <script src="../../js/common/back.js"></script>
 <script src="../../js/common/template-web.js"></script>
 <script src="../../js/common/template.js"></script>
+<script id="appraise" type="text/html">
+{{if data.comments.length==0}}
+<div class="no_info">对不起，暂时没有评价</div>
+{{else}}
+{{each data.comments as value i}}
+<div class="list">
+    <div class="list_tit clearfix">
+        <img src="{{value.worker.avatar}}" alt=""/>
+        <em>{{value.worker.userName.substr(0,1)}}**</em>
+        <i class="f_right">{{time(value.commentTime)}}</i>
+    </div>
+    <p>
+       {{value.message}}
+    </p>
+
+</div>
+{{/each}}
+    {{/if}}
+</script>
+<script>
+    $(function () {
+        var href=location.href.split("=")[1];
+        console.log(href);
+        function render(data){
+            console.log(data);
+            if(data.code==200){
+                template.helper("time",function(date){
+                    var time=new Date(date).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/\//g,"-");
+                    return time;
+                    /* return new Date(parseInt(date) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');*/
+                });
+                $(".content").html(template("appraise",data));
+            }else if(data.code==707){
+                sweetAlert(
+                        "sorry",
+                        "对不起，网络发生错误，请您重新登录",
+                        "error"
+                ).then(function () {
+                            location.href="../login.html"
+                        })
+            }
+            else{
+                sweetAlert(
+                        "sorry",
+                        data.msg,
+                        "error"
+                )
+            }
+        }
+        myAjax({url:"/station/findStation",data:{stationId:href},async:"false",type:"post"},render)
+    })
+</script>
 
 </html>

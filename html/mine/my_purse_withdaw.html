@@ -63,7 +63,7 @@
 <script>
     var userId=location.href.split("=")[1];
     $(function (){
-       // getheader();
+        getheader();
         function getheader(){
             $.ajax({
                 xhrFields: {
@@ -71,11 +71,12 @@
                 },
                 type: "post",
                 async:false,
-                url: baseUrl+"/student/findAvatar",
+                url: baseUrl+"/worker/getUserMessage",
                 dataType: 'json',
                 success:function(data){
+                    console.log(data);
                     //console.log(data.message);
-                    $(".top>img").attr("src",data.message);
+                    $(".top>img").attr("src",data.data.avatar);
 
                 },
                 error:function(data){
@@ -112,15 +113,15 @@
                 },
                 async:false,
                 type: "post",
-                url: baseUrl+"/pay/aliPayTransfer",
+                url: baseUrl+"/pay/aliTransfer",
                 data:{
                     amount:price,
-                    type:1,
+                   /* type:1,*/
                     payeeAccount:account
                 },
                 dataType: 'text',
                 success:function(data) {
-                    console.log('data',data)
+                    console.log('data',data);
                 if(data.code=="成功提现到支付宝账号"){
                 location.href='./my_wallet.html';
                 }else{
@@ -131,7 +132,7 @@
                     console.log(err)
                 }
             })
-        })
+        });
         //验证手机号
         function checkAccount(account){
             if(!/^(?:\w+\.?)*\w+@(?:\w+\.)+\w+|\d{9,11}$/.test(account)){

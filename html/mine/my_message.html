@@ -99,15 +99,18 @@
             -webkit-background-size: 100%;
             background-size: 100%;
         }
+        .mid img{
+            background-color: #999;
+        }
     </style>
 
 </head>
 <body>
 <div class="layer">
     <header>
-        <i onclick="back()"></i>
+        <i onclick="location.href='./mine.html'"></i>
         <div class="mid">
-            <img src="../../img/focus-img1.png" alt="" onclick="location.href='./head.html'"/>
+            <img src="" alt="" onclick="location.href='./head.html'"/>
             <em>技术大神</em>
         </div>
         <div class="bot">
@@ -143,8 +146,30 @@
 <script src="../../js/common/jquery.js"></script>
 <script src="../../js/common/base.js"></script>
 <script src="../../js/common/back.js"></script>
-
+<script src="../../js/common/template-web.js"></script>
+<script type="text/html" id="mine">
+    {{if data.avatar=="" || !data.avatar}}
+    <img src="../../img/focus-img1.png" alt="" onclick="location.href='./head.html'"/>
+    <em>{{data.userName==null?"模联":data.userName}}</em>
+    {{else}}
+    <img src="{{data.avatar}}" alt="" onclick="location.href='./head.html'"/>
+    <em>{{userName||userName!==null?userName:"模联"}}</em>
+    {{/if}}
+</script>
 <script>
+$(function () {
+    var param={};
+    param.url="/worker/getUserMessage";
+    param.type="post";
+    param.async="false";
+    function data(data){
+        console.log(data);
+            if(data.code==200){
+                $(".mid").html(template("mine",data))
+            }
+    }
+    myAjax(param,data);
 
+})
 </script>
 </html>
