@@ -261,7 +261,8 @@
         $(".add_data").click(function () {
            var base64IdCardBack=$(".against_box").css('backgroundImage').replace('url(','').replace(')','');
             //console.log(base64IdCardBack);
-            if(base64IdCardBack.replace(/\"/g,"") =="http://localhost:63342/MU/img/against.png"){
+            if(base64IdCardBack.replace(/\"/g,"").match("img/against.png")){
+            //if(base64IdCardBack.replace(/\"/g,"") =="http://localhost:63342/MU/img/against.png"){
                 base64IdCardBack="";
             }else{
                 base64IdCardBack=base64IdCardBack;
@@ -269,7 +270,8 @@
            // console.log(base64IdCardBack);
             var base64IdCardFront=$(".open_box").css('backgroundImage').replace('url(','').replace(')','');
             //console.log(base64IdCardFront);
-            if(base64IdCardFront.replace(/\"/g,"")=="http://localhost:63342/MU/img/just.jpg"){
+            if(base64IdCardFront.replace(/\"/g,"").match("img/just.jpg")){
+            //if(base64IdCardFront.replace(/\"/g,"")=="http://localhost:63342/MU/img/just.jpg"){
                 base64IdCardFront="";
             }else{
                 base64IdCardFront=base64IdCardFront;

@@ -143,7 +143,7 @@
 <script src="../js/common/template.js"></script>
 <script>
     FastClick.attach(document.body);
-    $.ajax({
+   /* $.ajax({
         url:baseUrl+"/company/getCompanyMessage",
         dataType:"json",
         data:{},
@@ -168,7 +168,7 @@
                 },5000);
             }
         }
-    })
+    })*/
 
     document.querySelector('.mui-table-view').addEventListener('selected',function(e1){
         window.event? window.event.cancelBubble = true : e.stopPropagation();
@@ -279,7 +279,7 @@
     /*上传图片结束*/
    $(".finish").click(function () {
 
-       var workType=$(".type_choose").text();
+    /*   var workType=$(".type_choose").text();
        if(workType=="请选择招工类型"){
            sweetAlert(
                    "sorry",
@@ -320,8 +320,8 @@ startTime=new Date(startTime.replace(/-/g,"/")).getTime();
        }else{
            endTime=new Date(endTime.replace(/-/g,"/")).getTime();
           // console.log(endTime);
-       }
-       var price=$(".pay>input").val();
+       }*/
+     /*  var price=$(".pay>input").val();
        if(price.trim()==""){
            sweetAlert(
                    "sorry",
@@ -348,13 +348,13 @@ startTime=new Date(startTime.replace(/-/g,"/")).getTime();
            );
            return false;
        }
-       var description=$(".description").val();
+       var description=$(".description").val();*/
        var base64s=images;
-       base64s=base64s.join("。").replace(/"/g,"");;
+       base64s=base64s.join("。").replace(/"/g,"");
        //console.log(base64Images);
-      // console.log(base64s);
+       console.log(base64s);
        var comment=$(".etc>textarea").val();
-       var param={
+       /*var param={
            comment:comment,
            base64Images:base64s,
            endTime:endTime,
@@ -365,9 +365,9 @@ startTime=new Date(startTime.replace(/-/g,"/")).getTime();
            mobilePhone:link_phone,
            number:recruiting,
            price:price
-       };
+       };*/
 
-       $.ajax({
+      /* $.ajax({
            url:baseUrl+"/station/pushStation",
            dataType:"json",
            data:param,
@@ -404,7 +404,7 @@ startTime=new Date(startTime.replace(/-/g,"/")).getTime();
                            })
                }
            }
-       })
+       })*/
 
 
    })
